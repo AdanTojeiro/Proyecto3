@@ -1,6 +1,5 @@
 package interfaz;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 public class JLabelControl extends JLabel {
