@@ -2,6 +2,7 @@ package principal;
 
 import java.awt.EventQueue;
 
+
 import interfaz.Ventana;
 
 public class Launcher {
@@ -13,6 +14,7 @@ public class Launcher {
 	 */
 
 	public static void main(String[] args) {
+			
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {

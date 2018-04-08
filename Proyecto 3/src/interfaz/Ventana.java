@@ -4,6 +4,7 @@ import java.awt.Color;
 import javax.swing.*;
 
 import controladores.FrameDrager;
+import controladores.NavLabelListener;
 import controladores.OptionListener;
 import controladores.WindowListener;
 
@@ -15,30 +16,67 @@ public class Ventana {
 
 	private JFrame frame;
 	private JPanel background_panel, side_panel, center_panel, logo_panel, nav_panel, index_nav, titulo_panel,
-			user_error_panel, password_error_panel, password_text_panel, display_panel, user_textPanel;
+			login_nick_error_panel, login_password_error_panel, login_password_text_panel, display_panel,
+			login_nick_textPanel;
 	private JDisplay display_index, display_login, display_reg, display_info, display_soporte;
 	private JPanelOpt opt_login, opt_reg, opt_info, opt_soporte;
 	private JLabelControl close_lbl, minimize_lbl;
 	private JLabel logo_imagen, logo_texto, opt_login_ico, opt_login_text, opt_reg_ico, opt_reg_text, opt_info_ico,
-			opt_info_text, opt_soporte_ico, opt_soporte_text, mensaje_index, user_icon_text, titulo_ico,
-			user_error_ico, user_error_text, password_icon_text, password_error_ico, password_error_text,  titulo_text, imagen_central_login;
+			opt_info_text, opt_soporte_ico, opt_soporte_text, mensaje_index, login_nick_icon_text, titulo_ico,
+			login_nick_error_ico, login_nick_error_text, login_password_icon_text, login_password_error_ico,
+			login_password_error_text, titulo_text, imagen_central_login;
 	private ArrayList<JPanelOpt> opciones_index = new ArrayList<JPanelOpt>();
 	private ArrayList<JDisplay> grupo_displays = new ArrayList<JDisplay>();
+	private ArrayList<JFormDisplay> grupo_reg = new ArrayList<JFormDisplay>();
 	private final Color COLOR_ERROR = new Color(219, 186, 70);
 	private final Color COLOR_SELECTED = new Color(85, 65, 118);
 	private final Color COLOR_BACKGROUND = new Color(54, 33, 89);
+	private final Color COLOR_CHECK = new Color(50, 205, 50);
 	private FrameDrager drager;
-	private JTextField password_textF, user_textF;
-	private JSeparator separador_titulo, password_separator, user_separator;
+	private JTextField login_password_textF, login_nick_textF;
+	private JSeparator separador_titulo, login_password_separator, login_nick_separator;
+	private JPanel reg_stepbar_panel;
+	private JPanel reg_nick_panel;
+	private JSeparator reg_nick_panel_separator;
+	private JLabel reg_nick_panel_ico;
+	private JTextField reg_nick_panel_textF;
+	private JPanel reg_nick_panel_info_panel;
+	private JLabel reg_nick_panel_info_ico;
+	private JLabel reg_nick_panel_info_text;
+	private JPanel reg_password_panel;
+	private JSeparator reg_password_separator, reg_stepbar_1_to_2_separator, reg_stepbar_2_to_3_separator;
+	private JLabel reg_password_ico;
+	private JPasswordField reg_password_textF;
+	private JPanel reg_password_info_panel;
+	private JLabel reg_password_info_ico;
+	private JLabel reg_password_info_text;
+	private JLabel reg_step_ico;
+	private JLabel reg_step_titulo;
+	private JSeparator reg_form_1_step_separator;
+	private JPanel reg_password_check_panel;
+	private JSeparator reg_password_check_separator;
+	private JLabel reg_password_check_ico;
+	private JPasswordField reg_password_check_textF;
+	private JPanel reg_password_check_info_panel;
+	private JLabel reg_password_check_info_ico;
+	private JLabel reg_password_check_info_text;
+	private NavLabel reg_next_navLabel, reg_back_navLabel;
+	private JLabel reg_stepbar_1_ico, reg_stepbar_2_ico, reg_stepbar_3_ico, reg_stepbar_1_arrow_ico, reg_stepbar_2_arrow_ico, reg_stepbar_3_arrow_ico;
+	private JFormDisplay reg_form_step_1_panel, reg_form_step_2_panel, reg_form_step_3_panel;
+	
+	
 
 	public static void main(String[] args) {
-		
+
 	}
 
 	public Ventana() {
 		initialize();
 	}
 
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	private void initialize() {
 
 		// Frame
@@ -146,87 +184,87 @@ public class Ventana {
 		imagen_central_login.setBounds(352, 27, 96, 96);
 		display_login.add(imagen_central_login);
 
-		user_textPanel = new JPanel();
-		user_textPanel.setBounds(204, 144, 390, 96);
-		display_login.add(user_textPanel);
-		user_textPanel.setOpaque(false);
-		user_textPanel.setLayout(null);
+		login_nick_textPanel = new JPanel();
+		login_nick_textPanel.setBounds(204, 144, 390, 96);
+		display_login.add(login_nick_textPanel);
+		login_nick_textPanel.setOpaque(false);
+		login_nick_textPanel.setLayout(null);
 
-		user_separator = new JSeparator();
-		user_separator.setBounds(52, 41, 328, 2);
-		user_textPanel.add(user_separator);
+		login_nick_separator = new JSeparator();
+		login_nick_separator.setBounds(52, 41, 328, 2);
+		login_nick_textPanel.add(login_nick_separator);
 
-		user_icon_text = new JLabel("");
-		user_icon_text.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/user_text_32px.png")));
-		user_icon_text.setBounds(10, 11, 32, 32);
-		user_textPanel.add(user_icon_text);
+		login_nick_icon_text = new JLabel("");
+		login_nick_icon_text.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/user_text_32px.png")));
+		login_nick_icon_text.setBounds(10, 11, 32, 32);
+		login_nick_textPanel.add(login_nick_icon_text);
 
-		user_textF = new JTextField("Usuario");
-		user_textF.setHorizontalAlignment(SwingConstants.LEFT);
-		user_textF.setFont(new Font("Tahoma", Font.BOLD, 20));
-		user_textF.setForeground(Color.WHITE);
-		user_textF.setBounds(52, 11, 328, 25);
-		user_textPanel.add(user_textF);
-		user_textF.setColumns(10);
-		user_textF.setBackground(COLOR_SELECTED);
-		user_textF.setBorder(null);
+		login_nick_textF = new JTextField("Usuario");
+		login_nick_textF.setHorizontalAlignment(SwingConstants.LEFT);
+		login_nick_textF.setFont(new Font("Tahoma", Font.BOLD, 20));
+		login_nick_textF.setForeground(Color.WHITE);
+		login_nick_textF.setBounds(52, 11, 328, 25);
+		login_nick_textPanel.add(login_nick_textF);
+		login_nick_textF.setColumns(10);
+		login_nick_textF.setBackground(COLOR_SELECTED);
+		login_nick_textF.setBorder(null);
 
-		user_error_panel = new JPanel();
-		user_error_panel.setBounds(10, 50, 370, 32);
-		user_textPanel.add(user_error_panel);
-		user_error_panel.setBackground(COLOR_ERROR);
-		user_error_panel.setLayout(null);
+		login_nick_error_panel = new JPanel();
+		login_nick_error_panel.setBounds(10, 50, 370, 32);
+		login_nick_textPanel.add(login_nick_error_panel);
+		login_nick_error_panel.setBackground(COLOR_ERROR);
+		login_nick_error_panel.setLayout(null);
 
-		user_error_ico = new JLabel("");
-		user_error_ico.setBounds(0, 0, 32, 32);
-		user_error_panel.add(user_error_ico);
-		user_error_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/error_black_32px.png")));
+		login_nick_error_ico = new JLabel("");
+		login_nick_error_ico.setBounds(0, 0, 32, 32);
+		login_nick_error_panel.add(login_nick_error_ico);
+		login_nick_error_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/error_black_32px.png")));
 
-		user_error_text = new JLabel("Error");
-		user_error_text.setFont(new Font("Tahoma", Font.BOLD, 20));
-		user_error_text.setBounds(42, 0, 328, 32);
-		user_error_panel.add(user_error_text);
+		login_nick_error_text = new JLabel("Error");
+		login_nick_error_text.setFont(new Font("Tahoma", Font.BOLD, 20));
+		login_nick_error_text.setBounds(42, 0, 328, 32);
+		login_nick_error_panel.add(login_nick_error_text);
 
-		password_text_panel = new JPanel();
-		password_text_panel.setLayout(null);
-		password_text_panel.setOpaque(false);
-		password_text_panel.setBounds(204, 251, 390, 96);
-		display_login.add(password_text_panel);
+		login_password_text_panel = new JPanel();
+		login_password_text_panel.setLayout(null);
+		login_password_text_panel.setOpaque(false);
+		login_password_text_panel.setBounds(204, 251, 390, 96);
+		display_login.add(login_password_text_panel);
 
-		password_separator = new JSeparator();
-		password_separator.setBounds(52, 41, 328, 2);
-		password_text_panel.add(password_separator);
+		login_password_separator = new JSeparator();
+		login_password_separator.setBounds(52, 41, 328, 2);
+		login_password_text_panel.add(login_password_separator);
 
-		password_icon_text = new JLabel("");
-		password_icon_text.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/pass_32px.png")));
-		password_icon_text.setBounds(10, 11, 32, 32);
-		password_text_panel.add(password_icon_text);
+		login_password_icon_text = new JLabel("");
+		login_password_icon_text.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/pass_32px.png")));
+		login_password_icon_text.setBounds(10, 11, 32, 32);
+		login_password_text_panel.add(login_password_icon_text);
 
-		password_textF = new JPasswordField("Contrase\u00F1a");
-		password_textF.setHorizontalAlignment(SwingConstants.LEFT);
-		password_textF.setForeground(Color.WHITE);
-		password_textF.setFont(new Font("Tahoma", Font.BOLD, 20));
-		password_textF.setColumns(10);
-		password_textF.setBorder(null);
-		password_textF.setBackground(new Color(85, 65, 118));
-		password_textF.setBounds(52, 11, 328, 25);
-		password_text_panel.add(password_textF);
+		login_password_textF = new JPasswordField("Contrase\u00F1a");
+		login_password_textF.setHorizontalAlignment(SwingConstants.LEFT);
+		login_password_textF.setForeground(Color.WHITE);
+		login_password_textF.setFont(new Font("Tahoma", Font.BOLD, 20));
+		login_password_textF.setColumns(10);
+		login_password_textF.setBorder(null);
+		login_password_textF.setBackground(new Color(85, 65, 118));
+		login_password_textF.setBounds(52, 11, 328, 25);
+		login_password_text_panel.add(login_password_textF);
 
-		password_error_panel = new JPanel();
-		password_error_panel.setLayout(null);
-		password_error_panel.setBackground(new Color(219, 186, 70));
-		password_error_panel.setBounds(10, 50, 370, 32);
-		password_text_panel.add(password_error_panel);
+		login_password_error_panel = new JPanel();
+		login_password_error_panel.setLayout(null);
+		login_password_error_panel.setBackground(new Color(219, 186, 70));
+		login_password_error_panel.setBounds(10, 50, 370, 32);
+		login_password_text_panel.add(login_password_error_panel);
 
-		password_error_ico = new JLabel("");
-		password_error_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/error_black_32px.png")));
-		password_error_ico.setBounds(0, 0, 32, 32);
-		password_error_panel.add(password_error_ico);
+		login_password_error_ico = new JLabel("");
+		login_password_error_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/error_black_32px.png")));
+		login_password_error_ico.setBounds(0, 0, 32, 32);
+		login_password_error_panel.add(login_password_error_ico);
 
-		password_error_text = new JLabel("Error");
-		password_error_text.setFont(new Font("Tahoma", Font.BOLD, 20));
-		password_error_text.setBounds(42, 0, 328, 32);
-		password_error_panel.add(password_error_text);
+		login_password_error_text = new JLabel("Error");
+		login_password_error_text.setFont(new Font("Tahoma", Font.BOLD, 20));
+		login_password_error_text.setBounds(42, 0, 328, 32);
+		login_password_error_panel.add(login_password_error_text);
 
 		// --> Display Reg
 		display_reg = new JDisplay("Crear una cuenta", "/imagenes/reg_96px.png", grupo_displays);
@@ -235,6 +273,221 @@ public class Ventana {
 		display_reg.setLayout(null);
 		display_reg.setOpaque(false);
 		display_reg.setVisible(false);
+
+		reg_stepbar_panel = new JPanel();
+		reg_stepbar_panel.setBounds(10, 11, 780, 64);
+		display_reg.add(reg_stepbar_panel);
+		reg_stepbar_panel.setOpaque(false);
+		reg_stepbar_panel.setLayout(null);
+
+		reg_stepbar_1_ico = new JLabel("");
+		reg_stepbar_1_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/circ_1_32px.png")));
+		reg_stepbar_1_ico.setBounds(10, 24, 32, 32);
+		reg_stepbar_panel.add(reg_stepbar_1_ico);
+
+		reg_stepbar_2_ico = new JLabel("");
+		reg_stepbar_2_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/circ_2_32px.png")));
+		reg_stepbar_2_ico.setBounds(375, 24, 32, 32);
+		reg_stepbar_panel.add(reg_stepbar_2_ico);
+
+		reg_stepbar_3_ico = new JLabel("");
+		reg_stepbar_3_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/circ_3_32px.png")));
+		reg_stepbar_3_ico.setBounds(738, 24, 32, 32);
+		reg_stepbar_panel.add(reg_stepbar_3_ico);
+
+		reg_stepbar_1_to_2_separator = new JSeparator();
+		reg_stepbar_1_to_2_separator.setBounds(37, 39, 342, 2);
+		reg_stepbar_panel.add(reg_stepbar_1_to_2_separator);
+
+		reg_stepbar_2_to_3_separator = new JSeparator();
+		reg_stepbar_2_to_3_separator.setBounds(401, 39, 342, 2);
+		reg_stepbar_panel.add(reg_stepbar_2_to_3_separator);
+
+		reg_stepbar_1_arrow_ico = new JLabel("");
+		reg_stepbar_1_arrow_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/arrow_down_32px.png")));
+		reg_stepbar_1_arrow_ico.setBounds(10, 0, 32, 28);
+		reg_stepbar_panel.add(reg_stepbar_1_arrow_ico);
+
+		reg_stepbar_2_arrow_ico = new JLabel("");
+		reg_stepbar_2_arrow_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/arrow_down_32px.png")));
+		reg_stepbar_2_arrow_ico.setBounds(375, 0, 32, 28);
+		reg_stepbar_panel.add(reg_stepbar_2_arrow_ico);
+
+		reg_stepbar_3_arrow_ico = new JLabel("");
+		reg_stepbar_3_arrow_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/arrow_down_32px.png")));
+		reg_stepbar_3_arrow_ico.setBounds(738, 0, 32, 28);
+		reg_stepbar_panel.add(reg_stepbar_3_arrow_ico);
+
+		reg_form_step_1_panel = new JFormDisplay("Datos de la cuenta", "/imagenes/user_info_64px.png", grupo_reg, 1, false, true);
+		reg_form_step_1_panel.setOpaque(false);
+		reg_form_step_1_panel.setBounds(173, 161, 449, 363);
+		display_reg.add(reg_form_step_1_panel);
+		reg_form_step_1_panel.setLayout(null);
+		
+		reg_form_step_2_panel = new JFormDisplay("2", "/imagenes/user_info_64px.png", grupo_reg, 2, true, true);
+		reg_form_step_2_panel.setOpaque(false);
+		reg_form_step_2_panel.setBounds(173, 161, 449, 363);
+		display_reg.add(reg_form_step_2_panel);
+		reg_form_step_2_panel.setLayout(null);
+		reg_form_step_2_panel.setVisible(false);
+		
+		reg_form_step_3_panel = new JFormDisplay("3", "/imagenes/user_info_64px.png", grupo_reg, 3, true, false);
+		reg_form_step_3_panel.setOpaque(false);
+		reg_form_step_3_panel.setBounds(173, 161, 449, 363);
+		display_reg.add(reg_form_step_3_panel);
+		reg_form_step_3_panel.setLayout(null);
+		reg_form_step_3_panel.setVisible(false);
+
+		reg_nick_panel = new JPanel();
+		reg_nick_panel.setLayout(null);
+		reg_nick_panel.setOpaque(false);
+		reg_nick_panel.setBounds(31, 11, 390, 96);
+		reg_form_step_1_panel.add(reg_nick_panel);
+
+		reg_nick_panel_separator = new JSeparator();
+		reg_nick_panel_separator.setBounds(52, 41, 328, 2);
+		reg_nick_panel.add(reg_nick_panel_separator);
+
+		reg_nick_panel_ico = new JLabel("");
+		reg_nick_panel_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/user_text_32px.png")));
+		reg_nick_panel_ico.setBounds(10, 11, 32, 32);
+		reg_nick_panel.add(reg_nick_panel_ico);
+
+		reg_nick_panel_textF = new JTextField("Nick");
+		reg_nick_panel_textF.setHorizontalAlignment(SwingConstants.LEFT);
+		reg_nick_panel_textF.setForeground(Color.WHITE);
+		reg_nick_panel_textF.setFont(new Font("Tahoma", Font.BOLD, 20));
+		reg_nick_panel_textF.setColumns(10);
+		reg_nick_panel_textF.setBorder(null);
+		reg_nick_panel_textF.setBackground(new Color(85, 65, 118));
+		reg_nick_panel_textF.setBounds(52, 11, 328, 25);
+		reg_nick_panel.add(reg_nick_panel_textF);
+
+		reg_nick_panel_info_panel = new JPanel();
+		reg_nick_panel_info_panel.setLayout(null);
+		reg_nick_panel_info_panel.setBackground(new Color(219, 186, 70));
+		reg_nick_panel_info_panel.setBounds(10, 50, 370, 32);
+		reg_nick_panel.add(reg_nick_panel_info_panel);
+
+		reg_nick_panel_info_ico = new JLabel("");
+		reg_nick_panel_info_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/error_black_32px.png")));
+		reg_nick_panel_info_ico.setBounds(0, 0, 32, 32);
+		reg_nick_panel_info_panel.add(reg_nick_panel_info_ico);
+
+		reg_nick_panel_info_text = new JLabel("Error");
+		reg_nick_panel_info_text.setFont(new Font("Tahoma", Font.BOLD, 20));
+		reg_nick_panel_info_text.setBounds(42, 0, 328, 32);
+		reg_nick_panel_info_panel.add(reg_nick_panel_info_text);
+
+		reg_password_panel = new JPanel();
+		reg_password_panel.setLayout(null);
+		reg_password_panel.setOpaque(false);
+		reg_password_panel.setBounds(31, 118, 390, 96);
+		reg_form_step_1_panel.add(reg_password_panel);
+
+		reg_password_separator = new JSeparator();
+		reg_password_separator.setBounds(52, 41, 328, 2);
+		reg_password_panel.add(reg_password_separator);
+
+		reg_password_ico = new JLabel("");
+		reg_password_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/pass_32px.png")));
+		reg_password_ico.setBounds(10, 11, 32, 32);
+		reg_password_panel.add(reg_password_ico);
+
+		reg_password_textF = new JPasswordField("Contrase\u00F1a");
+		reg_password_textF.setHorizontalAlignment(SwingConstants.LEFT);
+		reg_password_textF.setForeground(Color.WHITE);
+		reg_password_textF.setFont(new Font("Tahoma", Font.BOLD, 20));
+		reg_password_textF.setColumns(10);
+		reg_password_textF.setBorder(null);
+		reg_password_textF.setBackground(new Color(85, 65, 118));
+		reg_password_textF.setBounds(52, 11, 328, 25);
+		reg_password_panel.add(reg_password_textF);
+
+		reg_password_info_panel = new JPanel();
+		reg_password_info_panel.setLayout(null);
+		reg_password_info_panel.setBackground(new Color(219, 186, 70));
+		reg_password_info_panel.setBounds(10, 50, 370, 32);
+		reg_password_panel.add(reg_password_info_panel);
+
+		reg_password_info_ico = new JLabel("");
+		reg_password_info_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/error_black_32px.png")));
+		reg_password_info_ico.setBounds(0, 0, 32, 32);
+		reg_password_info_panel.add(reg_password_info_ico);
+
+		reg_password_info_text = new JLabel("Error");
+		reg_password_info_text.setFont(new Font("Tahoma", Font.BOLD, 20));
+		reg_password_info_text.setBounds(42, 0, 328, 32);
+		reg_password_info_panel.add(reg_password_info_text);
+
+		reg_password_check_panel = new JPanel();
+		reg_password_check_panel.setLayout(null);
+		reg_password_check_panel.setOpaque(false);
+		reg_password_check_panel.setBounds(31, 225, 390, 96);
+		reg_form_step_1_panel.add(reg_password_check_panel);
+
+		reg_password_check_separator = new JSeparator();
+		reg_password_check_separator.setBounds(52, 41, 328, 2);
+		reg_password_check_panel.add(reg_password_check_separator);
+
+		reg_password_check_ico = new JLabel("");
+		reg_password_check_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/pass_check_32px.png")));
+		reg_password_check_ico.setBounds(10, 11, 32, 32);
+		reg_password_check_panel.add(reg_password_check_ico);
+
+		reg_password_check_textF = new JPasswordField("Repite tu contrase\u00F1a");
+		reg_password_check_textF.setHorizontalAlignment(SwingConstants.LEFT);
+		reg_password_check_textF.setForeground(Color.WHITE);
+		reg_password_check_textF.setFont(new Font("Tahoma", Font.BOLD, 20));
+		reg_password_check_textF.setColumns(10);
+		reg_password_check_textF.setBorder(null);
+		reg_password_check_textF.setBackground(new Color(85, 65, 118));
+		reg_password_check_textF.setBounds(52, 11, 328, 25);
+		reg_password_check_panel.add(reg_password_check_textF);
+
+		reg_password_check_info_panel = new JPanel();
+		reg_password_check_info_panel.setLayout(null);
+		reg_password_check_info_panel.setBackground(new Color(219, 186, 70));
+		reg_password_check_info_panel.setBounds(10, 50, 370, 32);
+		reg_password_check_panel.add(reg_password_check_info_panel);
+
+		reg_password_check_info_ico = new JLabel("");
+		reg_password_check_info_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/error_black_32px.png")));
+		reg_password_check_info_ico.setBounds(0, 0, 32, 32);
+		reg_password_check_info_panel.add(reg_password_check_info_ico);
+
+		reg_password_check_info_text = new JLabel("Error");
+		reg_password_check_info_text.setFont(new Font("Tahoma", Font.BOLD, 20));
+		reg_password_check_info_text.setBounds(42, 0, 328, 32);
+		reg_password_check_info_panel.add(reg_password_check_info_text);
+
+		reg_next_navLabel = new NavLabel("/imagenes/siguiente_96px.png", "/imagenes/siguiente_hover_96px.png", "reg", "next");
+		reg_next_navLabel.setIcon(new ImageIcon(Ventana.class.getResource(reg_next_navLabel.getIco_path())));
+		reg_next_navLabel.setBounds(694, 279, 96, 96);
+		display_reg.add(reg_next_navLabel);
+		reg_next_navLabel.addMouseListener(new NavLabelListener(reg_next_navLabel, this));
+
+		reg_back_navLabel = new NavLabel("/imagenes/atras_96px.png", "/imagenes/atras_hover_96px.png", "reg", "back");
+		reg_back_navLabel.setIcon(new ImageIcon(Ventana.class.getResource(reg_back_navLabel.getIco_path())));
+		reg_back_navLabel.setBounds(10, 279, 96, 96);
+		display_reg.add(reg_back_navLabel);
+		reg_back_navLabel.addMouseListener(new NavLabelListener(reg_back_navLabel, this));
+
+		reg_form_1_step_separator = new JSeparator();
+		reg_form_1_step_separator.setBounds(183, 150, 429, 2);
+		display_reg.add(reg_form_1_step_separator);
+
+		reg_step_titulo = new JLabel("Datos de la cuenta");
+		reg_step_titulo.setBounds(262, 86, 338, 64);
+		display_reg.add(reg_step_titulo);
+		reg_step_titulo.setHorizontalAlignment(SwingConstants.CENTER);
+		reg_step_titulo.setFont(new Font("Tahoma", Font.BOLD, 32));
+		reg_step_titulo.setForeground(Color.WHITE);
+
+		reg_step_ico = new JLabel("");
+		reg_step_ico.setBounds(205, 86, 63, 62);
+		display_reg.add(reg_step_ico);
+		reg_step_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/user_info_64px.png")));
 		// --> Display Info
 		display_info = new JDisplay("Información", "/imagenes/info_96px.png", grupo_displays);
 		display_info.setBounds(0, 0, 800, 552);
@@ -379,9 +632,74 @@ public class Ventana {
 		titulo_text.setText(display.getTitulo());
 
 	}
+	
+	public void setRegDisplay(int index, String function) {
+		switch(function) {
+		case "next":
+			index++;
+			break;
+		case "back":
+			index--;
+			break;
+		}
+		JFormDisplay f;
+		JFormDisplay selected = null;
+		Iterator<JFormDisplay> it = grupo_reg.iterator();
+		while(it.hasNext()) {
+			f = it.next();
+			f.setVisible(false);
+			if(f.getIndex() == index) {
+				selected = f;
+			}
+		}
+		
+		selected.setVisible(true);
+		reg_step_ico.setIcon(new ImageIcon(Ventana.class.getResource(selected.getIcoPath())));
+		reg_step_titulo.setText(selected.getTitulo());
+		reg_next_navLabel.setVisible(selected.isNextChecker());
+		reg_back_navLabel.setVisible(selected.isBackChecker());
+		reg_next_navLabel.setActualIndex(index);
+		reg_back_navLabel.setActualIndex(index);
+		
+		
+		switch(index) {
+		case 1:
+			reg_stepbar_1_arrow_ico.setVisible(true);
+			reg_stepbar_2_arrow_ico.setVisible(false);
+			reg_stepbar_3_arrow_ico.setVisible(false);
+			reg_stepbar_1_to_2_separator.setBackground(Color.WHITE);
+			reg_stepbar_2_to_3_separator.setBackground(Color.WHITE);
+			reg_stepbar_1_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/circ_1_32px.png")));
+			reg_stepbar_2_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/circ_2_32px.png")));
+			reg_stepbar_3_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/circ_3_32px.png")));
+			break;
+		case 2:
+			reg_stepbar_1_arrow_ico.setVisible(false);
+			reg_stepbar_2_arrow_ico.setVisible(true);
+			reg_stepbar_3_arrow_ico.setVisible(false);
+			reg_stepbar_1_to_2_separator.setBackground(COLOR_CHECK);
+			reg_stepbar_2_to_3_separator.setBackground(Color.WHITE);
+			reg_stepbar_1_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/circ_1_green_32px.png")));
+			reg_stepbar_2_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/circ_2_32px.png")));
+			reg_stepbar_3_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/circ_3_32px.png")));
+			break;
+		case 3:
+			reg_stepbar_1_arrow_ico.setVisible(false);
+			reg_stepbar_2_arrow_ico.setVisible(false);
+			reg_stepbar_3_arrow_ico.setVisible(true);
+			reg_stepbar_1_to_2_separator.setBackground(COLOR_CHECK);
+			reg_stepbar_2_to_3_separator.setBackground(COLOR_CHECK);
+			reg_stepbar_1_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/circ_1_green_32px.png")));
+			reg_stepbar_2_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/circ_2_green_32px.png")));
+			reg_stepbar_3_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/circ_3_green_32px.png")));
+			break;
+			
+			
+		}
+	}
 
 	public void setVisible(boolean b) {
 		frame.setVisible(true);
-		
+
 	}
 }
