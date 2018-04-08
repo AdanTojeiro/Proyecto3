@@ -324,14 +324,14 @@ public class Ventana {
 		display_reg.add(reg_form_step_1_panel);
 		reg_form_step_1_panel.setLayout(null);
 		
-		reg_form_step_2_panel = new JFormDisplay("2", "/imagenes/user_info_64px.png", grupo_reg, 2, true, true);
+		reg_form_step_2_panel = new JFormDisplay("Datos del usuario", "/imagenes/user_info_64px.png", grupo_reg, 2, true, true);
 		reg_form_step_2_panel.setOpaque(false);
 		reg_form_step_2_panel.setBounds(173, 161, 449, 363);
 		display_reg.add(reg_form_step_2_panel);
 		reg_form_step_2_panel.setLayout(null);
 		reg_form_step_2_panel.setVisible(false);
 		
-		reg_form_step_3_panel = new JFormDisplay("3", "/imagenes/user_info_64px.png", grupo_reg, 3, true, false);
+		reg_form_step_3_panel = new JFormDisplay("Confirmar datos", "/imagenes/user_info_64px.png", grupo_reg, 3, true, false);
 		reg_form_step_3_panel.setOpaque(false);
 		reg_form_step_3_panel.setBounds(173, 161, 449, 363);
 		display_reg.add(reg_form_step_3_panel);
