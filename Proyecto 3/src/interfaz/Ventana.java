@@ -3,6 +3,9 @@ package interfaz;
 import java.awt.Color;
 import javax.swing.*;
 
+import acceso_a_datos.MysqlC;
+import clases.Usuario;
+import controladores.BtnPanelListener;
 import controladores.FrameDrager;
 import controladores.NavLabelListener;
 import controladores.OptionListener;
@@ -13,6 +16,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Ventana {
+	
+	//ACCESO A DATOS INICIO////////////////////////////////////////////////////////////
+	private MysqlC mysqlc;
+	//ACCESO A DATOS FIN///////////////////////////////////////////////////////////////
+	
+	//DATA ////////////////////////////////////////////////////////////////////////////
+	private Usuario RegData = new Usuario();
+	//DATA ////////////////////////////////////////////////////////////////////////////
 	
 	//GRUPOS INICIO////////////////////////////////////////////////////////////////////
 	private ArrayList<JPanelOpt> opciones_index = new ArrayList<JPanelOpt>();
@@ -120,6 +131,9 @@ public class Ventana {
 	private JSeparator reg_email_separator;
 	private JLabel reg_email_ico, reg_email_info_ico, reg_email_info_text;
 	private JTextField reg_email_textF;
+	//2.2.3.3.2-Confirmar Button
+	JBtnPanel reg_confirmar_btnPanel;
+	JLabel reg_confirmar_btnPanel_text;
 	//2.2.4-Info display----------------------------------------------------------------
 	//2.2.5-Soporte display-------------------------------------------------------------
 	//COMPONENTES FIN///////////////////////////////////////////////////////////////////
@@ -131,13 +145,18 @@ public class Ventana {
 
 	}
 
-	public Ventana() {
+	public Ventana(MysqlC mysqlc) {
+		this.mysqlc = mysqlc;
 		initialize();
+	}
+	public MysqlC getMysqlc() {
+		return mysqlc;
 	}
 
 	/**
 	 * @wbp.parser.entryPoint
 	 */
+	//Inicializacion de componentes
 	private void initialize() {
 
 		// Frame
@@ -663,11 +682,11 @@ public class Ventana {
 		reg_email_panel.add(reg_email_separator);
 
 		reg_email_ico = new JLabel("");
-		reg_email_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/dni_32px.png")));
+		reg_email_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/email_32px.png")));
 		reg_email_ico.setBounds(10, 11, 32, 32);
 		reg_email_panel.add(reg_email_ico);
 
-		reg_email_textF = new JTextField("DNI");
+		reg_email_textF = new JTextField("Correo electronico");
 		reg_email_textF.setHorizontalAlignment(SwingConstants.LEFT);
 		reg_email_textF.setForeground(Color.WHITE);
 		reg_email_textF.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -691,7 +710,21 @@ public class Ventana {
 		reg_email_info_text = new JLabel("Error");
 		reg_email_info_text.setFont(new Font("Tahoma", Font.BOLD, 20));
 		reg_email_info_text.setBounds(42, 0, 328, 32);
-		reg_email_info_panel.add(reg_email_info_text);		
+		reg_email_info_panel.add(reg_email_info_text);
+		
+		reg_confirmar_btnPanel = new JBtnPanel("reg");
+		reg_confirmar_btnPanel.setBackground(COLOR_CHECK);
+		reg_confirmar_btnPanel.setBounds(100, 290, 258, 62);
+		reg_form_step_3_panel.add(reg_confirmar_btnPanel);
+		reg_confirmar_btnPanel.setLayout(null);
+		reg_confirmar_btnPanel.addMouseListener(new BtnPanelListener(reg_confirmar_btnPanel, this));
+		
+		reg_confirmar_btnPanel_text = new JLabel("Crear cuenta");
+		reg_confirmar_btnPanel_text.setBounds(10, 0, 238, 62);
+		reg_confirmar_btnPanel.add(reg_confirmar_btnPanel_text);
+		reg_confirmar_btnPanel_text.setForeground(Color.WHITE);
+		reg_confirmar_btnPanel_text.setFont(new Font("Tahoma", Font.BOLD, 25));
+		reg_confirmar_btnPanel_text.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		//Reg Nav labels
 		reg_next_navLabel = new NavLabel("/imagenes/siguiente_96px.png", "/imagenes/siguiente_hover_96px.png", "reg", "next");
@@ -855,6 +888,7 @@ public class Ventana {
 
 	}
 
+	//Display Setters
 	public void setDisplay(JDisplay display, ArrayList<JDisplay> grupo) {
 		Iterator<JDisplay> it = grupo.iterator();
 		while (it.hasNext()) {
@@ -933,7 +967,21 @@ public class Ventana {
 			
 		}
 	}
-
+	
+	//Data getters
+	public Usuario getRegData(){
+		return RegData;
+	}
+	//Data setters
+	public void setRegData() {
+		RegData.setNick(reg_nick_textF.getText());
+		RegData.setPass(String.valueOf(reg_password_textF.getPassword()));
+		RegData.setNombre(reg_name_textF.getText());
+		RegData.setApellidos(reg_apellido_textF.getText());
+		RegData.setDni(reg_dni_textF.getText());
+		RegData.setEmail(reg_email_textF.getText());
+	}
+	//Set visible principal
 	public void setVisible(boolean b) {
 		frame.setVisible(true);
 
