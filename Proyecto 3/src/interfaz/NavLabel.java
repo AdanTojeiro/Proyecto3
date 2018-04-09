@@ -6,6 +6,11 @@ import javax.swing.JLabel;
 
 public class NavLabel extends JLabel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private String ico_path;
 	private String ico_hover_path;
 	private String function;
