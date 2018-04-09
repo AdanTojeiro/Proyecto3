@@ -16,7 +16,7 @@ public class FrameDrager extends MouseAdapter {
      }
 
      public void mouseReleased(MouseEvent e) {
-         mouseDownCompCoords = null;
+         //mouseDownCompCoords = null;
      }
 
      public void mousePressed(MouseEvent e) {
