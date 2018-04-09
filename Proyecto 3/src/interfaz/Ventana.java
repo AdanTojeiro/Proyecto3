@@ -393,11 +393,13 @@ public class Ventana {
 		reg_stepbar_2_arrow_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/arrow_down_32px.png")));
 		reg_stepbar_2_arrow_ico.setBounds(375, 0, 32, 28);
 		reg_stepbar_panel.add(reg_stepbar_2_arrow_ico);
+		reg_stepbar_2_arrow_ico.setVisible(false);
 
 		reg_stepbar_3_arrow_ico = new JLabel("");
 		reg_stepbar_3_arrow_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/arrow_down_32px.png")));
 		reg_stepbar_3_arrow_ico.setBounds(738, 0, 32, 28);
 		reg_stepbar_panel.add(reg_stepbar_3_arrow_ico);
+		reg_stepbar_3_arrow_ico.setVisible(false);
 		
 		//Reg form 1
 		
@@ -738,6 +740,7 @@ public class Ventana {
 		reg_back_navLabel.setBounds(10, 279, 96, 96);
 		display_reg.add(reg_back_navLabel);
 		reg_back_navLabel.addMouseListener(new NavLabelListener(reg_back_navLabel, this));
+		reg_back_navLabel.setVisible(false);
 		
 		//Reg tittle
 		reg_form_separator = new JSeparator();
