@@ -30,7 +30,6 @@ public class BtnPanelListener implements MouseListener{
 			Date fecha = new Date(new java.util.Date().getTime());
 			ventana.setRegData();
 			Usuario data = ventana.getRegData();
-			System.out.println(data.getNick());
 			String nombreTabla = "usuario";
 			String campos = "nick, pass, nombre, apellidos, dni, email, fecha_registro, fecha_ultima_sesion";
 			String value = "'"+data.getNick()+"', '"+enc.encriptarMD5(data.getPass())+"', '"+data.getNombre()+"', '"+data.getApellidos()+"', '"+data.getDni()+"', '"+data.getEmail()+"', '"+fecha+"', '"+fecha+"'";
