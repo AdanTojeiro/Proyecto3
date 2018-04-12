@@ -1,5 +1,7 @@
 package interfaz;
 
+import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,11 +19,12 @@ public class TextFieldGroup {
 	private JSeparator separator;
 	private String tipo;
 	private boolean check;
+	private ArrayList<TextFieldGroup> grupo_logico;
 	
 	
 
 	public TextFieldGroup(JPanel content_panel, JPanel info_panel, JLabel textF_icon, JLabel info_ico, JLabel info_text,
-			JTextField textF, JSeparator separator, String tipo) {
+			JTextField textF, JSeparator separator, String tipo, ArrayList<TextFieldGroup> grupo_logico) {
 		super();
 		this.content_panel = content_panel;
 		this.info_panel = info_panel;
@@ -32,6 +35,7 @@ public class TextFieldGroup {
 		this.separator = separator;
 		this.tipo = tipo;
 		check = false;
+		grupo_logico.add(this);
 	}
 	
 	public void  hideInfo() {
@@ -116,6 +120,15 @@ public class TextFieldGroup {
 	public void setCheck(boolean check) {
 		this.check = check;
 	}
+
+	public ArrayList<TextFieldGroup> getGrupo_logico() {
+		return grupo_logico;
+	}
+
+	public void setGrupo_logico(ArrayList<TextFieldGroup> grupo_logico) {
+		this.grupo_logico = grupo_logico;
+	}
+	
 	
 	
 	

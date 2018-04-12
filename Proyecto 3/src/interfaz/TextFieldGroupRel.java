@@ -1,5 +1,7 @@
 package interfaz;
 
+import java.util.ArrayList;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
@@ -11,8 +13,8 @@ public class TextFieldGroupRel extends TextFieldGroup {
 	String relType;
 	
 	public TextFieldGroupRel(JPanel content_panel, JPanel info_panel, JLabel textF_icon, JLabel info_ico,
-			JLabel info_text, JTextField textF, JSeparator separator, TextFieldGroup rel, String relType) {
-		super(content_panel, info_panel, textF_icon, info_ico, info_text, textF, separator, "rel");
+			JLabel info_text, JTextField textF, JSeparator separator, ArrayList<TextFieldGroup> grupo_logico, TextFieldGroup rel, String relType) {
+		super(content_panel, info_panel, textF_icon, info_ico, info_text, textF, separator, "rel", grupo_logico);
 		// TODO Auto-generated constructor stub
 		this.rel = rel;
 		this.relType = relType;

@@ -5,10 +5,11 @@ import javax.swing.*;
 
 import acceso_a_datos.MysqlC;
 import clases.Usuario;
-import controladores.BtnPanelListener;
+import controladores.FormBtnListener;
 import controladores.FrameDrager;
 import controladores.NavLabelListener;
 import controladores.OptionListener;
+import controladores.TextFieldKeyListener;
 import controladores.TextFocusListener;
 import controladores.WindowListener;
 
@@ -133,16 +134,17 @@ public class Ventana {
 	private JLabel reg_email_ico, reg_email_info_ico, reg_email_info_text;
 	private JTextField reg_email_textF;
 	//2.2.3.3.2-Confirmar Button
-	JBtnPanel reg_confirmar_btnPanel;
-	JLabel reg_confirmar_btnPanel_text;
+	private JFormBtn reg_confirmar_FormBtn;
+	private JLabel reg_confirmar_btnPanel_text;
 	//2.2.4-Info display----------------------------------------------------------------
 	//2.2.5-Soporte display-------------------------------------------------------------
 	//COMPONENTES FIN///////////////////////////////////////////////////////////////////
 	
 	//COMPONENTES LOGICOS///////////////////////////////////////////////////////////////
 	//-Formulario registro--------------------------------------------------------------
-	TextFieldGroup reg_nick_tfg, reg_password_tfg, reg_name_tfg, reg_apellido_tfg, reg_dni_tfg, reg_email_tfg;
-	TextFieldGroup reg_password_check_tfg;
+	private ArrayList<TextFieldGroup> reg_grupo_logico = new ArrayList<TextFieldGroup>();
+	private TextFieldGroup reg_nick_tfg, reg_password_tfg, reg_name_tfg, reg_apellido_tfg, reg_dni_tfg, reg_email_tfg;
+	private TextFieldGroup reg_password_check_tfg;
 	//COMPONENTES LOGICOS///////////////////////////////////////////////////////////////
 	
 	
@@ -734,16 +736,16 @@ public class Ventana {
 		reg_email_info_text.setBounds(42, 0, 328, 32);
 		reg_email_info_panel.add(reg_email_info_text);
 		
-		reg_confirmar_btnPanel = new JBtnPanel("reg");
-		reg_confirmar_btnPanel.setBackground(COLOR_CHECK);
-		reg_confirmar_btnPanel.setBounds(100, 290, 258, 62);
-		reg_form_step_3_panel.add(reg_confirmar_btnPanel);
-		reg_confirmar_btnPanel.setLayout(null);
-		reg_confirmar_btnPanel.addMouseListener(new BtnPanelListener(reg_confirmar_btnPanel, this));
+		reg_confirmar_FormBtn = new JFormBtn("reg", reg_grupo_logico);
+		reg_confirmar_FormBtn.setBackground(COLOR_CHECK);
+		reg_confirmar_FormBtn.setBounds(100, 290, 258, 62);
+		reg_form_step_3_panel.add(reg_confirmar_FormBtn);
+		reg_confirmar_FormBtn.setLayout(null);
+		reg_confirmar_FormBtn.addMouseListener(new FormBtnListener(reg_confirmar_FormBtn, this));
 		
 		reg_confirmar_btnPanel_text = new JLabel("Crear cuenta");
 		reg_confirmar_btnPanel_text.setBounds(10, 0, 238, 62);
-		reg_confirmar_btnPanel.add(reg_confirmar_btnPanel_text);
+		reg_confirmar_FormBtn.add(reg_confirmar_btnPanel_text);
 		reg_confirmar_btnPanel_text.setForeground(Color.WHITE);
 		reg_confirmar_btnPanel_text.setFont(new Font("Tahoma", Font.BOLD, 25));
 		reg_confirmar_btnPanel_text.setHorizontalAlignment(SwingConstants.CENTER);
@@ -910,24 +912,29 @@ public class Ventana {
 		// Work zone -> Codigo efimero
 		
 		reg_nick_tfg = new TextFieldGroup(reg_nick_panel, reg_nick_info_panel, reg_nick_ico, reg_nick_info_ico, reg_nick_info_text,
-				reg_nick_textF,  reg_nick_separator, "flex");
+				reg_nick_textF,  reg_nick_separator, "flex", reg_grupo_logico);
 		reg_password_tfg = new TextFieldGroup(reg_password_panel, reg_password_info_panel, reg_password_ico, reg_password_info_ico, reg_password_info_text,
-				reg_password_textF,  reg_password_separator, "pass");
+				reg_password_textF,  reg_password_separator, "pass", reg_grupo_logico);
 		reg_name_tfg = new TextFieldGroup(reg_name_panel, reg_name_info_panel, reg_name_ico, reg_name_info_ico, reg_name_info_text,
-				reg_name_textF,  reg_name_separator, "strict");
+				reg_name_textF,  reg_name_separator, "strict", reg_grupo_logico);
 		reg_apellido_tfg = new TextFieldGroup(reg_apellido_panel, reg_apellido_info_panel, reg_apellido_ico, reg_apellido_info_ico, reg_apellido_info_text,
-				reg_apellido_textF,  reg_apellido_separator, "strict2");
+				reg_apellido_textF,  reg_apellido_separator, "strict2", reg_grupo_logico);
 		reg_dni_tfg = new TextFieldGroup(reg_dni_panel, reg_dni_info_panel, reg_dni_ico, reg_dni_info_ico, reg_dni_info_text,
-				reg_dni_textF,  reg_dni_separator, "dni");
+				reg_dni_textF,  reg_dni_separator, "dni", reg_grupo_logico);
 		reg_email_tfg = new TextFieldGroup(reg_email_panel, reg_email_info_panel, reg_email_ico, reg_email_info_ico, reg_email_info_text,
-				reg_email_textF,  reg_email_separator, "email");
+				reg_email_textF,  reg_email_separator, "email", reg_grupo_logico);
 		
-		reg_nick_textF.addFocusListener(new TextFocusListener(reg_nick_tfg));
-		reg_password_textF.addFocusListener(new TextFocusListener(reg_password_tfg));
-		reg_name_textF.addFocusListener(new TextFocusListener(reg_name_tfg));
-		reg_apellido_textF.addFocusListener(new TextFocusListener(reg_apellido_tfg));
-		reg_dni_textF.addFocusListener(new TextFocusListener(reg_dni_tfg));
-		reg_email_textF.addFocusListener(new TextFocusListener(reg_email_tfg));
+		reg_password_check_tfg = new TextFieldGroupRel(reg_password_check_panel, reg_password_check_info_panel, reg_password_check_ico, reg_password_check_info_ico, reg_password_check_info_text,
+				reg_password_check_textF,  reg_password_check_separator, reg_grupo_logico, reg_password_tfg, "similitud");
+		
+		reg_nick_textF.addKeyListener(new TextFieldKeyListener(reg_nick_tfg));
+		reg_password_textF.addKeyListener(new TextFieldKeyListener(reg_password_tfg));
+		reg_name_textF.addKeyListener(new TextFieldKeyListener(reg_name_tfg));
+		reg_apellido_textF.addKeyListener(new TextFieldKeyListener(reg_apellido_tfg));
+		reg_dni_textF.addKeyListener(new TextFieldKeyListener(reg_dni_tfg));
+		reg_email_textF.addKeyListener(new TextFieldKeyListener(reg_email_tfg));
+		reg_password_check_textF.addKeyListener(new TextFieldKeyListener(reg_password_check_tfg));
+
 
 	}
 

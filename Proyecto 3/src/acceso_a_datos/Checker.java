@@ -9,21 +9,39 @@ public class Checker {
 	MysqlC mysqlc;
 	
 	public InfoMsg checkPassword(String s) {
-		InfoMsg info = new InfoMsg("Funsiona muyayo", "/imagenes/error_black_32px.png", false, COLOR_ERROR);
+		InfoMsg info;
+		if(s.equals("holaresco")) {
+			info = new InfoMsg("Funsiona muyayo", "/imagenes/error_black_32px.png", false, COLOR_CHECK);
+		} else {
+			info = new InfoMsg("Ta to mal Loco", "/imagenes/error_black_32px.png", false, COLOR_ERROR);
+		}
+		 
 		return info;
 	} 
 	
 	public InfoMsg checkStringStrict(String s) {
 		//Solo letras, sin espacios maximo 20 caracteres
 		//Reconvertimos la cadana a primera mayuscula, siguientes minusculas.
-		InfoMsg info = new InfoMsg("Funsiona muyayo", "/imagenes/error_black_32px.png", false, COLOR_ERROR);
+		InfoMsg info;
+		if(s.equals("holaresco")) {
+			info = new InfoMsg("Funsiona muyayo", "/imagenes/error_black_32px.png", false, COLOR_CHECK);
+		} else {
+			info = new InfoMsg("Ta to mal Loco", "/imagenes/error_black_32px.png", false, COLOR_ERROR);
+		}
+		 
 		return info;
 	}
 	
 	public InfoMsg checkStringFlex(String s) {
 		//Solo letras, numeros y guiones, sin espacios maximo 20 caracteres
 		//Reconvertimos la cadana a primera mayuscula, siguientes minusculas.
-		InfoMsg info = new InfoMsg("Funsiona muyayo", "/imagenes/error_black_32px.png", false, COLOR_ERROR);
+		InfoMsg info;
+		if(s.equals("holaresco")) {
+			info = new InfoMsg("Funsiona muyayo", "/imagenes/checkbox_32px.png", true, COLOR_CHECK);
+		} else {
+			info = new InfoMsg("Ta to mal Loco", "/imagenes/error_black_32px.png", false, COLOR_ERROR);
+		}
+		 
 		return info;
 	}
 	
