@@ -9,6 +9,7 @@ import controladores.BtnPanelListener;
 import controladores.FrameDrager;
 import controladores.NavLabelListener;
 import controladores.OptionListener;
+import controladores.TextFocusListener;
 import controladores.WindowListener;
 
 import java.awt.Font;
@@ -137,6 +138,12 @@ public class Ventana {
 	//2.2.4-Info display----------------------------------------------------------------
 	//2.2.5-Soporte display-------------------------------------------------------------
 	//COMPONENTES FIN///////////////////////////////////////////////////////////////////
+	
+	//COMPONENTES LOGICOS///////////////////////////////////////////////////////////////
+	//-Formulario registro--------------------------------------------------------------
+	TextFieldGroup reg_nick_tfg, reg_password_tfg, reg_name_tfg, reg_apellido_tfg, reg_dni_tfg, reg_email_tfg;
+	TextFieldGroup reg_password_check_tfg;
+	//COMPONENTES LOGICOS///////////////////////////////////////////////////////////////
 	
 	
 	
@@ -439,6 +446,8 @@ public class Ventana {
 		reg_nick_info_panel.setBackground(new Color(219, 186, 70));
 		reg_nick_info_panel.setBounds(10, 50, 370, 32);
 		reg_nick_panel.add(reg_nick_info_panel);
+		reg_nick_info_panel.setVisible(false);
+
 
 		reg_nick_info_ico = new JLabel("");
 		reg_nick_info_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/error_black_32px.png")));
@@ -480,6 +489,8 @@ public class Ventana {
 		reg_password_info_panel.setBackground(new Color(219, 186, 70));
 		reg_password_info_panel.setBounds(10, 50, 370, 32);
 		reg_password_panel.add(reg_password_info_panel);
+		reg_password_info_panel.setVisible(false);
+
 
 		reg_password_info_ico = new JLabel("");
 		reg_password_info_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/error_black_32px.png")));
@@ -521,6 +532,8 @@ public class Ventana {
 		reg_password_check_info_panel.setBackground(new Color(219, 186, 70));
 		reg_password_check_info_panel.setBounds(10, 50, 370, 32);
 		reg_password_check_panel.add(reg_password_check_info_panel);
+		reg_password_check_info_panel.setVisible(false);
+
 
 		reg_password_check_info_ico = new JLabel("");
 		reg_password_check_info_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/error_black_32px.png")));
@@ -571,6 +584,8 @@ public class Ventana {
 		reg_name_info_panel.setBackground(new Color(219, 186, 70));
 		reg_name_info_panel.setBounds(10, 50, 370, 32);
 		reg_name_panel.add(reg_name_info_panel);
+		reg_name_info_panel.setVisible(false);
+
 
 		reg_name_info_ico = new JLabel("");
 		reg_name_info_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/error_black_32px.png")));
@@ -612,6 +627,8 @@ public class Ventana {
 		reg_apellido_info_panel.setBackground(new Color(219, 186, 70));
 		reg_apellido_info_panel.setBounds(10, 50, 370, 32);
 		reg_apellido_panel.add(reg_apellido_info_panel);
+		reg_apellido_info_panel.setVisible(false);
+
 
 		reg_apellido_info_ico = new JLabel("");
 		reg_apellido_info_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/error_black_32px.png")));
@@ -653,6 +670,8 @@ public class Ventana {
 		reg_dni_info_panel.setBackground(new Color(219, 186, 70));
 		reg_dni_info_panel.setBounds(10, 50, 370, 32);
 		reg_dni_panel.add(reg_dni_info_panel);
+		reg_dni_info_panel.setVisible(false);
+
 
 		reg_dni_info_ico = new JLabel("");
 		reg_dni_info_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/error_black_32px.png")));
@@ -703,6 +722,7 @@ public class Ventana {
 		reg_email_info_panel.setBackground(new Color(219, 186, 70));
 		reg_email_info_panel.setBounds(10, 50, 370, 32);
 		reg_email_panel.add(reg_email_info_panel);
+		reg_email_info_panel.setVisible(false);
 
 		reg_email_info_ico = new JLabel("");
 		reg_email_info_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/error_black_32px.png")));
@@ -888,6 +908,26 @@ public class Ventana {
 		opt_soporte.add(opt_soporte_text);
 
 		// Work zone -> Codigo efimero
+		
+		reg_nick_tfg = new TextFieldGroup(reg_nick_panel, reg_nick_info_panel, reg_nick_ico, reg_nick_info_ico, reg_nick_info_text,
+				reg_nick_textF,  reg_nick_separator, "flex");
+		reg_password_tfg = new TextFieldGroup(reg_password_panel, reg_password_info_panel, reg_password_ico, reg_password_info_ico, reg_password_info_text,
+				reg_password_textF,  reg_password_separator, "pass");
+		reg_name_tfg = new TextFieldGroup(reg_name_panel, reg_name_info_panel, reg_name_ico, reg_name_info_ico, reg_name_info_text,
+				reg_name_textF,  reg_name_separator, "strict");
+		reg_apellido_tfg = new TextFieldGroup(reg_apellido_panel, reg_apellido_info_panel, reg_apellido_ico, reg_apellido_info_ico, reg_apellido_info_text,
+				reg_apellido_textF,  reg_apellido_separator, "strict2");
+		reg_dni_tfg = new TextFieldGroup(reg_dni_panel, reg_dni_info_panel, reg_dni_ico, reg_dni_info_ico, reg_dni_info_text,
+				reg_dni_textF,  reg_dni_separator, "dni");
+		reg_email_tfg = new TextFieldGroup(reg_email_panel, reg_email_info_panel, reg_email_ico, reg_email_info_ico, reg_email_info_text,
+				reg_email_textF,  reg_email_separator, "email");
+		
+		reg_nick_textF.addFocusListener(new TextFocusListener(reg_nick_tfg));
+		reg_password_textF.addFocusListener(new TextFocusListener(reg_password_tfg));
+		reg_name_textF.addFocusListener(new TextFocusListener(reg_name_tfg));
+		reg_apellido_textF.addFocusListener(new TextFocusListener(reg_apellido_tfg));
+		reg_dni_textF.addFocusListener(new TextFocusListener(reg_dni_tfg));
+		reg_email_textF.addFocusListener(new TextFocusListener(reg_email_tfg));
 
 	}
 
