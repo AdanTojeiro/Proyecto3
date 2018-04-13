@@ -11,13 +11,14 @@ import interfaz.TextFieldGroupRel;
 public class TextFieldKeyListener implements KeyListener {
 	
 	TextFieldGroup tFGroup;
-	Checker checker = new Checker();
+	Checker checker;
 	
 	
 
-	public TextFieldKeyListener(TextFieldGroup tFGroup) {
+	public TextFieldKeyListener(TextFieldGroup tFGroup, Checker checker) {
 		super();
 		this.tFGroup = tFGroup;
+		this.checker = checker;
 	}
 
 	@Override
@@ -47,7 +48,7 @@ public class TextFieldKeyListener implements KeyListener {
 			tFGroup.showInfo(info);
 			break;
 		case "dni":
-			info = checker.checkStringStrict(tFGroup.getTextF().getText());
+			info = checker.checkDNI(tFGroup.getTextF().getText());
 			tFGroup.showInfo(info);
 			break;
 		case "email":
@@ -60,7 +61,7 @@ public class TextFieldKeyListener implements KeyListener {
 				TextFieldGroup rel = tFGroupRel.getRel();
 				switch(tFGroupRel.getRelType()) {
 				case "similitud":
-					info = checker.checkSimilitud(tFGroupRel.getTextF().getText(), rel.getTextF().getText());
+					info = checker.checkSimilitud(tFGroupRel.getTextF().getText(), rel.getTextF().getText(),rel.isCheck());
 					tFGroupRel.showInfo(info);
 					break;
 				case "correspondencia":

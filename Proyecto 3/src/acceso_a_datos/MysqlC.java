@@ -3,6 +3,7 @@ package acceso_a_datos;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class MysqlC {
@@ -75,6 +76,19 @@ public class MysqlC {
 		}
 		
 	}
+	
+	public ResultSet selectFrom(String nombreTabla, String where) {
+		ResultSet rs = null;          
+		String sql="SELECT * FROM "+nombreTabla+" WHERE "+where;
+		try {
+			PreparedStatement stm = con.prepareStatement(sql);
+			rs = stm.executeQuery(sql);
+		} catch (SQLException e) {
+			System.err.println("MYSQL: "+e);
+		}
+		return rs;
+	}
+	
 
 	
 	

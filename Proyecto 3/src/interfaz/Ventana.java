@@ -3,6 +3,7 @@ package interfaz;
 import java.awt.Color;
 import javax.swing.*;
 
+import acceso_a_datos.Checker;
 import acceso_a_datos.MysqlC;
 import clases.Usuario;
 import controladores.FormBtnListener;
@@ -10,7 +11,6 @@ import controladores.FrameDrager;
 import controladores.NavLabelListener;
 import controladores.OptionListener;
 import controladores.TextFieldKeyListener;
-import controladores.TextFocusListener;
 import controladores.WindowListener;
 
 import java.awt.Font;
@@ -21,6 +21,7 @@ public class Ventana {
 	
 	//ACCESO A DATOS INICIO////////////////////////////////////////////////////////////
 	private MysqlC mysqlc;
+	private Checker checker;
 	//ACCESO A DATOS FIN///////////////////////////////////////////////////////////////
 	
 	//DATA ////////////////////////////////////////////////////////////////////////////
@@ -154,8 +155,10 @@ public class Ventana {
 
 	}
 
-	public Ventana(MysqlC mysqlc) {
-		this.mysqlc = mysqlc;
+	public Ventana() {
+		mysqlc = new MysqlC();
+		checker = new Checker(mysqlc);
+		mysqlc.Conectar();
 		initialize();
 	}
 	public MysqlC getMysqlc() {
@@ -927,13 +930,14 @@ public class Ventana {
 		reg_password_check_tfg = new TextFieldGroupRel(reg_password_check_panel, reg_password_check_info_panel, reg_password_check_ico, reg_password_check_info_ico, reg_password_check_info_text,
 				reg_password_check_textF,  reg_password_check_separator, reg_grupo_logico, reg_password_tfg, "similitud");
 		
-		reg_nick_textF.addKeyListener(new TextFieldKeyListener(reg_nick_tfg));
-		reg_password_textF.addKeyListener(new TextFieldKeyListener(reg_password_tfg));
-		reg_name_textF.addKeyListener(new TextFieldKeyListener(reg_name_tfg));
-		reg_apellido_textF.addKeyListener(new TextFieldKeyListener(reg_apellido_tfg));
-		reg_dni_textF.addKeyListener(new TextFieldKeyListener(reg_dni_tfg));
-		reg_email_textF.addKeyListener(new TextFieldKeyListener(reg_email_tfg));
-		reg_password_check_textF.addKeyListener(new TextFieldKeyListener(reg_password_check_tfg));
+		reg_nick_textF.addKeyListener(new TextFieldKeyListener(reg_nick_tfg, checker));
+		reg_password_textF.addKeyListener(new TextFieldKeyListener(reg_password_tfg, checker));
+		reg_name_textF.addKeyListener(new TextFieldKeyListener(reg_name_tfg, checker));
+		reg_apellido_textF.addKeyListener(new TextFieldKeyListener(reg_apellido_tfg, checker));
+		reg_dni_textF.addKeyListener(new TextFieldKeyListener(reg_dni_tfg, checker));
+		reg_email_textF.addKeyListener(new TextFieldKeyListener(reg_email_tfg, checker));
+		reg_password_check_textF.addKeyListener(new TextFieldKeyListener(reg_password_check_tfg, checker));
+		reg_password_textF.addKeyListener(new TextFieldKeyListener(reg_password_check_tfg, checker));
 
 
 	}

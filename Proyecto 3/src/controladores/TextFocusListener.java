@@ -14,13 +14,14 @@ public class TextFocusListener implements FocusListener{
 	
 	
 	TextFieldGroup tFGroup;
-	Checker checker = new Checker();
+	Checker checker;
 	
 	
 
-	public TextFocusListener(TextFieldGroup tFGroup) {
+	public TextFocusListener(TextFieldGroup tFGroup, Checker checker) {
 		super();
 		this.tFGroup = tFGroup;
+		this.checker = checker;
 	}
 
 	@Override
@@ -64,7 +65,7 @@ public class TextFocusListener implements FocusListener{
 				TextFieldGroup rel = tFGroupRel.getRel();
 				switch(tFGroupRel.getRelType()) {
 				case "similitud":
-					info = checker.checkSimilitud(tFGroupRel.getTextF().getText(), rel.getTextF().getText());
+					info = checker.checkSimilitud(tFGroupRel.getTextF().getText(), rel.getTextF().getText(), rel.isCheck());
 					tFGroupRel.showInfo(info);
 					break;
 				case "correspondencia":

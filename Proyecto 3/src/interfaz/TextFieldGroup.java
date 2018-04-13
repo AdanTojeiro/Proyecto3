@@ -47,6 +47,7 @@ public class TextFieldGroup {
 		info_panel.setBackground(info.getColor());
 		info_text.setText(info.getText());
 		info_ico.setIcon(new ImageIcon(this.getClass().getResource(info.getIco_path())));
+		check = info.isCheck();
 	}
 
 	public JPanel getContent_panel() {
