@@ -957,7 +957,7 @@ public class Ventana {
 
 	}
 	
-	public void setRegDisplay(int index, String function) {
+	public void setRegDisplay(int index, String function) throws java.awt.IllegalComponentStateException  {
 		switch(function) {
 		case "next":
 			index++;
