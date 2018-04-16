@@ -27,7 +27,6 @@ public class OptionListener implements MouseListener {
 			JPanelOpt o = it.next();
 			if(!o.equals(opt)) {
 				o.setSelected(false);
-				o.setBackground(o.getCOLOR_BACKGROUND());
 			}
 		}
 		opt.setSelected(true);

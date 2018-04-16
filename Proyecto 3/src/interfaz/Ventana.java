@@ -195,7 +195,7 @@ public class Ventana {
 		popUp_text.setHorizontalAlignment(SwingConstants.LEFT);
 		popUp_text.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		popUp_text.setForeground(Color.WHITE);
-		popUp_text.setBounds(99, 31, 173, 121);
+		popUp_text.setBounds(105, 32, 173, 96);
 		popUp_panel.add(popUp_text);
 		popUp_panel.setVisible(false);
 		
@@ -336,6 +336,7 @@ public class Ventana {
 		login_nick_panel.add(login_nick_info_panel);
 		login_nick_info_panel.setBackground(COLOR_ERROR);
 		login_nick_info_panel.setLayout(null);
+		login_nick_info_panel.setVisible(false);
 
 		login_nick_info_ico = new JLabel("");
 		login_nick_info_ico.setBounds(0, 0, 32, 32);
@@ -377,6 +378,7 @@ public class Ventana {
 		login_password_info_panel.setBackground(new Color(219, 186, 70));
 		login_password_info_panel.setBounds(10, 50, 370, 32);
 		login_password_panel.add(login_password_info_panel);
+		login_password_info_panel.setVisible(false);
 
 		login_password_info_ico = new JLabel("");
 		login_password_info_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/error_black_32px.png")));
@@ -1022,6 +1024,25 @@ public class Ventana {
 		titulo_ico.setIcon(new ImageIcon(Ventana.class.getResource(display.getIcoPath())));
 		titulo_text.setText(display.getTitulo());
 
+	}
+	
+	public void setDisplay(JDisplay display, ArrayList<JDisplay> grupo, String option) {
+		Iterator<JDisplay> it = grupo.iterator();
+		while (it.hasNext()) {
+			JDisplay d = it.next();
+			if (!d.equals(display)) {
+				d.setVisible(false);
+			}
+		}
+		display.setVisible(true);
+		titulo_ico.setIcon(new ImageIcon(Ventana.class.getResource(display.getIcoPath())));
+		titulo_text.setText(display.getTitulo());
+		switch(option) {
+		case "login":
+			opt_login.setSelected(true);
+			opt_reg.setSelected(false);
+			opt_info.setSelected(false);
+		}
 	}
 	
 	public void resetRegForm(){

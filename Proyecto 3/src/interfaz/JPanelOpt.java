@@ -38,6 +38,11 @@ public class JPanelOpt extends JPanel {
 
 	public void setSelected(boolean selected) {
 		this.selected = selected;
+		if (selected){
+			this.setBackground(COLOR_SELECTED);
+		}else {
+			this.setBackground(COLOR_BACKGROUND);
+		}
 	}
 
 	public JDisplay getDisplay() {
