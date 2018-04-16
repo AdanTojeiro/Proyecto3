@@ -1,6 +1,8 @@
 package interfaz;
 
 import java.awt.Color;
+
+
 import javax.swing.*;
 
 import acceso_a_datos.Checker;
@@ -8,10 +10,13 @@ import acceso_a_datos.MysqlC;
 import clases.Usuario;
 import controladores.FormBtnListener;
 import controladores.FrameDrager;
+import controladores.JPopUpPanel;
 import controladores.NavLabelListener;
 import controladores.OptionListener;
 import controladores.TextFieldKeyListener;
+import controladores.TextFocusListener;
 import controladores.WindowListener;
+
 
 import java.awt.Font;
 import java.util.ArrayList;
@@ -45,6 +50,7 @@ public class Ventana {
 	//Estructura-----------------------------------------------------------------------
 	private JFrame frame;
 	private JPanel background_panel, side_panel, center_panel;
+	private JPopUpPanel popUp_panel;
 	//1-Side panel---------------------------------------------------------------------
 	private JPanel logo_panel, nav_panel;
 	//1.1-Logo panel-------------------------------------------------------------------
@@ -170,7 +176,7 @@ public class Ventana {
 	 */
 	//Inicializacion de componentes
 	private void initialize() {
-
+	
 		// Frame
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1100, 700);
@@ -187,6 +193,29 @@ public class Ventana {
 		background_panel.setBounds(0, 0, 1100, 700);
 		frame.getContentPane().add(background_panel);
 		background_panel.setLayout(null);
+		
+		JPopUpPanel popUp_panel = new JPopUpPanel();
+		popUp_panel.setBounds(20, 520, 350, 180);
+		background_panel.add(popUp_panel);
+		popUp_panel.setBackground(Color.RED);
+		popUp_panel.setLayout(null);
+		
+		JLabel pop_ico = new JLabel("");
+		pop_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/info_96px.png")));
+		pop_ico.setBounds(10, 39, 96, 96);
+		popUp_panel.add(pop_ico);
+		
+		JLabel popUp_text = new JLabel("texto texto texto texto texto texo");
+		popUp_text.setVerticalAlignment(SwingConstants.TOP);
+		popUp_text.setHorizontalAlignment(SwingConstants.LEFT);
+		popUp_text.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		popUp_text.setForeground(Color.WHITE);
+		popUp_text.setBounds(112, 39, 228, 96);
+		popUp_panel.add(popUp_text);
+		popUp_panel.setVisible(false);
+		
+		popUp_panel.setIco(pop_ico);
+		popUp_panel.setText(popUp_text);
 
 		// Estructura panels
 		side_panel = new JPanel();
@@ -938,8 +967,34 @@ public class Ventana {
 		reg_email_textF.addKeyListener(new TextFieldKeyListener(reg_email_tfg, checker));
 		reg_password_check_textF.addKeyListener(new TextFieldKeyListener(reg_password_check_tfg, checker));
 		reg_password_textF.addKeyListener(new TextFieldKeyListener(reg_password_check_tfg, checker));
+		
+		reg_nick_textF.addFocusListener(new TextFocusListener(reg_nick_tfg, checker));
+		reg_password_textF.addFocusListener(new TextFocusListener(reg_password_tfg, checker));
+		reg_name_textF.addFocusListener(new TextFocusListener(reg_name_tfg, checker));
+		reg_apellido_textF.addFocusListener(new TextFocusListener(reg_apellido_tfg, checker));
+		reg_dni_textF.addFocusListener(new TextFocusListener(reg_dni_tfg, checker));
+		reg_email_textF.addFocusListener(new TextFocusListener(reg_email_tfg, checker));
+		reg_password_check_textF.addFocusListener(new TextFocusListener(reg_password_check_tfg, checker));
 
 
+	}
+	//PopUp control
+	
+	public void showPopUp(String type) {
+		
+		switch(type){
+		case "mysqlerror":
+			
+			popUp_panel.errorStyle();
+			popUp_panel.showPanel("MYSQL: No se ha podido establecer la conexion con la base de datos", "/imagenes/error_black_96px.png");
+			break;
+		case "regcomplete":
+			
+			popUp_panel.infoStyle();
+			popUp_panel.showPanel("Cuenta creada con exito. Inicia sesion para disfrutar de la aplicacion", "/imagenes/reg_96px.png");
+			break;
+		}
+		
 	}
 
 	//Display Setters
@@ -955,6 +1010,16 @@ public class Ventana {
 		titulo_ico.setIcon(new ImageIcon(Ventana.class.getResource(display.getIcoPath())));
 		titulo_text.setText(display.getTitulo());
 
+	}
+	
+	public void resetRegForm(){
+		reg_nick_tfg.reset();
+		reg_password_tfg.reset();
+		reg_name_tfg.reset();
+		reg_apellido_tfg.reset();
+		reg_dni_tfg.reset();
+		reg_email_tfg.reset();
+		reg_password_check_tfg.reset();
 	}
 	
 	public void setRegDisplay(int index, String function) throws java.awt.IllegalComponentStateException  {
@@ -1022,10 +1087,7 @@ public class Ventana {
 		}
 	}
 	
-	//Data getters
-	public Usuario getRegData(){
-		return RegData;
-	}
+	
 	//Data setters
 	public void setRegData() {
 		RegData.setNick(reg_nick_textF.getText());
@@ -1040,4 +1102,33 @@ public class Ventana {
 		frame.setVisible(true);
 
 	}
+	
+	//Getters
+	//Data getters
+		public Usuario getRegData(){
+			return RegData;
+		}
+		
+	//displays
+	public JDisplay getDisplay_index() {
+		return display_index;
+	}
+
+	public JDisplay getDisplay_login() {
+		return display_login;
+	}
+
+	public JDisplay getDisplay_reg() {
+		return display_reg;
+	}
+
+	public JDisplay getDisplay_info() {
+		return display_info;
+	}
+
+	public JDisplay getDisplay_soporte() {
+		return display_soporte;
+	}
+	//Pop up
+	
 }

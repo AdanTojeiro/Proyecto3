@@ -36,6 +36,9 @@ public class FormBtnListener implements MouseListener{
 				String value = "'"+data.getNick()+"', '"+enc.encriptarMD5(data.getPass())+"', '"+data.getNombre()+"', '"+data.getApellidos()+"', '"+data.getDni()+"', '"+data.getEmail()+"', '"+fecha+"', '"+fecha+"'";
 				System.out.println(value);
 				ventana.getMysqlc().insertInto(nombreTabla, campos, value);
+				ventana.resetRegForm();
+				ventana.setRegDisplay(2, "back");
+				ventana.setDisplay(ventana.getDisplay_login(), ventana.getDisplay_login().getGrupo());
 			}	
 		}
 		
@@ -48,6 +51,7 @@ public class FormBtnListener implements MouseListener{
 		
 		if(formBtn.isGroupAllTrue()) {
 			formBtn.setBackground(formBtn.getCOLOR_HOVER());
+			formBtn.setToolTipText("Todo correcto! pulsa aqui para registrarte.");
 		} else {
 			formBtn.setBackground(formBtn.getCOLOR_DISABLED());
 			formBtn.setToolTipText("Algunos de los campos requeridos no estan correctamente complentados.");

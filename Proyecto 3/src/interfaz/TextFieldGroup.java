@@ -17,7 +17,7 @@ public class TextFieldGroup {
 	private JLabel textF_icon, info_ico, info_text;
 	private JTextField textF;
 	private JSeparator separator;
-	private String tipo;
+	private String tipo, defaultText;
 	private boolean check;
 	private ArrayList<TextFieldGroup> grupo_logico;
 	
@@ -35,6 +35,7 @@ public class TextFieldGroup {
 		this.separator = separator;
 		this.tipo = tipo;
 		check = false;
+		defaultText = textF.getText();
 		grupo_logico.add(this);
 	}
 	
@@ -128,6 +129,12 @@ public class TextFieldGroup {
 
 	public void setGrupo_logico(ArrayList<TextFieldGroup> grupo_logico) {
 		this.grupo_logico = grupo_logico;
+	}
+	
+	public void reset() {
+		textF.setText(defaultText);
+		info_panel.setVisible(false);
+		check = false;
 	}
 	
 	
