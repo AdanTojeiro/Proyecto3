@@ -14,14 +14,14 @@ import interfaz.Ventana;
 public class WindowListener  implements MouseListener {
 	
 	private JLabelControl lbl;
-	private JFrame frame;
+	private Ventana ventana;
 	
 	
 	
 	
-	public WindowListener(JLabelControl lbl, JFrame frame) {
+	public WindowListener(JLabelControl lbl, Ventana ventana) {
 		this.lbl = lbl;
-		this.frame = frame;
+		this.ventana = ventana;
 	}
 
 	@Override
@@ -31,8 +31,12 @@ public class WindowListener  implements MouseListener {
 			System.exit(0);
 			break;
 		case 1:
-			frame.setState(JFrame.ICONIFIED);
+			ventana.getFrame().setState(JFrame.ICONIFIED);
 			break;
+		case 2:
+			ventana.hidePopUp();
+			break;
+			
 		}
 	}
 

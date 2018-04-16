@@ -10,7 +10,6 @@ import acceso_a_datos.MysqlC;
 import clases.Usuario;
 import controladores.FormBtnListener;
 import controladores.FrameDrager;
-import controladores.JPopUpPanel;
 import controladores.NavLabelListener;
 import controladores.OptionListener;
 import controladores.TextFieldKeyListener;
@@ -154,17 +153,9 @@ public class Ventana {
 	private TextFieldGroup reg_password_check_tfg;
 	//COMPONENTES LOGICOS///////////////////////////////////////////////////////////////
 	
-	
-	
-
-	public static void main(String[] args) {
-
-	}
-
 	public Ventana() {
 		mysqlc = new MysqlC();
 		checker = new Checker(mysqlc);
-		mysqlc.Conectar();
 		initialize();
 	}
 	public MysqlC getMysqlc() {
@@ -194,8 +185,8 @@ public class Ventana {
 		frame.getContentPane().add(background_panel);
 		background_panel.setLayout(null);
 		
-		JPopUpPanel popUp_panel = new JPopUpPanel();
-		popUp_panel.setBounds(20, 520, 350, 180);
+		popUp_panel = new JPopUpPanel();
+		popUp_panel.setBounds(20, 500, 350, 180);
 		background_panel.add(popUp_panel);
 		popUp_panel.setBackground(Color.RED);
 		popUp_panel.setLayout(null);
@@ -210,12 +201,22 @@ public class Ventana {
 		popUp_text.setHorizontalAlignment(SwingConstants.LEFT);
 		popUp_text.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		popUp_text.setForeground(Color.WHITE);
-		popUp_text.setBounds(112, 39, 228, 96);
+		popUp_text.setBounds(116, 29, 228, 121);
 		popUp_panel.add(popUp_text);
 		popUp_panel.setVisible(false);
 		
+	
+		
+		JLabelControl labelControl = new JLabelControl(2, "/imagenes/salir_black_16px.png", "/imagenes/salir_16px.png");
+		labelControl.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/salir_black_16px.png")));
+		labelControl.setBounds(324, 11, 16, 16);
+		labelControl.setOpaque(true);
+		popUp_panel.add(labelControl);
+		labelControl.addMouseListener(new WindowListener(labelControl, this));
+		
 		popUp_panel.setIco(pop_ico);
 		popUp_panel.setText(popUp_text);
+		popUp_panel.setControl(labelControl);
 
 		// Estructura panels
 		side_panel = new JPanel();
@@ -257,13 +258,13 @@ public class Ventana {
 		close_lbl.setIcon(new ImageIcon(Ventana.class.getResource(close_lbl.getPathIco())));
 		close_lbl.setBounds(762, 0, 32, 40);
 		titulo_panel.add(close_lbl);
-		close_lbl.addMouseListener(new WindowListener(close_lbl, frame));
+		close_lbl.addMouseListener(new WindowListener(close_lbl, this));
 
 		minimize_lbl = new JLabelControl(1, "/imagenes/minimizar_32px.png", "/imagenes/minimizar_hover_32px.png");
 		minimize_lbl.setIcon(new ImageIcon(Ventana.class.getResource(minimize_lbl.getPathIco())));
 		minimize_lbl.setBounds(730, 0, 32, 40);
 		titulo_panel.add(minimize_lbl);
-		minimize_lbl.addMouseListener(new WindowListener(minimize_lbl, frame));
+		minimize_lbl.addMouseListener(new WindowListener(minimize_lbl, this));
 
 		// Display panel
 		display_panel = new JPanel();
@@ -975,6 +976,11 @@ public class Ventana {
 		reg_dni_textF.addFocusListener(new TextFocusListener(reg_dni_tfg, checker));
 		reg_email_textF.addFocusListener(new TextFocusListener(reg_email_tfg, checker));
 		reg_password_check_textF.addFocusListener(new TextFocusListener(reg_password_check_tfg, checker));
+		
+		//final
+		if(!mysqlc.Conectar()) {
+			this.showPopUp("mysqlerror");
+		}
 
 
 	}
@@ -986,14 +992,21 @@ public class Ventana {
 		case "mysqlerror":
 			
 			popUp_panel.errorStyle();
-			popUp_panel.showPanel("MYSQL: No se ha podido establecer la conexion con la base de datos", "/imagenes/error_black_96px.png");
+			popUp_panel.showPanel("<HTML>MYSQL: No se ha podido establecer la conexion con la base de datos</HTML>", "/imagenes/error_black_96px.png");
 			break;
 		case "regcomplete":
 			
 			popUp_panel.infoStyle();
-			popUp_panel.showPanel("Cuenta creada con exito. Inicia sesion para disfrutar de la aplicacion", "/imagenes/reg_96px.png");
+			popUp_panel.showPanel("<HTML>Cuenta creada con exito. Inicia sesion para disfrutar de la aplicacion</HTML>", "/imagenes/reg_96px.png");
 			break;
 		}
+		frame.setState(JFrame.ICONIFIED);
+		frame.setState(JFrame.NORMAL);
+		
+	}
+	public void hidePopUp() {
+		
+		popUp_panel.setVisible(false);
 		
 	}
 
@@ -1104,11 +1117,18 @@ public class Ventana {
 	}
 	
 	//Getters
+	public JFrame getFrame() {
+		return frame;
+	}
 	//Data getters
 		public Usuario getRegData(){
 			return RegData;
 		}
 		
+	
+		public void setFrame(JFrame frame) {
+			this.frame = frame;
+		}
 	//displays
 	public JDisplay getDisplay_index() {
 		return display_index;
@@ -1129,6 +1149,4 @@ public class Ventana {
 	public JDisplay getDisplay_soporte() {
 		return display_soporte;
 	}
-	//Pop up
-	
 }

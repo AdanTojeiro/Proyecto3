@@ -17,7 +17,7 @@ public class MysqlC {
 	
 	
 	
-	public void Conectar() {
+	public boolean Conectar() {
 		con = null;
 		try {
 			Class.forName(DRIVER);
@@ -29,22 +29,7 @@ public class MysqlC {
 		} catch(ClassNotFoundException | SQLException e) {
 			System.err.println("MYSQL: "+e+".");
 		}
-	}
-	
-	public boolean CheckMysqlC() {
-		boolean control = false;
-		con = null;
-		try {
-			Class.forName(DRIVER);
-			con = DriverManager.getConnection(URL, USUARIO, PASSWORD);
-			if(con != null) {
-				System.out.println("MYSQL: Todos los datos correctos.");
-				con = null;
-			}
-		} catch(ClassNotFoundException | SQLException e) {
-			System.err.println("MYSQL: "+e+".");
-		}
-		return control;
+		return conectada;
 	}
 	
 	public static void Desconectar() {

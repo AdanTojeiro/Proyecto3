@@ -4,6 +4,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Date;
 
+import javax.swing.JFrame;
+
 import acceso_a_datos.Encriptador;
 import clases.Usuario;
 import interfaz.JFormBtn;
@@ -38,8 +40,10 @@ public class FormBtnListener implements MouseListener{
 				ventana.getMysqlc().insertInto(nombreTabla, campos, value);
 				ventana.resetRegForm();
 				ventana.setRegDisplay(2, "back");
+				ventana.showPopUp("regcomplete");
 				ventana.setDisplay(ventana.getDisplay_login(), ventana.getDisplay_login().getGrupo());
 			}	
+			
 		}
 		
 		
