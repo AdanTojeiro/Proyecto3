@@ -136,6 +136,15 @@ public class TextFieldGroup {
 		info_panel.setVisible(false);
 		check = false;
 	}
+
+	public String getDefaultText() {
+		return defaultText;
+	}
+
+	public void setDefaultText(String defaultText) {
+		this.defaultText = defaultText;
+	}
+	
 	
 	
 	

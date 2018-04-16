@@ -178,30 +178,24 @@ public class Ventana {
 		FrameDrager drager = new FrameDrager(frame);
 		frame.addMouseListener(drager);
 		frame.addMouseMotionListener(drager);
-
-		// Background Panel
-		background_panel = new JPanel();
-		background_panel.setBounds(0, 0, 1100, 700);
-		frame.getContentPane().add(background_panel);
-		background_panel.setLayout(null);
 		
 		popUp_panel = new JPopUpPanel();
-		popUp_panel.setBounds(20, 500, 350, 180);
-		background_panel.add(popUp_panel);
+		popUp_panel.setBounds(5, 540, 290, 150);
+		frame.getContentPane().add(popUp_panel);
 		popUp_panel.setBackground(Color.RED);
 		popUp_panel.setLayout(null);
 		
 		JLabel pop_ico = new JLabel("");
 		pop_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/info_96px.png")));
-		pop_ico.setBounds(10, 39, 96, 96);
+		pop_ico.setBounds(8, 31, 96, 96);
 		popUp_panel.add(pop_ico);
 		
 		JLabel popUp_text = new JLabel("texto texto texto texto texto texo");
 		popUp_text.setVerticalAlignment(SwingConstants.TOP);
 		popUp_text.setHorizontalAlignment(SwingConstants.LEFT);
-		popUp_text.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		popUp_text.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		popUp_text.setForeground(Color.WHITE);
-		popUp_text.setBounds(116, 29, 228, 121);
+		popUp_text.setBounds(99, 31, 173, 121);
 		popUp_panel.add(popUp_text);
 		popUp_panel.setVisible(false);
 		
@@ -209,7 +203,7 @@ public class Ventana {
 		
 		JLabelControl labelControl = new JLabelControl(2, "/imagenes/salir_black_16px.png", "/imagenes/salir_16px.png");
 		labelControl.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/salir_black_16px.png")));
-		labelControl.setBounds(324, 11, 16, 16);
+		labelControl.setBounds(256, 13, 16, 16);
 		labelControl.setOpaque(true);
 		popUp_panel.add(labelControl);
 		labelControl.addMouseListener(new WindowListener(labelControl, this));
@@ -217,6 +211,12 @@ public class Ventana {
 		popUp_panel.setIco(pop_ico);
 		popUp_panel.setText(popUp_text);
 		popUp_panel.setControl(labelControl);
+
+		// Background Panel
+		background_panel = new JPanel();
+		background_panel.setBounds(0, 0, 1100, 700);
+		frame.getContentPane().add(background_panel);
+		background_panel.setLayout(null);
 
 		// Estructura panels
 		side_panel = new JPanel();
@@ -980,6 +980,7 @@ public class Ventana {
 		//final
 		if(!mysqlc.Conectar()) {
 			this.showPopUp("mysqlerror");
+			
 		}
 
 
@@ -1000,8 +1001,6 @@ public class Ventana {
 			popUp_panel.showPanel("<HTML>Cuenta creada con exito. Inicia sesion para disfrutar de la aplicacion</HTML>", "/imagenes/reg_96px.png");
 			break;
 		}
-		frame.setState(JFrame.ICONIFIED);
-		frame.setState(JFrame.NORMAL);
 		
 	}
 	public void hidePopUp() {

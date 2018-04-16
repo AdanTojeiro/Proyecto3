@@ -15,8 +15,8 @@ public class JPopUpPanel extends JPanel {
 	
 	private JLabel ico, text;
 	private JLabelControl control;
-	private final Color COLOR_ERROR = new Color(219, 186, 70, 150);
-	private final Color COLOR_CHECK = new Color(50, 205, 50, 150);
+	private final Color COLOR_ERROR = new Color(219, 186, 70);
+	private final Color COLOR_CHECK = new Color(50, 205, 50);
 	
 	public void showPanel(String text, String ico_path) {
 		this.setVisible(true);

@@ -24,7 +24,9 @@ public class TextFocusListener implements FocusListener{
 
 	@Override
 	public void focusGained(FocusEvent arg0) {
-		
+		if(tFGroup.getTextF().getText().equals(tFGroup.getDefaultText())){
+			tFGroup.getTextF().setText("");
+		}
 		
 	}
 
