@@ -144,6 +144,9 @@ public class Ventana {
 	private JLabel reg_confirmar_btnPanel_text;
 	//2.2.4-Info display----------------------------------------------------------------
 	//2.2.5-Soporte display-------------------------------------------------------------
+	//3-PopUp Panel---------------------------------------------------------------------
+	private JLabel popUp_ico, popUp_text;
+	private JLabelControl popUp_salir_labelControl;
 	//COMPONENTES FIN///////////////////////////////////////////////////////////////////
 	
 	//COMPONENTES LOGICOS///////////////////////////////////////////////////////////////
@@ -179,18 +182,19 @@ public class Ventana {
 		frame.addMouseListener(drager);
 		frame.addMouseMotionListener(drager);
 		
+		//PopUp Panel
 		popUp_panel = new JPopUpPanel();
 		popUp_panel.setBounds(5, 540, 290, 150);
 		frame.getContentPane().add(popUp_panel);
 		popUp_panel.setBackground(Color.RED);
 		popUp_panel.setLayout(null);
 		
-		JLabel pop_ico = new JLabel("");
-		pop_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/info_96px.png")));
-		pop_ico.setBounds(8, 31, 96, 96);
-		popUp_panel.add(pop_ico);
+		popUp_ico = new JLabel("");
+		popUp_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/info_96px.png")));
+		popUp_ico.setBounds(8, 31, 96, 96);
+		popUp_panel.add(popUp_ico);
 		
-		JLabel popUp_text = new JLabel("texto texto texto texto texto texo");
+		popUp_text = new JLabel("");
 		popUp_text.setVerticalAlignment(SwingConstants.TOP);
 		popUp_text.setHorizontalAlignment(SwingConstants.LEFT);
 		popUp_text.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -199,18 +203,15 @@ public class Ventana {
 		popUp_panel.add(popUp_text);
 		popUp_panel.setVisible(false);
 		
-	
+		popUp_salir_labelControl = new JLabelControl(2, "/imagenes/salir_black_16px.png", "/imagenes/salir_16px.png");
+		popUp_salir_labelControl.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/salir_black_16px.png")));
+		popUp_salir_labelControl.setBounds(256, 13, 16, 16);
+		popUp_panel.add(popUp_salir_labelControl);
+		popUp_salir_labelControl.addMouseListener(new WindowListener(popUp_salir_labelControl, this));
 		
-		JLabelControl labelControl = new JLabelControl(2, "/imagenes/salir_black_16px.png", "/imagenes/salir_16px.png");
-		labelControl.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/salir_black_16px.png")));
-		labelControl.setBounds(256, 13, 16, 16);
-		labelControl.setOpaque(true);
-		popUp_panel.add(labelControl);
-		labelControl.addMouseListener(new WindowListener(labelControl, this));
-		
-		popUp_panel.setIco(pop_ico);
+		popUp_panel.setIco(popUp_ico);
 		popUp_panel.setText(popUp_text);
-		popUp_panel.setControl(labelControl);
+		popUp_panel.setControl(popUp_salir_labelControl);
 
 		// Background Panel
 		background_panel = new JPanel();
