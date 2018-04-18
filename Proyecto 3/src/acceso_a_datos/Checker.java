@@ -178,6 +178,48 @@ public class Checker {
 		}
 		return info;
 	}
+	
+	public InfoMsg checkStringFlexKey(String s) {
+		// Solo letras, numeros y guiones, sin espacios maximo 20 caracteres
+		// Reconvertimos la cadana a primera mayuscula, siguientes minusculas.
+		// "^[a-zA-Z0-9_-]{4,20}$"
+
+		InfoMsg info = null;
+
+		Pattern pat = Pattern.compile("^[a-zA-Z0-9_-]{4,20}$");
+		Matcher mat = pat.matcher(s);
+		if (mat.matches()) {
+			// Cumple formato
+			ResultSet rs = mysqlc.selectFrom("usuario", "nick='" + s + "'");
+			try {
+				if (rs.next()) {
+					info = new InfoMsg("Usuario encontrado", "/imagenes/checkbox_32px.png", true, COLOR_CHECK);
+				} else {
+					info = new InfoMsg("El usuario no existe", "/imagenes/error_black_32px.png", false,
+							COLOR_ERROR);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		} else {
+			if (s.length() > 20) {
+				info = new InfoMsg("Maximo 20 caracteres", "/imagenes/error_black_32px.png", false, COLOR_ERROR);
+			} else {
+				if (s.length() < 4) {
+					info = new InfoMsg("Minimo 4 caracteres", "/imagenes/error_black_32px.png", false, COLOR_ERROR);
+				} else {
+					info = new InfoMsg("Solo letras, numeros y guiones", "/imagenes/error_black_32px.png", false,
+							COLOR_ERROR);
+				}
+
+			}
+
+		}
+		return info;
+	}
+
 
 	public InfoMsg checkDNI(String s) {
 		// Comprueba longitud = 9 empieza por numero o x | y | z (NIE), comprobara que
@@ -253,9 +295,33 @@ public class Checker {
 		return info;
 	}
 
-	public InfoMsg checkCorrespondencia(String sPrincipal, String sRelacionada) {
-		InfoMsg info = new InfoMsg("Funsiona muyayo", "/imagenes/error_black_32px.png", false, COLOR_ERROR);
+	public InfoMsg checkCorrespondencia(String sPrincipal, String sRelacionada, boolean check) {
+		InfoMsg info = null;
+		Encriptador enc = new Encriptador();
+		if(check) {
+			
+			ResultSet rs = mysqlc.selectFrom("usuario", "nick='" + sRelacionada + "'");
+			
+			try {
+				if(rs.next()) {
+					if(enc.compararMD5(sPrincipal, rs.getString("pass"))) {
+						info = new InfoMsg("Contraseña Correcta", "/imagenes/checkbox_32px.png", true, COLOR_CHECK);
+					} else {
+						info = new InfoMsg("Contraseña incorrecta", "/imagenes/error_black_32px.png", false,
+								COLOR_ERROR);
+					}
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			info = new InfoMsg("Usuario no encontrado", "/imagenes/error_black_32px.png", false,
+					COLOR_ERROR);
+		}
 		return info;
 	}
+	
+	
 
 }

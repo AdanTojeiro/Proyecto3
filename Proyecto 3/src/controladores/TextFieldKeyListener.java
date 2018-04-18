@@ -55,6 +55,10 @@ public class TextFieldKeyListener implements KeyListener {
 			info = checker.checkEmail(tFGroup.getTextF().getText());
 			tFGroup.showInfo(info);
 			break;
+		case "flex_key":
+			info = checker.checkStringFlexKey(tFGroup.getTextF().getText());
+			tFGroup.showInfo(info);
+			break;
 		case "rel":
 			if (tFGroup instanceof TextFieldGroupRel) {
 				TextFieldGroupRel tFGroupRel = (TextFieldGroupRel)tFGroup; 
@@ -65,11 +69,12 @@ public class TextFieldKeyListener implements KeyListener {
 					tFGroupRel.showInfo(info);
 					break;
 				case "correspondencia":
-					info = checker.checkCorrespondencia(tFGroupRel.getTextF().getText(), rel.getTextF().getText());
+					info = checker.checkCorrespondencia(tFGroupRel.getTextF().getText(), rel.getTextF().getText(),rel.isCheck());
 					tFGroupRel.showInfo(info);
-					break;
+					break;			
 				}
 			}
+			break;
 		}
 		
 	}

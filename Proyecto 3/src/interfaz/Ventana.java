@@ -150,6 +150,10 @@ public class Ventana {
 	//COMPONENTES FIN///////////////////////////////////////////////////////////////////
 	
 	//COMPONENTES LOGICOS///////////////////////////////////////////////////////////////
+	//-Formulario Login-----------------------------------------------------------------
+	private ArrayList<TextFieldGroup> login_grupo_logico = new ArrayList<TextFieldGroup>();
+	private TextFieldGroup login_nick_tfg;
+	private TextFieldGroup login_password_tfg;
 	//-Formulario registro--------------------------------------------------------------
 	private ArrayList<TextFieldGroup> reg_grupo_logico = new ArrayList<TextFieldGroup>();
 	private TextFieldGroup reg_nick_tfg, reg_password_tfg, reg_name_tfg, reg_apellido_tfg, reg_dni_tfg, reg_email_tfg;
@@ -947,6 +951,21 @@ public class Ventana {
 
 		// Work zone -> Codigo efimero
 		
+		//Componentes logicos formulario Login
+		login_nick_tfg = new TextFieldGroup(login_nick_panel, login_nick_info_panel, login_nick_icon, login_nick_info_ico, login_nick_info_text,
+				login_nick_textF,  login_nick_separator, "flex_key", login_grupo_logico);
+		login_password_tfg = new TextFieldGroupRel(login_password_panel, login_password_info_panel, login_password_icon, login_password_info_ico, login_password_info_text,
+				login_password_textF,  login_password_separator, login_grupo_logico, login_nick_tfg, "correspondencia");
+		
+		login_nick_textF.addKeyListener(new TextFieldKeyListener(login_nick_tfg, checker));
+		login_password_textF.addKeyListener(new TextFieldKeyListener(login_password_tfg, checker));
+		login_nick_textF.addKeyListener(new TextFieldKeyListener(login_password_tfg, checker));
+		
+		login_nick_textF.addFocusListener(new TextFocusListener(login_nick_tfg, checker));
+		login_password_textF.addFocusListener(new TextFocusListener(login_password_tfg, checker));
+		
+		
+		//Componentes logicos formulario Registro
 		reg_nick_tfg = new TextFieldGroup(reg_nick_panel, reg_nick_info_panel, reg_nick_ico, reg_nick_info_ico, reg_nick_info_text,
 				reg_nick_textF,  reg_nick_separator, "flex", reg_grupo_logico);
 		reg_password_tfg = new TextFieldGroup(reg_password_panel, reg_password_info_panel, reg_password_ico, reg_password_info_ico, reg_password_info_text,
