@@ -3,6 +3,9 @@ package controladores;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import acceso_a_datos.Encriptador;
 import clases.Sesion;
 import clases.Usuario;
@@ -42,8 +45,47 @@ public class FormBtnListener implements MouseListener{
 				ventana.setDisplay(ventana.getDisplay_login(), ventana.getDisplay_login().getGrupo(),"login");
 				break;
 			case "login":
-				ventana.iniciarSesion(new Sesion(ventana.getLoginResultSet()));
-				ventana.showPopUp("logincomplete");
+				ResultSet rs = ventana.getLoginResultSet();
+				try {
+					if (rs.next()) {
+						String estado = rs.getString("estado");
+						if(estado.equals("offline")){
+							String where = "pk_usuario="+rs.getInt("pk_usuario");
+							ventana.getMysqlc().Update("usuario", "estado='online'",where);
+							Sesion sesion = new Sesion(ventana.getLoginResultSet());
+							ventana.iniciarSesion(sesion);
+							switch(sesion.getUsuario().getAcceso()) {
+							case 0:
+								//sesion alumno
+								break;
+							case 1:
+								//sesion profesor
+								break;
+							case 2:
+								//sesion  administrador
+								break;
+							case 3:
+								//sesion desarrollador
+								break;
+								
+							}
+							ventana.showPopUp("logincomplete");
+						}else {
+							switch(estado) {
+							case "online":
+								ventana.showPopUp("useronline");
+								break;
+							case "suspendido":
+								ventana.showPopUp("usersuspend");
+								break;
+							}
+							
+						}
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}	
 			
 		}

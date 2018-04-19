@@ -15,7 +15,7 @@ import controladores.NavLabelListener;
 import controladores.OptionListener;
 import controladores.TextFieldKeyListener;
 import controladores.TextFocusListener;
-import controladores.WindowListener;
+import controladores.ControlLabelListener;
 
 
 import java.awt.Font;
@@ -194,6 +194,7 @@ public class Ventana {
 		frame.addMouseListener(drager);
 		frame.addMouseMotionListener(drager);
 		
+		
 		//PopUp Panel
 		popUp_panel = new JPopUpPanel();
 		popUp_panel.setBounds(5, 540, 290, 150);
@@ -219,7 +220,7 @@ public class Ventana {
 		popUp_salir_labelControl.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/salir_black_16px.png")));
 		popUp_salir_labelControl.setBounds(256, 13, 16, 16);
 		popUp_panel.add(popUp_salir_labelControl);
-		popUp_salir_labelControl.addMouseListener(new WindowListener(popUp_salir_labelControl, this));
+		popUp_salir_labelControl.addMouseListener(new ControlLabelListener(popUp_salir_labelControl, this));
 		
 		popUp_panel.setIco(popUp_ico);
 		popUp_panel.setText(popUp_text);
@@ -271,13 +272,13 @@ public class Ventana {
 		close_lbl.setIcon(new ImageIcon(Ventana.class.getResource(close_lbl.getPathIco())));
 		close_lbl.setBounds(762, 0, 32, 40);
 		titulo_panel.add(close_lbl);
-		close_lbl.addMouseListener(new WindowListener(close_lbl, this));
+		close_lbl.addMouseListener(new ControlLabelListener(close_lbl, this));
 
 		minimize_lbl = new JLabelControl(1, "/imagenes/minimizar_32px.png", "/imagenes/minimizar_hover_32px.png");
 		minimize_lbl.setIcon(new ImageIcon(Ventana.class.getResource(minimize_lbl.getPathIco())));
 		minimize_lbl.setBounds(730, 0, 32, 40);
 		titulo_panel.add(minimize_lbl);
-		minimize_lbl.addMouseListener(new WindowListener(minimize_lbl, this));
+		minimize_lbl.addMouseListener(new ControlLabelListener(minimize_lbl, this));
 
 		// Display panel
 		display_panel = new JPanel();
@@ -1041,6 +1042,17 @@ public class Ventana {
 			popUp_panel.errorStyle();
 			popUp_panel.showPanel("<HTML>MYSQL: No se ha podido establecer la conexion con la base de datos</HTML>", "/imagenes/error_black_96px.png");
 			break;
+		
+		case "useronline":
+			popUp_panel.errorStyle();
+			popUp_panel.showPanel("<HTML>El usuario con el que intentas inciar sesion esta: <b>ONLINE</b></HTML>", "/imagenes/error_black_96px.png");
+			break;
+		
+		case "usersuspend":
+			popUp_panel.errorStyle();
+			popUp_panel.showPanel("<HTML>El usuario con el que intentas inciar sesion esta: <b>SUSPENDIDO</b></HTML>", "/imagenes/error_black_96px.png");
+			break;
+			
 		case "regcomplete":
 			
 			popUp_panel.infoStyle();
@@ -1174,6 +1186,11 @@ public class Ventana {
 		sesionActual = sesion;
 		
 	}
+	
+	public Sesion getSesionActual() {
+		return sesionActual;
+	}
+	
 	public ResultSet getLoginResultSet() {
 		ResultSet rs = mysqlc.selectFrom("usuario", "nick='"+login_nick_textF.getText()+"'");
 		return rs;

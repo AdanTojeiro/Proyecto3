@@ -54,7 +54,21 @@ public class MysqlC {
 			PreparedStatement stm = con.prepareStatement(sql);
 			int n = stm.executeUpdate();
 			if(n > 0 ) {
-				System.out.println("MYSQL: Registro guardado con exito."+n+" rows afected.");
+				System.out.println("MYSQL: Registro guardado con exito. "+n+" rows afected.");
+			}
+		} catch (SQLException e) {
+			System.err.println("MYSQL: "+e);
+		}
+		
+	}
+	
+	public void Update(String nombreTabla, String update, String where) {
+		String sql="UPDATE "+nombreTabla+" SET "+update+" WHERE "+where;
+		try {
+			PreparedStatement stm = con.prepareStatement(sql);
+			int n = stm.executeUpdate();
+			if(n > 0 ) {
+				System.out.println("MYSQL: Registro actualizado con exito. "+n+" rows afected.");
 			}
 		} catch (SQLException e) {
 			System.err.println("MYSQL: "+e);

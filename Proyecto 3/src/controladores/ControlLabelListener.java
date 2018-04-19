@@ -11,7 +11,7 @@ import interfaz.Ventana;
 
 
 
-public class WindowListener  implements MouseListener {
+public class ControlLabelListener  implements MouseListener {
 	
 	private JLabelControl lbl;
 	private Ventana ventana;
@@ -19,7 +19,7 @@ public class WindowListener  implements MouseListener {
 	
 	
 	
-	public WindowListener(JLabelControl lbl, Ventana ventana) {
+	public ControlLabelListener(JLabelControl lbl, Ventana ventana) {
 		this.lbl = lbl;
 		this.ventana = ventana;
 	}
@@ -28,6 +28,10 @@ public class WindowListener  implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		switch(lbl.getFunction()) {
 		case 0:
+			if(ventana.getSesionActual() != null) {
+				String where = "nick='"+ventana.getSesionActual().getUsuario().getNick()+"'";
+				ventana.getMysqlc().Update("usuario", "estado='offline'",where);
+			}
 			System.exit(0);
 			break;
 		case 1:
