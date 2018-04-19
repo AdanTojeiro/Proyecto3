@@ -56,6 +56,7 @@ public class JFormBtn extends JPanel {
 	public void setFunction(String function) {
 		this.function = function;
 	}
+	
 
 	public boolean isGroupAllTrue() {
 		Iterator<TextFieldGroup> it = grupo_logico.iterator();

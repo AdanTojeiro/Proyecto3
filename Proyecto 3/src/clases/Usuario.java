@@ -1,12 +1,14 @@
 package clases;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
 public class Usuario {
 
 		private String nick, pass, nombre, apellidos, dni, email;
 		private Date fecha_registro, fecha_ultima_sesion;
-		private int pk_usuario, acceso;
+		private int acceso;
 		
 		public Usuario() {
 			
@@ -23,6 +25,25 @@ public class Usuario {
 			this.email = email;
 			this.fecha_registro = fecha_registro;
 			this.fecha_ultima_sesion = fecha_ultima_sesion;
+		}
+		
+		public Usuario(ResultSet rs) {
+			try {
+				if(rs.next()) {
+					this.setNick(rs.getString("nick"));
+					this.setNombre(rs.getString("nombre"));
+					this.setApellidos(rs.getString("apellidos"));
+					this.setDni(rs.getString("dni"));
+					this.setEmail(rs.getString("email"));
+					this.setAcceso(rs.getInt("acceso"));
+					this.setFecha_registro(rs.getDate("fecha_Registro"));
+					this.setFecha_ultima_sesion(rs.getDate("fecha_ultima_sesion"));
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		public String getNick() {
@@ -87,14 +108,6 @@ public class Usuario {
 
 		public void setFecha_ultima_sesion(Date fecha_ultima_sesion) {
 			this.fecha_ultima_sesion = fecha_ultima_sesion;
-		}
-
-		public int getPk_usuario() {
-			return pk_usuario;
-		}
-
-		public void setPk_usuario(int pk_usuario) {
-			this.pk_usuario = pk_usuario;
 		}
 
 		public int getAcceso() {

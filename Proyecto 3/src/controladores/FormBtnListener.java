@@ -4,6 +4,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Date;
 import acceso_a_datos.Encriptador;
+import clases.Sesion;
 import clases.Usuario;
 import interfaz.JFormBtn;
 import interfaz.Ventana;
@@ -14,9 +15,9 @@ public class FormBtnListener implements MouseListener{
 	private Ventana ventana;
 	
 
-	public FormBtnListener(JFormBtn btnPanel, Ventana ventana) {
+	public FormBtnListener(JFormBtn formBtn, Ventana ventana) {
 		super();
-		this.formBtn = btnPanel;
+		this.formBtn = formBtn;
 		this.ventana = ventana;
 	}
 
@@ -39,6 +40,10 @@ public class FormBtnListener implements MouseListener{
 				ventana.setRegDisplay(2, "back");
 				ventana.showPopUp("regcomplete");
 				ventana.setDisplay(ventana.getDisplay_login(), ventana.getDisplay_login().getGrupo(),"login");
+				break;
+			case "login":
+				ventana.iniciarSesion(new Sesion(ventana.getLoginResultSet()));
+				ventana.showPopUp("logincomplete");
 			}	
 			
 		}

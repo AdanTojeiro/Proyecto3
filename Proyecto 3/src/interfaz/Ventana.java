@@ -7,6 +7,7 @@ import javax.swing.*;
 
 import acceso_a_datos.Checker;
 import acceso_a_datos.MysqlC;
+import clases.Sesion;
 import clases.Usuario;
 import controladores.FormBtnListener;
 import controladores.FrameDrager;
@@ -18,6 +19,7 @@ import controladores.WindowListener;
 
 
 import java.awt.Font;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -27,6 +29,10 @@ public class Ventana {
 	private MysqlC mysqlc;
 	private Checker checker;
 	//ACCESO A DATOS FIN///////////////////////////////////////////////////////////////
+	
+	//DATOS DE SESION
+	private Sesion sesionActual;
+	//DATOS DE SESION
 	
 	//DATA ////////////////////////////////////////////////////////////////////////////
 	private Usuario RegData = new Usuario();
@@ -79,6 +85,8 @@ public class Ventana {
 	//2.2.2-Login display---------------------------------------------------------------
 	private JPanel login_password_panel, login_nick_panel;
 	private JLabel imagen_central_login;
+	private JFormBtn login_iniciar_FormBtn;
+	private JLabel login_iniciar_formBtn_text;
 	//2.2.2.1-Login_nick_panel----------------------------------------------------------
 	private JPanel login_nick_info_panel;
 	private JLabel login_nick_icon,login_nick_info_ico, login_nick_info_text;
@@ -141,7 +149,7 @@ public class Ventana {
 	private JTextField reg_email_textF;
 	//2.2.3.3.2-Confirmar Button
 	private JFormBtn reg_confirmar_FormBtn;
-	private JLabel reg_confirmar_btnPanel_text;
+	private JLabel reg_confirmar_formBtn_text;
 	//2.2.4-Info display----------------------------------------------------------------
 	//2.2.5-Soporte display-------------------------------------------------------------
 	//3-PopUp Panel---------------------------------------------------------------------
@@ -394,6 +402,20 @@ public class Ventana {
 		login_password_info_text.setFont(new Font("Tahoma", Font.BOLD, 20));
 		login_password_info_text.setBounds(42, 0, 328, 32);
 		login_password_info_panel.add(login_password_info_text);
+		
+		login_iniciar_FormBtn = new JFormBtn("login", login_grupo_logico);
+		login_iniciar_FormBtn.setBounds(275, 450, 258, 62);
+		display_login.add(login_iniciar_FormBtn);
+		login_iniciar_FormBtn.setLayout(null);
+		login_iniciar_FormBtn.setBackground(new Color(50, 205, 50));
+		login_iniciar_FormBtn.addMouseListener(new FormBtnListener(login_iniciar_FormBtn, this));
+		
+		login_iniciar_formBtn_text = new JLabel("Iniciar sesi\u00F3n");
+		login_iniciar_formBtn_text.setHorizontalAlignment(SwingConstants.CENTER);
+		login_iniciar_formBtn_text.setForeground(Color.WHITE);
+		login_iniciar_formBtn_text.setFont(new Font("Tahoma", Font.BOLD, 25));
+		login_iniciar_formBtn_text.setBounds(10, 0, 238, 62);
+		login_iniciar_FormBtn.add(login_iniciar_formBtn_text);
 
 		// --> Display Reg
 		display_reg = new JDisplay("Crear una cuenta", "/imagenes/reg_96px.png", grupo_displays);
@@ -783,12 +805,12 @@ public class Ventana {
 		reg_confirmar_FormBtn.setLayout(null);
 		reg_confirmar_FormBtn.addMouseListener(new FormBtnListener(reg_confirmar_FormBtn, this));
 		
-		reg_confirmar_btnPanel_text = new JLabel("Crear cuenta");
-		reg_confirmar_btnPanel_text.setBounds(10, 0, 238, 62);
-		reg_confirmar_FormBtn.add(reg_confirmar_btnPanel_text);
-		reg_confirmar_btnPanel_text.setForeground(Color.WHITE);
-		reg_confirmar_btnPanel_text.setFont(new Font("Tahoma", Font.BOLD, 25));
-		reg_confirmar_btnPanel_text.setHorizontalAlignment(SwingConstants.CENTER);
+		reg_confirmar_formBtn_text = new JLabel("Crear cuenta");
+		reg_confirmar_formBtn_text.setBounds(10, 0, 238, 62);
+		reg_confirmar_FormBtn.add(reg_confirmar_formBtn_text);
+		reg_confirmar_formBtn_text.setForeground(Color.WHITE);
+		reg_confirmar_formBtn_text.setFont(new Font("Tahoma", Font.BOLD, 25));
+		reg_confirmar_formBtn_text.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		//Reg Nav labels
 		reg_next_navLabel = new NavLabel("/imagenes/siguiente_96px.png", "/imagenes/siguiente_hover_96px.png", "reg", "next");
@@ -957,6 +979,8 @@ public class Ventana {
 		login_password_tfg = new TextFieldGroupRel(login_password_panel, login_password_info_panel, login_password_icon, login_password_info_ico, login_password_info_text,
 				login_password_textF,  login_password_separator, login_grupo_logico, login_nick_tfg, "correspondencia");
 		
+		
+		
 		login_nick_textF.addKeyListener(new TextFieldKeyListener(login_nick_tfg, checker));
 		login_password_textF.addKeyListener(new TextFieldKeyListener(login_password_tfg, checker));
 		login_nick_textF.addKeyListener(new TextFieldKeyListener(login_password_tfg, checker));
@@ -1022,6 +1046,11 @@ public class Ventana {
 			popUp_panel.infoStyle();
 			popUp_panel.showPanel("<HTML>Cuenta creada con exito. Inicia sesion para disfrutar de la aplicacion</HTML>", "/imagenes/reg_96px.png");
 			break;
+		case "logincomplete":
+			
+			popUp_panel.infoStyle();
+			popUp_panel.showPanel("<HTML>Sesion inciada con exito. Bienvenid@ "+sesionActual.getUsuario().getNick()+"</HTML>", "/imagenes/user_96px.png");
+			break;	
 		}
 		
 	}
@@ -1140,7 +1169,15 @@ public class Ventana {
 		}
 	}
 	
-	
+	//Sesion
+	public void iniciarSesion(Sesion sesion) {
+		sesionActual = sesion;
+		
+	}
+	public ResultSet getLoginResultSet() {
+		ResultSet rs = mysqlc.selectFrom("usuario", "nick='"+login_nick_textF.getText()+"'");
+		return rs;
+	}
 	//Data setters
 	public void setRegData() {
 		RegData.setNick(reg_nick_textF.getText());
@@ -1161,12 +1198,11 @@ public class Ventana {
 		return frame;
 	}
 	//Data getters
-		public Usuario getRegData(){
+	public Usuario getRegData(){
 			return RegData;
 		}
 		
-	
-		public void setFrame(JFrame frame) {
+	public void setFrame(JFrame frame) {
 			this.frame = frame;
 		}
 	//displays
