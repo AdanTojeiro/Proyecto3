@@ -7,7 +7,7 @@ import java.util.Date;
 public class Usuario {
 
 		private String nick, pass, nombre, apellidos, dni, email;
-		private Date fecha_registro, fecha_ultima_sesion;
+		private Date fecha_registro;
 		private int acceso;
 		
 		public Usuario() {
@@ -24,7 +24,6 @@ public class Usuario {
 			this.dni = dni;
 			this.email = email;
 			this.fecha_registro = fecha_registro;
-			this.fecha_ultima_sesion = fecha_ultima_sesion;
 		}
 		
 		public Usuario(ResultSet rs) {
@@ -37,7 +36,6 @@ public class Usuario {
 					this.setEmail(rs.getString("email"));
 					this.setAcceso(rs.getInt("acceso"));
 					this.setFecha_registro(rs.getDate("fecha_Registro"));
-					this.setFecha_ultima_sesion(rs.getDate("fecha_ultima_sesion"));
 				}
 				
 			} catch (SQLException e) {
@@ -100,14 +98,6 @@ public class Usuario {
 
 		public void setFecha_registro(Date fecha_registro) {
 			this.fecha_registro = fecha_registro;
-		}
-
-		public Date getFecha_ultima_sesion() {
-			return fecha_ultima_sesion;
-		}
-
-		public void setFecha_ultima_sesion(Date fecha_ultima_sesion) {
-			this.fecha_ultima_sesion = fecha_ultima_sesion;
 		}
 
 		public int getAcceso() {

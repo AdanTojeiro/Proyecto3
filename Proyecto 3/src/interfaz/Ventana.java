@@ -1184,7 +1184,6 @@ public class Ventana {
 	//Sesion
 	public void iniciarSesion(Sesion sesion) {
 		sesionActual = sesion;
-		
 	}
 	
 	public Sesion getSesionActual() {

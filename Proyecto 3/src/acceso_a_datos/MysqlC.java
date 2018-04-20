@@ -88,6 +88,18 @@ public class MysqlC {
 		return rs;
 	}
 	
+	public ResultSet selectFrom(String nombreTabla) {
+		ResultSet rs = null;          
+		String sql="SELECT * FROM "+nombreTabla;
+		try {
+			PreparedStatement stm = con.prepareStatement(sql);
+			rs = stm.executeQuery(sql);
+		} catch (SQLException e) {
+			System.err.println("MYSQL: "+e);
+		}
+		return rs;
+	}
+	
 
 	
 	

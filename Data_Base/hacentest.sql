@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.7.7
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-04-2018 a las 03:33:59
--- Versión del servidor: 10.1.31-MariaDB
--- Versión de PHP: 7.2.3
+-- Tiempo de generación: 20-04-2018 a las 17:35:07
+-- Versión del servidor: 10.1.30-MariaDB
+-- Versión de PHP: 7.2.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -68,10 +68,18 @@ CREATE TABLE `respuesta` (
 
 CREATE TABLE `sesion` (
   `pk_sesion` int(11) NOT NULL,
+  `codigo` varchar(15) COLLATE latin1_spanish_ci NOT NULL,
   `tiempo_inicio` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `tiempo_final` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `fk_usuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `sesion`
+--
+
+INSERT INTO `sesion` (`pk_sesion`, `codigo`, `tiempo_inicio`, `tiempo_final`, `fk_usuario`) VALUES
+(1, '@m3f7c2m8t5p6x8', '2018-04-20 15:28:49', '2018-04-20 15:28:49', 16);
 
 -- --------------------------------------------------------
 
@@ -104,6 +112,13 @@ CREATE TABLE `usuario` (
   `fecha_registro` date NOT NULL,
   `estado` varchar(20) COLLATE latin1_spanish_ci NOT NULL DEFAULT 'offline'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`pk_usuario`, `nick`, `pass`, `acceso`, `nombre`, `apellidos`, `dni`, `email`, `fecha_registro`, `estado`) VALUES
+(16, 'Adan77', '3488e28acfe4abe097e1f4d501d4b49a', 0, 'Adan', 'Jarillo Merida', '51512452l', 'adan@adan.com', '2018-04-20', 'offline');
 
 --
 -- Índices para tablas volcadas
@@ -169,7 +184,7 @@ ALTER TABLE `respuesta`
 -- AUTO_INCREMENT de la tabla `sesion`
 --
 ALTER TABLE `sesion`
-  MODIFY `pk_sesion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `pk_sesion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `test`
@@ -181,7 +196,7 @@ ALTER TABLE `test`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `pk_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `pk_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Restricciones para tablas volcadas
