@@ -51,7 +51,7 @@ public class FormBtnListener implements MouseListener{
 					if (rs.next()) {
 						String estado = rs.getString("estado");
 						if(estado.equals("offline")){
-							Timestamp tiempo_inicio =  new Timestamp(new java.util.Date().getTime());
+							//Timestamp tiempo_inicio =  new Timestamp(new java.util.Date().getTime());
 							int pk_usuario = rs.getInt("pk_usuario");
 							String where = "pk_usuario="+pk_usuario;
 							ventana.getMysqlc().Update("usuario", "estado='online'",where);
@@ -59,7 +59,7 @@ public class FormBtnListener implements MouseListener{
 							ResultSet rs2 = ventana.getMysqlc().selectFrom("sesion");
 							sesion.generarCodigo(rs2);
 							ventana.iniciarSesion(sesion);
-							ventana.getMysqlc().insertInto("sesion", "codigo, tiempo_inicio, fk_usuario","'"+sesion.getCodigo()+"', '"+tiempo_inicio+"', "+pk_usuario);
+							ventana.getMysqlc().insertInto("sesion", "codigo, tiempo_inicio, fk_usuario","'"+sesion.getCodigo()+"', CURRENT_TIMESTAMP() , "+pk_usuario);
 							switch(sesion.getUsuario().getAcceso()) {
 							case 0:
 								//sesion alumno

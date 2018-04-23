@@ -30,10 +30,10 @@ public class ControlLabelListener  implements MouseListener {
 		switch(lbl.getFunction()) {
 		case 0:
 			if(ventana.getSesionActual() != null) {
-				Timestamp tiempo_final =  new Timestamp(new java.util.Date().getTime());
+				//Timestamp tiempo_final =  new Timestamp(new java.util.Date().getTime());
 				String where = "nick='"+ventana.getSesionActual().getUsuario().getNick()+"'";
 				ventana.getMysqlc().Update("usuario", "estado='offline'",where);
-				ventana.getMysqlc().Update("sesion", "tiempo_final='"+tiempo_final+"'", "codigo='"+ventana.getSesionActual().getCodigo()+"'");
+				ventana.getMysqlc().Update("sesion", "tiempo_inicio = tiempo_inicio, tiempo_final= CURRENT_TIMESTAMP()", "codigo='"+ventana.getSesionActual().getCodigo()+"'");
 			}
 			System.exit(0);
 			break;
