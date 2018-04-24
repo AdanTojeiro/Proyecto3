@@ -10,8 +10,8 @@ import java.sql.Timestamp;
 import acceso_a_datos.Encriptador;
 import clases.Sesion;
 import clases.Usuario;
-import interfaz.JFormBtn;
 import interfaz.Ventana;
+import interfaz.componentes.JFormBtn;
 
 public class FormBtnListener implements MouseListener{
 	
@@ -43,7 +43,7 @@ public class FormBtnListener implements MouseListener{
 				ventana.resetRegForm();
 				ventana.setRegDisplay(2, "back");
 				ventana.showPopUp("regcomplete");
-				ventana.setDisplay(ventana.getDisplay_login(), ventana.getDisplay_login().getGrupo(),"login");
+				ventana.goTo("display_login");
 				break;
 			case "login":
 				ResultSet rs = ventana.getLoginResultSet();

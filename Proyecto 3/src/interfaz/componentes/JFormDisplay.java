@@ -1,4 +1,4 @@
-package interfaz;
+package interfaz.componentes;
 
 import java.util.ArrayList;
 

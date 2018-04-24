@@ -6,31 +6,34 @@ import java.awt.event.MouseListener;
 
 import java.util.Iterator;
 
-import interfaz.JPanelOpt;
+import interfaz.componentes.JOption;
 
 public class OptionListener implements MouseListener {
 	
-	private JPanelOpt opt;
+	private JOption opt;
 	
 	
 	
 	
-	public OptionListener(JPanelOpt opt ){
+	public OptionListener(JOption opt ){
 		super();
 		this.opt = opt;
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		Iterator<JPanelOpt> it = opt.getGrupo().iterator();
+		Iterator<JOption> it = opt.getGrupo().getGrupo().iterator();
 		while(it.hasNext()) {
-			JPanelOpt o = it.next();
+			JOption o = it.next();
 			if(!o.equals(opt)) {
 				o.setSelected(false);
 			}
 		}
 		opt.setSelected(true);
-		opt.getVentana().setDisplay(opt.getDisplay(), opt.getDisplay().getGrupo());
+		if(opt.getDisplay() == null) {
+			System.out.println("falla");
+		}
+		opt.getDisplay().getGrupo().mostarDisplay(opt.getDisplay());
 		
 	}
 

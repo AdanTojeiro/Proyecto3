@@ -7,20 +7,20 @@ import java.sql.Timestamp;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-import interfaz.JLabelControl;
 import interfaz.Ventana;
+import interfaz.componentes.JControlLabel;
 
 
 
 public class ControlLabelListener  implements MouseListener {
 	
-	private JLabelControl lbl;
+	private JControlLabel lbl;
 	private Ventana ventana;
 	
 	
 	
 	
-	public ControlLabelListener(JLabelControl lbl, Ventana ventana) {
+	public ControlLabelListener(JControlLabel lbl, Ventana ventana) {
 		this.lbl = lbl;
 		this.ventana = ventana;
 	}

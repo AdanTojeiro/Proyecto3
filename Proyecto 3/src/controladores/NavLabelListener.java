@@ -5,18 +5,17 @@ import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 
-
-import interfaz.NavLabel;
 import interfaz.Ventana;
+import interfaz.componentes.JNavLabel;
 
 public class NavLabelListener implements MouseListener {
 	
-	private NavLabel navLabel;
+	private JNavLabel navLabel;
 	private Ventana ventana;
 	
 	
 	
-	public NavLabelListener(NavLabel navLabel, Ventana ventana) {
+	public NavLabelListener(JNavLabel navLabel, Ventana ventana) {
 		super();
 		this.navLabel = navLabel;
 		this.ventana = ventana;

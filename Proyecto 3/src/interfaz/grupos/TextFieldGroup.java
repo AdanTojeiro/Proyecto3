@@ -1,4 +1,4 @@
-package interfaz;
+package interfaz.grupos;
 
 import java.util.ArrayList;
 

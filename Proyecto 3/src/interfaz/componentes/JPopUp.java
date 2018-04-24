@@ -1,4 +1,4 @@
-package interfaz;
+package interfaz.componentes;
 
 import java.awt.Color;
 
@@ -6,7 +6,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class JPopUpPanel extends JPanel {
+import interfaz.Ventana;
+
+public class JPopUp extends JPanel {
 
 	/**
 	 * 
@@ -14,7 +16,7 @@ public class JPopUpPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private JLabel ico, text;
-	private JLabelControl control;
+	private JControlLabel control;
 	private final Color COLOR_ERROR = new Color(219, 186, 70);
 	private final Color COLOR_CHECK = new Color(50, 205, 50);
 	
@@ -55,11 +57,11 @@ public class JPopUpPanel extends JPanel {
 		this.text = text;
 	}
 
-	public JLabelControl getControl() {
+	public JControlLabel getControl() {
 		return control;
 	}
 
-	public void setControl(JLabelControl control) {
+	public void setControl(JControlLabel control) {
 		this.control = control;
 	}
 

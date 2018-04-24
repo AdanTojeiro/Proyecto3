@@ -1,8 +1,8 @@
-package interfaz;
-
-import java.util.ArrayList;
+package interfaz.componentes;
 
 import javax.swing.JPanel;
+
+import interfaz.grupos.DisplayGroup;
 
 public class JDisplay extends JPanel {
 
@@ -12,14 +12,14 @@ public class JDisplay extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private String titulo;
 	private String icoPath;
-	private ArrayList<JDisplay> grupo; 
+	private DisplayGroup grupo; 
 	
-	public JDisplay(String titulo, String icoPath,  ArrayList<JDisplay> grupo) {
+	public JDisplay(String titulo, String icoPath,  DisplayGroup grupo) {
 		super();
 		this.titulo = titulo;
 		this.icoPath = icoPath;
 		this.grupo = grupo;
-		grupo.add(this);
+		grupo.addDisplay(this);
 	}
 
 	public String getTitulo() {
@@ -38,13 +38,15 @@ public class JDisplay extends JPanel {
 		this.icoPath = icoPath;
 	}
 
-	public ArrayList<JDisplay> getGrupo() {
+	public DisplayGroup getGrupo() {
 		return grupo;
 	}
 
-	public void setGrupo(ArrayList<JDisplay> grupo) {
+	public void setGrupo(DisplayGroup grupo) {
 		this.grupo = grupo;
 	}
+	
+	
 	
 	
 	

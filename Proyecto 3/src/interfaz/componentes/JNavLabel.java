@@ -1,10 +1,10 @@
-package interfaz;
+package interfaz.componentes;
 
 
 
 import javax.swing.JLabel;
 
-public class NavLabel extends JLabel {
+public class JNavLabel extends JLabel {
 	
 	/**
 	 * 
@@ -17,7 +17,7 @@ public class NavLabel extends JLabel {
 	private String grupo;
 	private int actualIndex = 1;
 	
-	public NavLabel(String ico_path, String ico_hover_path, String grupo, String function) {
+	public JNavLabel(String ico_path, String ico_hover_path, String grupo, String function) {
 		super();
 		this.ico_path = ico_path;
 		this.ico_hover_path = ico_hover_path;

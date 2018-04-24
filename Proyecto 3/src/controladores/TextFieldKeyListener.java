@@ -5,8 +5,8 @@ import java.awt.event.KeyListener;
 
 import acceso_a_datos.Checker;
 import acceso_a_datos.InfoMsg;
-import interfaz.TextFieldGroup;
-import interfaz.TextFieldGroupRel;
+import interfaz.grupos.TextFieldGroup;
+import interfaz.grupos.TextFieldGroupRel;
 
 public class TextFieldKeyListener implements KeyListener {
 	

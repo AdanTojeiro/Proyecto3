@@ -1,35 +1,38 @@
-package interfaz;
+package interfaz.componentes;
 
 import java.awt.Color;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-public class JPanelOpt extends JPanel {
+import interfaz.Ventana;
+import interfaz.grupos.OptionGroup;
+
+public class JOption extends JPanel {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private boolean selected;
-	private Ventana ventana;
 	private JDisplay display;
 	private String text;
 	private String ico_path;
+	private OptionGroup grupo;
 	private final Color COLOR_HOVER = new Color(110, 89, 222);
     private final Color COLOR_SELECTED = new Color(85, 65, 118);
     private final Color COLOR_BACKGROUND = new Color(54,33,89);
-    ArrayList<JPanelOpt> grupo;
+   
 	
 	
 	
-	public JPanelOpt(Ventana ventana, JDisplay display, String text, String ico_path, ArrayList<JPanelOpt> grupo) {
+	public JOption(JDisplay display, String text, String ico_path, OptionGroup grupo) {
 		super();
-		this.ventana = ventana;
 		this.display = display;
 		this.text = text;
 		this.ico_path = ico_path;
 		this.grupo = grupo;
-		grupo.add(this);
+		grupo.addOption(this);
+
 	}
 
 	public boolean isSelected() {
@@ -81,13 +84,14 @@ public class JPanelOpt extends JPanel {
 		return COLOR_BACKGROUND;
 	}
 
-	public ArrayList<JPanelOpt> getGrupo() {
+	public OptionGroup getGrupo() {
 		return grupo;
 	}
 
-	public Ventana getVentana() {
-		return ventana;
+	public void setGrupo(OptionGroup grupo) {
+		this.grupo = grupo;
 	}
+
 	
 	
 	

@@ -1,8 +1,8 @@
-package interfaz;
+package interfaz.componentes;
 
 import javax.swing.JLabel;
 
-public class JLabelControl extends JLabel {
+public class JControlLabel extends JLabel {
 
 	/**
 	 * 
@@ -11,7 +11,7 @@ public class JLabelControl extends JLabel {
 	private String pathIco, pathIcoHover;
 	private int function;
 	
-	public JLabelControl(int function, String pathIco, String pathIcoHover) {
+	public JControlLabel(int function, String pathIco, String pathIcoHover) {
 		super();
 		this.function = function;
 		this.pathIco = pathIco;

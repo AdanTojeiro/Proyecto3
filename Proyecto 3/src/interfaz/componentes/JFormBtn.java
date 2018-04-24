@@ -1,10 +1,12 @@
-package interfaz;
+package interfaz.componentes;
 
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.swing.JPanel;
+
+import interfaz.grupos.TextFieldGroup;
 
 public class JFormBtn extends JPanel {
 

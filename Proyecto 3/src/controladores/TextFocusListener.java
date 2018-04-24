@@ -4,7 +4,7 @@ package controladores;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import acceso_a_datos.Checker;
-import interfaz.TextFieldGroup;
+import interfaz.grupos.TextFieldGroup;
 
 
 public class TextFocusListener implements FocusListener{
