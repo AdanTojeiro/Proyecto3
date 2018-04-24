@@ -5,7 +5,6 @@ import java.awt.event.MouseListener;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 
 import acceso_a_datos.Encriptador;
 import clases.Sesion;
@@ -33,7 +32,6 @@ public class FormBtnListener implements MouseListener{
 			case "reg":
 				Encriptador enc = new Encriptador();
 				Date fecha = new Date(new java.util.Date().getTime());
-				ventana.setRegData();
 				Usuario data = ventana.getRegData();
 				String nombreTabla = "usuario";
 				String campos = "nick, pass, nombre, apellidos, dni, email, fecha_registro";

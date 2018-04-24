@@ -35,26 +35,17 @@ import java.util.Iterator;
 
 public class Ventana {
 
-	// ACCESO A DATOS
-	// INICIO////////////////////////////////////////////////////////////
+	// ACCESO A DATOS INICIO
 	private MysqlC mysqlc;
 	private Checker checker;
-	// ACCESO A DATOS
-	// FIN///////////////////////////////////////////////////////////////
 
 	// DATOS DE SESION
 	private Sesion sesionActual;
-	// DATOS DE SESION
-
+	
 	// DATA
-	// ////////////////////////////////////////////////////////////////////////////
 	private Usuario RegData = new Usuario();
-	// DATA
-	// ////////////////////////////////////////////////////////////////////////////
 
-	// GRUPOS
-	// INICIO////////////////////////////////////////////////////////////////////
-
+	// GRUPOS 
 	private ArrayList<JOption> listaOpciones_invitado = new ArrayList<JOption>();
 	private ArrayList<JOption> listaOpciones_alumno = new ArrayList<JOption>();
 	private ArrayList<JOption> listaOpciones_profesor = new ArrayList<JOption>();
@@ -68,172 +59,173 @@ public class Ventana {
 	private ArrayList<JDisplay> listaDisplays_desarrollador = new ArrayList<JDisplay>();
 
 	private ArrayList<JFormDisplay> grupo_reg = new ArrayList<JFormDisplay>();
-	// GRUPOS
-	// FIN-//////////////////////////////////////////////////////////////////////
 
-	// COLORES
-	// INICIO///////////////////////////////////////////////////////////////////
+	// COLORES INICIO
 	private final Color COLOR_ERROR = new Color(219, 186, 70);
 	private final Color COLOR_SELECTED = new Color(85, 65, 118);
 	private final Color COLOR_BACKGROUND = new Color(54, 33, 89);
 	private final Color COLOR_CHECK = new Color(50, 205, 50);
-	// COLORES
-	// FIN//////////////////////////////////////////////////////////////////////
 
-	// SESIONS_STEUP////////////////////////////////////////////////////////////////////
+	// SESIONS_STEUP
 	private SesionSteup invitado, alumno, profesor, administador, desarrollador;
 	private OptionGroup opciones_invitado, opciones_alumno, opciones_profesor, opciones_administrador,
 			opciones_desarrollador;
 	private DisplayGroup displays_invitado, displays_alumno, displays_profesor, displays_administrador,
 			displays_desarrollador;
 
-	///////////////////////////////////////////////////////////////////////////////////
-
-	// COMPONENTES
-	// INICIO///////////////////////////////////////////////////////////////
-	// Estructura-----------------------------------------------------------------------
+	// COMPONENTES INICIO
+	
+	// Estructura
 	private JFrame frame;
 	private JPanel background_panel, side_panel, center_panel;
 	private JPopUp popUp_panel;
-	// 1-Side
-	// panel---------------------------------------------------------------------
+	
+	// 1-Side panel
 	private JPanel logo_panel, nav_panel;
-	// 1.1-Logo
-	// panel-------------------------------------------------------------------
+	
+	// 1.1-Logo panel
 	private JLabel logo_imagen, logo_texto;
-	// 1.2-Nav
-	// Panel--------------------------------------------------------------------
+	
+	// 1.2-Nav Panel
 	private JPanel navPanel_invitado, navPanel_alumno, navPanel_profesor, navPanel_administrador,
 			navPanel_desarrollador;
-	// 1.2.1-Index
-	// nav------------------------------------------------------------------
+	
+	// 1.2.1-Index nav
 	private JOption opt_login, opt_reg, opt_info, opt_soporte;
-	// 1.2.1.1-Opt_Login----------------------------------------------------------------
+	
+	// 1.2.1.1-Opt_Login
 	private JLabel opt_login_ico, opt_login_text;
-	// 1.2.1.2-Opt_Reg------------------------------------------------------------------
+	
+	// 1.2.1.2-Opt_Reg
 	private JLabel opt_reg_ico, opt_reg_text;
-	// 1.2.1.3-Opt_Info-----------------------------------------------------------------
+	
+	// 1.2.1.3-Opt_Info
 	private JLabel opt_info_ico, opt_info_text;
-	// 1.2.1.4-Opt_Soporte--------------------------------------------------------------
+	
+	// 1.2.1.4-Opt_Soporte
 	private JLabel opt_soporte_ico, opt_soporte_text;
-	// 2-Center
-	// panel-------------------------------------------------------------------
+	
+	// 2-Center panel
 	private JPanel titulo_panel, display_panel;
-	// 2.1-Titulo
-	// panel-----------------------------------------------------------------
+	
+	// 2.1-Titulo panel
 	private JControlLabel close_lbl, minimize_lbl;
 	private JLabel titulo_ico, titulo_text;
 	private JSeparator separador_titulo;
-	// 2.2-Displays----------------------------------------------------------------------
+	
+	// 2.2-Displays
 	private JDisplay display_index, display_login, display_reg, display_info, display_soporte;
-	// 2.2.1-Index
-	// display---------------------------------------------------------------
+	
+	// 2.2.1-Index display
 	private JLabel mensaje_index;
-	// 2.2.2-Login
-	// display---------------------------------------------------------------
+	
+	// 2.2.2-Login display
 	private JPanel login_password_panel, login_nick_panel;
 	private JLabel imagen_central_login;
 	private JFormBtn login_iniciar_FormBtn;
 	private JLabel login_iniciar_formBtn_text;
-	// 2.2.2.1-Login_nick_panel----------------------------------------------------------
+	
+	// 2.2.2.1-Login_nick_panel
 	private JPanel login_nick_info_panel;
 	private JLabel login_nick_icon, login_nick_info_ico, login_nick_info_text;
 	private JTextField login_nick_textF;
 	private JSeparator login_nick_separator;
-	// 2.2.2.2-Login_pass_panel----------------------------------------------------------
+	
+	// 2.2.2.2-Login_pass_panel
 	private JPanel login_password_info_panel;
 	private JLabel login_password_icon, login_password_info_ico, login_password_info_text;
 	private JPasswordField login_password_textF;
 	private JSeparator login_password_separator;
-	// 2.2.3-Reg
-	// display-----------------------------------------------------------------
+	
+	// 2.2.3-ReG display
 	private JPanel reg_stepbar_panel;
 	private JFormDisplay reg_form_step_1_panel, reg_form_step_2_panel, reg_form_step_3_panel;
 	private JNavLabel reg_next_navLabel, reg_back_navLabel;
 	private JLabel reg_form_ico, reg_form_titulo;
 	private JSeparator reg_form_separator;
-	// 2.2.3.1-Stepbar-------------------------------------------------------------------
+	
+	// 2.2.3.1-Stepbar
 	private JSeparator reg_stepbar_1_to_2_separator, reg_stepbar_2_to_3_separator;
 	private JLabel reg_stepbar_1_ico, reg_stepbar_2_ico, reg_stepbar_3_ico, reg_stepbar_1_arrow_ico,
 			reg_stepbar_2_arrow_ico, reg_stepbar_3_arrow_ico;
-	// 2.2.3.2-Form
-	// 1--------------------------------------------------------------------
+	
+	// 2.2.3.2-Form 1
 	private JPanel reg_nick_panel, reg_password_panel, reg_password_check_panel;
-	// 2.2.3.2.1-Nick
-	// panel--------------------------------------------------------------
+	
+	// 2.2.3.2.1-Nick panel
 	private JSeparator reg_nick_separator;
 	private JLabel reg_nick_ico, reg_nick_info_ico, reg_nick_info_text;
 	private JTextField reg_nick_textF;
 	private JPanel reg_nick_info_panel;
-	// 2.2.3.2.2-Password
-	// panel----------------------------------------------------------
+	
+	// 2.2.3.2.2-Password panel
 	private JSeparator reg_password_separator;
 	private JLabel reg_password_ico, reg_password_info_ico, reg_password_info_text;
 	private JPasswordField reg_password_textF;
 	private JPanel reg_password_info_panel;
-	// 2.2.3.2.3-Password check
-	// panel----------------------------------------------------
+	
+	// 2.2.3.2.3-Password check panel
 	private JPanel reg_password_check_info_panel;
 	private JSeparator reg_password_check_separator;
 	private JLabel reg_password_check_ico, reg_password_check_info_ico, reg_password_check_info_text;
 	private JPasswordField reg_password_check_textF;
-	// 2.2.3.3-Form
-	// 2--------------------------------------------------------------------
+	
+	// 2.2.3.3-Form 2
 	private JPanel reg_name_panel, reg_apellido_panel, reg_dni_panel;
-	// 2.2.3.3.1-Name
-	// panel--------------------------------------------------------------
+	
+	// 2.2.3.3.1-Name panel
 	private JPanel reg_name_info_panel;
 	private JSeparator reg_name_separator;
 	private JLabel reg_name_ico, reg_name_info_ico, reg_name_info_text;
 	private JTextField reg_name_textF;
-	// 2.2.3.3.2-Apellido
-	// panel----------------------------------------------------------
+	
+	// 2.2.3.3.2-Apellido panel
 	private JPanel reg_apellido_info_panel;
 	private JSeparator reg_apellido_separator;
 	private JLabel reg_apellido_ico, reg_apellido_info_ico, reg_apellido_info_text;
 	private JTextField reg_apellido_textF;
-	// 2.2.3.3.3-DNI
-	// panel---------------------------------------------------------------
+	
+	// 2.2.3.3.3-DNI panel
 	private JPanel reg_dni_info_panel;
 	private JSeparator reg_dni_separator;
 	private JLabel reg_dni_ico, reg_dni_info_ico, reg_dni_info_text;
 	private JTextField reg_dni_textF;
-	// 2.2.3.3-Form
-	// 3--------------------------------------------------------------------
+	
+	// 2.2.3.3-Form 3
 	private JPanel reg_email_panel;
+	
 	// 2.2.3.3.1-Email panel
 	private JPanel reg_email_info_panel;
 	private JSeparator reg_email_separator;
 	private JLabel reg_email_ico, reg_email_info_ico, reg_email_info_text;
 	private JTextField reg_email_textF;
+	
 	// 2.2.3.3.2-Confirmar Button
 	private JFormBtn reg_confirmar_FormBtn;
 	private JLabel reg_confirmar_formBtn_text;
-	// 2.2.4-Info
-	// display----------------------------------------------------------------
-	// 2.2.5-Soporte
-	// display-------------------------------------------------------------
-	// 3-PopUp
-	// Panel---------------------------------------------------------------------
+	
+	// 2.2.4-Info display
+	// 2.2.5-Soporte display
+	
+	// 3-PopUp Panel
 	private JLabel popUp_ico, popUp_text;
 	private JControlLabel popUp_salir_labelControl;
-	// COMPONENTES
-	// FIN///////////////////////////////////////////////////////////////////
+	
 
-	// COMPONENTES
-	// LOGICOS///////////////////////////////////////////////////////////////
-	// -Formulario
-	// Login-----------------------------------------------------------------
+	// [ ]COMPONENTES LOGICOS
+	// Formulario Login
 	private ArrayList<TextFieldGroup> login_grupo_logico = new ArrayList<TextFieldGroup>();
 	private TextFieldGroup login_nick_tfg;
 	private TextFieldGroup login_password_tfg;
-	// -Formulario
-	// registro--------------------------------------------------------------
+	// Formulario registro
 	private ArrayList<TextFieldGroup> reg_grupo_logico = new ArrayList<TextFieldGroup>();
 	private TextFieldGroup reg_nick_tfg, reg_password_tfg, reg_name_tfg, reg_apellido_tfg, reg_dni_tfg, reg_email_tfg;
 	private TextFieldGroup reg_password_check_tfg;
-	// COMPONENTES
-	// LOGICOS///////////////////////////////////////////////////////////////
+	
+	/*
+	 * |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+	 * INICIALIZACION COMPONENTES
+	 */
 
 	public Ventana() {
 		mysqlc = new MysqlC();
@@ -248,6 +240,7 @@ public class Ventana {
 	/**
 	 * @wbp.parser.entryPoint
 	 */
+	
 	// Inicializacion de componentes
 	private void initialize() {
 		// Frame
@@ -260,12 +253,11 @@ public class Ventana {
 		FrameDrager drager = new FrameDrager(frame);
 		frame.addMouseListener(drager);
 		frame.addMouseMotionListener(drager);
-		
+
 		cargarPopUpPanel();
 		cargarEstructura();
 		cargarSesionSteups();
 		cargarSesionInvitado();
-		
 
 		// Comprobar driver
 		if (!mysqlc.Conectar()) {
@@ -296,11 +288,10 @@ public class Ventana {
 		background_panel.add(center_panel);
 		center_panel.setBackground(COLOR_SELECTED);
 		center_panel.setLayout(null);
-		
+
 		cargarCenterPanel();
 		cargarSidePanel();
-		
-		
+
 	}
 
 	private void cargarSidePanel() {
@@ -1158,10 +1149,9 @@ public class Ventana {
 	}
 
 	/*
-	 * ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+	 * |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+	 * POPUP CONTROL
 	 */
-	
-	// PopUp control
 
 	public void showPopUp(String type) {
 
@@ -1207,11 +1197,14 @@ public class Ventana {
 		popUp_panel.setVisible(false);
 
 	}
-
-
 	
+	/*
+	 * |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+	 * DISPLAY CONTROL
+	 */
+
 	public void goTo(String displayName) {
-		switch(displayName) {
+		switch (displayName) {
 		case "display_login":
 			opt_login.setSelected(true);
 			opt_reg.setSelected(false);
@@ -1219,6 +1212,16 @@ public class Ventana {
 			displays_invitado.mostarDisplay(display_login);
 			break;
 		}
+	}
+	
+	/*
+	 * |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+	 * CONTROL FORMULARIOS
+	 */
+	
+	public ResultSet getLoginResultSet() {
+		ResultSet rs = mysqlc.selectFrom("usuario", "nick='" + login_nick_textF.getText() + "'");
+		return rs;
 	}
 
 	public void resetRegForm() {
@@ -1293,23 +1296,8 @@ public class Ventana {
 
 		}
 	}
-
-	// Sesion
-	public void iniciarSesion(Sesion sesion) {
-		sesionActual = sesion;
-	}
-
-	public Sesion getSesionActual() {
-		return sesionActual;
-	}
-
-	public ResultSet getLoginResultSet() {
-		ResultSet rs = mysqlc.selectFrom("usuario", "nick='" + login_nick_textF.getText() + "'");
-		return rs;
-	}
-
-	// Data setters
-	public void setRegData() {
+	
+	private void setRegData() {
 		RegData.setNick(reg_nick_textF.getText());
 		RegData.setPass(String.valueOf(reg_password_textF.getPassword()));
 		RegData.setNombre(reg_name_textF.getText());
@@ -1317,6 +1305,32 @@ public class Ventana {
 		RegData.setDni(reg_dni_textF.getText());
 		RegData.setEmail(reg_email_textF.getText());
 	}
+	
+	public Usuario getRegData() {
+		setRegData();
+		return RegData;
+	}
+	
+	/*
+	 * |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+	 * SESION CONTROL
+	 */
+
+	public void iniciarSesion(Sesion sesion) {
+		sesionActual = sesion;
+	}
+
+	public Sesion getSesionActual() {
+		return sesionActual;
+	}
+	
+	/*
+	 * |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+	 * FRAME CONTROL
+	 */
+
+	// Data setters
+	
 
 	// Set visible principal
 	public void setVisible(boolean b) {
@@ -1325,37 +1339,18 @@ public class Ventana {
 	}
 
 	// Getters
+	
 	public JFrame getFrame() {
 		return frame;
 	}
 
 	// Data getters
-	public Usuario getRegData() {
-		return RegData;
-	}
-
-	public void setFrame(JFrame frame) {
-		this.frame = frame;
-	}
+	
 
 	// displays
 	public JDisplay getDisplay_index() {
 		return display_index;
 	}
 
-	public JDisplay getDisplay_login() {
-		return display_login;
-	}
-
-	public JDisplay getDisplay_reg() {
-		return display_reg;
-	}
-
-	public JDisplay getDisplay_info() {
-		return display_info;
-	}
-
-	public JDisplay getDisplay_soporte() {
-		return display_soporte;
-	}
 }
+	

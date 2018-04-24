@@ -1,11 +1,7 @@
 package interfaz.componentes;
 
 import java.awt.Color;
-import java.util.ArrayList;
-
 import javax.swing.JPanel;
-
-import interfaz.Ventana;
 import interfaz.grupos.OptionGroup;
 
 public class JOption extends JPanel {
