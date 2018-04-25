@@ -16,7 +16,7 @@ public class Launcher {
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
-			public void run() {
+			public void run(){
 				try {
 					Ventana window = new Ventana();
 				} catch (Exception e) {

@@ -37,6 +37,7 @@ public class ControlLabelListener  implements MouseListener {
 			System.exit(0);
 			break;
 		case 1:
+			ventana.getFocusFixer().requestFocus();
 			ventana.getFrame().setState(JFrame.ICONIFIED);
 			break;
 		case 2:

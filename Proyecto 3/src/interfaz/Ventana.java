@@ -83,6 +83,7 @@ public class Ventana {
 	private JFrame frame;
 	private JPanel background_panel, side_panel, center_panel;
 	private JPopUp popUp_panel;
+	JButton focusFixer;
 	
 	// 1-Side panel
 	private JPanel logo_panel, nav_panel;
@@ -253,7 +254,7 @@ public class Ventana {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1100, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setUndecorated(true);
+		//frame.setUndecorated(true);
 		frame.setVisible(true);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
@@ -296,6 +297,10 @@ public class Ventana {
 		background_panel.add(center_panel);
 		center_panel.setBackground(COLOR_SELECTED);
 		center_panel.setLayout(null);
+		
+		focusFixer = new JButton("");
+		focusFixer.setBounds(42, 0, 1, 1);
+		frame.getContentPane().add(focusFixer);
 
 		cargarCenterPanel();
 		cargarSidePanel();
@@ -1341,6 +1346,10 @@ public class Ventana {
 	public JFrame getFrame() {
 		return frame;
 	}
+	
+	public JButton getFocusFixer() {
+		return focusFixer;
+	}
 
 	
 
@@ -1349,6 +1358,11 @@ public class Ventana {
 	 * GESTORES DE DATOS
 	 */
 	
+	
+	public void setFocusFixer(JButton focusFixer) {
+		this.focusFixer = focusFixer;
+	}
+
 	public GestorUsuarios getGestorUsuarios() {
 		return gestorUsuarios;
 	}
@@ -1356,9 +1370,5 @@ public class Ventana {
 	public GestorSesiones getGestorSesiones() {
 		return gestorSesiones;
 	}
-	
-	
-	
-
 }
 	
