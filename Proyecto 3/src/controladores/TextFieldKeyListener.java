@@ -1,5 +1,6 @@
 package controladores;
 
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -12,7 +13,7 @@ public class TextFieldKeyListener implements KeyListener {
 	
 	TextFieldGroup tFGroup;
 	Checker checker;
-	
+	private final Color COLOR_DANGER = new Color(222, 69, 69);
 	
 
 	public TextFieldKeyListener(TextFieldGroup tFGroup, Checker checker) {
@@ -28,8 +29,9 @@ public class TextFieldKeyListener implements KeyListener {
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {
+	public void keyReleased(KeyEvent e){
 		InfoMsg info;
+		if(tFGroup.isConnected()) {
 		switch(tFGroup.getTipo()) {
 		case "strict":
 			info = checker.checkStringStrict(tFGroup.getTextF().getText());
@@ -75,6 +77,10 @@ public class TextFieldKeyListener implements KeyListener {
 				}
 			}
 			break;
+		}
+		} else {
+			info = new InfoMsg("Imposible conectar a la base de datos", "/imagenes/error_black_32px.png", false, COLOR_DANGER);
+			tFGroup.showInfo(info);
 		}
 		
 	}

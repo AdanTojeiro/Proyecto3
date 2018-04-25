@@ -19,6 +19,7 @@ public class TextFieldGroup {
 	private JSeparator separator;
 	private String tipo, defaultText;
 	private boolean check;
+	private boolean connected;
 	private ArrayList<TextFieldGroup> grupo_logico;
 	
 	
@@ -35,6 +36,7 @@ public class TextFieldGroup {
 		this.separator = separator;
 		this.tipo = tipo;
 		check = false;
+		connected = true;
 		defaultText = textF.getText();
 		grupo_logico.add(this);
 	}
@@ -144,6 +146,15 @@ public class TextFieldGroup {
 	public void setDefaultText(String defaultText) {
 		this.defaultText = defaultText;
 	}
+
+	public boolean isConnected() {
+		return connected;
+	}
+
+	public void setConnected(boolean connected) {
+		this.connected = connected;
+	}
+	
 	
 	
 	

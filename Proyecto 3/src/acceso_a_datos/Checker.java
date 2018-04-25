@@ -1,8 +1,6 @@
 package acceso_a_datos;
 
 import java.awt.Color;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,10 +8,10 @@ public class Checker {
 
 	private final Color COLOR_ERROR = new Color(219, 186, 70);
 	private final Color COLOR_CHECK = new Color(50, 205, 50);
-	MysqlC mysqlc;
+	GestorUsuarios gestorUsuarios;
 
-	public Checker(MysqlC mysqlc) {
-		this.mysqlc = mysqlc;
+	public Checker(GestorUsuarios gestorUsuarios) {
+		this.gestorUsuarios = gestorUsuarios;
 	}
 
 	public InfoMsg checkPassword(String s) {
@@ -83,17 +81,11 @@ public class Checker {
 		Matcher mat = pat.matcher(s);
 		if (mat.matches()) {
 			// Cumple formato
-			ResultSet rs = mysqlc.selectFrom("usuario", "nick='" + s + "'");
-			try {
-				if (!rs.next()) {
-					info = new InfoMsg("Nick valido", "/imagenes/checkbox_32px.png", true, COLOR_CHECK);
-				} else {
-					info = new InfoMsg("El nick no esta disponible", "/imagenes/error_black_32px.png", false,
-							COLOR_ERROR);
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if (!gestorUsuarios.buscarUsuarioExacto("nick", s)) {
+				info = new InfoMsg("Nick valido", "/imagenes/checkbox_32px.png", true, COLOR_CHECK);
+			} else {
+				info = new InfoMsg("El nick no esta disponible", "/imagenes/error_black_32px.png", false,
+						COLOR_ERROR);
 			}
 
 		} else {
@@ -119,8 +111,13 @@ public class Checker {
 		
 		Pattern pat = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 		Matcher mat = pat.matcher(s);
+		
 		if(mat.matches()) {
+			if (!gestorUsuarios.buscarUsuarioExacto("email", s)) {
 			info = new InfoMsg("Email valido", "/imagenes/checkbox_32px.png", true, COLOR_CHECK);
+			} else {
+				info = new InfoMsg("Este email ya esta en uso", "/imagenes/error_black_32px.png", false, COLOR_ERROR);
+			}
 		} else {
 			info = new InfoMsg("Formato no reconocido", "/imagenes/error_black_32px.png", false, COLOR_ERROR);
 		}
@@ -183,6 +180,7 @@ public class Checker {
 		// Solo letras, numeros y guiones, sin espacios maximo 20 caracteres
 		// Reconvertimos la cadana a primera mayuscula, siguientes minusculas.
 		// "^[a-zA-Z0-9_-]{4,20}$"
+		//La cadena debe existir dentro de la base de datos ene l campo indicado
 
 		InfoMsg info = null;
 
@@ -190,17 +188,11 @@ public class Checker {
 		Matcher mat = pat.matcher(s);
 		if (mat.matches()) {
 			// Cumple formato
-			ResultSet rs = mysqlc.selectFrom("usuario", "nick='" + s + "'");
-			try {
-				if (rs.next()) {
+				if(gestorUsuarios.buscarUsuarioExacto("nick", s)){
 					info = new InfoMsg("Usuario encontrado", "/imagenes/checkbox_32px.png", true, COLOR_CHECK);
 				} else {
 					info = new InfoMsg("El usuario no existe", "/imagenes/error_black_32px.png", false,
 							COLOR_ERROR);
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 
 		} else {
@@ -230,9 +222,8 @@ public class Checker {
 		char[] letras = { 'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H',
 				'L', 'C', 'K', 'E', 'T' };
 
-		ResultSet rs = mysqlc.selectFrom("usuario", "dni='" + s + "'");
-		try {
-			if (!rs.next()) {
+		
+			if (!gestorUsuarios.buscarUsuarioExacto("dni", s)) {
 				if (s.length() > 0) {
 					char pL = s.charAt(0);
 					switch (pL) {
@@ -270,10 +261,7 @@ public class Checker {
 			} else {
 				info = new InfoMsg("Este DNI ya esta en uso", "/imagenes/error_black_32px.png", false, COLOR_ERROR);
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		return info;
 	}
 
@@ -299,22 +287,13 @@ public class Checker {
 		InfoMsg info = null;
 		Encriptador enc = new Encriptador();
 		if(check) {
-			
-			ResultSet rs = mysqlc.selectFrom("usuario", "nick='" + sRelacionada + "'");
-			
-			try {
-				if(rs.next()) {
-					if(enc.compararMD5(sPrincipal, rs.getString("pass"))) {
+					if(enc.compararMD5(sPrincipal, gestorUsuarios.getPassword("nick", sRelacionada))) {
 						info = new InfoMsg("Contraseña Correcta", "/imagenes/checkbox_32px.png", true, COLOR_CHECK);
 					} else {
 						info = new InfoMsg("Contraseña incorrecta", "/imagenes/error_black_32px.png", false,
 								COLOR_ERROR);
 					}
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 		} else {
 			info = new InfoMsg("Usuario no encontrado", "/imagenes/error_black_32px.png", false,
 					COLOR_ERROR);

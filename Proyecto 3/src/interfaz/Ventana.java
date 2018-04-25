@@ -5,6 +5,8 @@ import java.awt.Color;
 import javax.swing.*;
 
 import acceso_a_datos.Checker;
+import acceso_a_datos.GestorSesiones;
+import acceso_a_datos.GestorUsuarios;
 import acceso_a_datos.MysqlC;
 import clases.Sesion;
 import clases.Usuario;
@@ -37,6 +39,8 @@ public class Ventana {
 
 	// ACCESO A DATOS INICIO
 	private MysqlC mysqlc;
+	private GestorUsuarios gestorUsuarios;
+	private GestorSesiones gestorSesiones;
 	private Checker checker;
 
 	// DATOS DE SESION
@@ -229,7 +233,9 @@ public class Ventana {
 
 	public Ventana() {
 		mysqlc = new MysqlC();
-		checker = new Checker(mysqlc);
+		gestorUsuarios = new GestorUsuarios(mysqlc);
+		gestorSesiones = new GestorSesiones(mysqlc);
+		checker = new Checker(gestorUsuarios);
 		initialize();
 	}
 
@@ -248,6 +254,7 @@ public class Ventana {
 		frame.setBounds(100, 100, 1100, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setUndecorated(true);
+		frame.setVisible(true);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
 		FrameDrager drager = new FrameDrager(frame);
@@ -260,10 +267,11 @@ public class Ventana {
 		cargarSesionInvitado();
 
 		// Comprobar driver
-		if (!mysqlc.Conectar()) {
+		
+		if (!mysqlc.testConnection()) {
 			this.showPopUp("mysqlerror");
-
-		}
+		} 
+		
 
 	}
 
@@ -1220,7 +1228,7 @@ public class Ventana {
 	 */
 	
 	public ResultSet getLoginResultSet() {
-		ResultSet rs = mysqlc.selectFrom("usuario", "nick='" + login_nick_textF.getText() + "'");
+		ResultSet rs = gestorUsuarios.getUsuario("nick", login_nick_textF.getText());
 		return rs;
 	}
 
@@ -1329,28 +1337,28 @@ public class Ventana {
 	 * FRAME CONTROL
 	 */
 
-	// Data setters
-	
-
-	// Set visible principal
-	public void setVisible(boolean b) {
-		frame.setVisible(true);
-
-	}
-
 	// Getters
-	
 	public JFrame getFrame() {
 		return frame;
 	}
 
-	// Data getters
 	
 
-	// displays
-	public JDisplay getDisplay_index() {
-		return display_index;
+	/*
+	 * |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+	 * GESTORES DE DATOS
+	 */
+	
+	public GestorUsuarios getGestorUsuarios() {
+		return gestorUsuarios;
 	}
+
+	public GestorSesiones getGestorSesiones() {
+		return gestorSesiones;
+	}
+	
+	
+	
 
 }
 	

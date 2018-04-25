@@ -17,8 +17,7 @@ public class MysqlC {
 	
 	
 	
-	public boolean Conectar() {
-		con = null;
+	public boolean conectar() {
 		try {
 			Class.forName(DRIVER);
 			con = DriverManager.getConnection(URL, USUARIO, PASSWORD);
@@ -32,12 +31,21 @@ public class MysqlC {
 		return conectada;
 	}
 	
-	public static void Desconectar() {
+	public void desconectar() {
 		con = null;
 		if(con == null) {
 			System.out.println("MYSQL: Fin de la conexion.");
 			conectada = false;
 		}
+	}
+	
+	public boolean testConnection() {
+		boolean control = false;
+		if(conectar()) {
+			control = true;
+			desconectar();
+		}
+		return control;
 	}
 	
 	public Connection getCon() {
@@ -48,31 +56,37 @@ public class MysqlC {
 		return conectada;
 	}
 	//SQL STATEMENTS
-	public void insertInto(String nombreTabla, String campos, String value) {
+	public boolean insertInto(String nombreTabla, String campos, String value) {
+		boolean control = false;
 		String sql="INSERT INTO "+nombreTabla+" ("+campos+") VALUES ("+value+")";
 		try {
 			PreparedStatement stm = con.prepareStatement(sql);
 			int n = stm.executeUpdate();
 			if(n > 0 ) {
-				System.out.println("MYSQL: Registro guardado con exito. "+n+" rows afected.");
+				control = true;
+				System.out.println("MYSQL: Execute Insert( -> "+sql+" <-). Rows afected: "+n);
 			}
 		} catch (SQLException e) {
 			System.err.println("MYSQL: "+e);
 		}
+		return control;
 		
 	}
 	
-	public void Update(String nombreTabla, String update, String where) {
+	public boolean Update(String nombreTabla, String update, String where) {
+		boolean control = false;
 		String sql="UPDATE "+nombreTabla+" SET "+update+" WHERE "+where;
 		try {
 			PreparedStatement stm = con.prepareStatement(sql);
 			int n = stm.executeUpdate();
 			if(n > 0 ) {
-				System.out.println("MYSQL: Registro actualizado con exito. "+n+" rows afected.");
+				control = true;
+				System.out.println("MYSQL: Execute Update( -> "+sql+" <-). Rows afected: "+n);
 			}
 		} catch (SQLException e) {
 			System.err.println("MYSQL: "+e);
 		}
+		return control;
 		
 	}
 	
@@ -82,6 +96,7 @@ public class MysqlC {
 		try {
 			PreparedStatement stm = con.prepareStatement(sql);
 			rs = stm.executeQuery(sql);
+			System.out.println("MYSQL: Execute Query( -> "+sql+" <-)");
 		} catch (SQLException e) {
 			System.err.println("MYSQL: "+e);
 		}
@@ -94,6 +109,7 @@ public class MysqlC {
 		try {
 			PreparedStatement stm = con.prepareStatement(sql);
 			rs = stm.executeQuery(sql);
+			System.out.println("MYSQL: Execute Query( -> "+sql+" <-)");
 		} catch (SQLException e) {
 			System.err.println("MYSQL: "+e);
 		}

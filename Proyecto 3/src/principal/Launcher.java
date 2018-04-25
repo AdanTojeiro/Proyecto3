@@ -19,7 +19,6 @@ public class Launcher {
 			public void run() {
 				try {
 					Ventana window = new Ventana();
-					window.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
