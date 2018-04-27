@@ -13,10 +13,11 @@ public class SesionSteup {
 	}
 
 	public void abrirVistaDeSesion() {
-		
+		opciones.getNav_panel().setVisible(true);
 	}
 	
 	public void cerrarVistaDeSesion() {
+		opciones.getNav_panel().setVisible(false);
 		
 	}
 

@@ -71,7 +71,7 @@ public class Ventana {
 	private final Color COLOR_CHECK = new Color(50, 205, 50);
 
 	// SESIONS_STEUP
-	private SesionSteup invitado, alumno, profesor, administador, desarrollador;
+	private SesionSteup invitado, alumno, profesor, administrador, desarrollador;
 	private OptionGroup opciones_invitado, opciones_alumno, opciones_profesor, opciones_administrador,
 			opciones_desarrollador;
 	private DisplayGroup displays_invitado, displays_alumno, displays_profesor, displays_administrador,
@@ -96,7 +96,10 @@ public class Ventana {
 			navPanel_desarrollador;
 	
 	// 1.2.1-Index nav
+		//Invitado
 	private JOption opt_login, opt_reg, opt_info, opt_soporte;
+		//Admin
+	private JOption opt_verUsuarios, opt_soporte_administrador, opt_entrarComo_administrador, opt_cerrarSesion_administrador;
 	
 	// 1.2.1.1-Opt_Login
 	private JLabel opt_login_ico, opt_login_text;
@@ -226,6 +229,16 @@ public class Ventana {
 	private ArrayList<TextFieldGroup> reg_grupo_logico = new ArrayList<TextFieldGroup>();
 	private TextFieldGroup reg_nick_tfg, reg_password_tfg, reg_name_tfg, reg_apellido_tfg, reg_dni_tfg, reg_email_tfg;
 	private TextFieldGroup reg_password_check_tfg;
+	////////////////////////////////////////////////////////////////////////////
+	private JLabel opt_verUsuarios_ico;
+	private JLabel opt_verUsuarios_text;
+	private JOption opt_soporte_administracion;
+	private JLabel opt_soporte_administrador_ico;
+	private JLabel opt_soporte_administrador_text;
+	private JLabel opt_entrarComo_administrador_ico;
+	private JLabel opt_entrarComo_administrador_text;
+	private JLabel opt_cerrarSesion_administrador_ico;
+	private JLabel opt_cerrarSesion_administrador_text;
 	
 	/*
 	 * |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -240,9 +253,7 @@ public class Ventana {
 		initialize();
 	}
 
-	public MysqlC getMysqlc() {
-		return mysqlc;
-	}
+	
 
 	/**
 	 * @wbp.parser.entryPoint
@@ -254,7 +265,7 @@ public class Ventana {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1100, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//frame.setUndecorated(true);
+		frame.setUndecorated(true);
 		frame.setVisible(true);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
@@ -266,6 +277,9 @@ public class Ventana {
 		cargarEstructura();
 		cargarSesionSteups();
 		cargarSesionInvitado();
+		cargarSesionAdministrador();
+		
+		
 
 		// Comprobar driver
 		
@@ -415,11 +429,11 @@ public class Ventana {
 
 	private void cargarSesionSteups() {
 		// Carga los grupos de componentes utilizados durante la aplicacion
-		opciones_invitado = new OptionGroup(navPanel_invitado);
-		opciones_alumno = new OptionGroup(navPanel_alumno);
-		opciones_profesor = new OptionGroup(navPanel_profesor);
-		opciones_administrador = new OptionGroup(navPanel_administrador);
-		opciones_desarrollador = new OptionGroup(navPanel_desarrollador);
+		opciones_invitado = new OptionGroup();
+		opciones_alumno = new OptionGroup();
+		opciones_profesor = new OptionGroup();
+		opciones_administrador = new OptionGroup();
+		opciones_desarrollador = new OptionGroup();
 
 		displays_invitado = new DisplayGroup(titulo_ico, titulo_text);
 		displays_alumno = new DisplayGroup(titulo_ico, titulo_text);
@@ -430,7 +444,7 @@ public class Ventana {
 		invitado = new SesionSteup(opciones_invitado, displays_invitado);
 		alumno = new SesionSteup(opciones_alumno, displays_alumno);
 		profesor = new SesionSteup(opciones_profesor, displays_profesor);
-		administador = new SesionSteup(opciones_administrador, displays_administrador);
+		administrador = new SesionSteup(opciones_administrador, displays_administrador);
 		desarrollador = new SesionSteup(opciones_desarrollador, displays_desarrollador);
 	}
 
@@ -442,7 +456,7 @@ public class Ventana {
 		cargarNavPanelInvitado();
 		cargarListenersInvitado();
 	}
-
+	
 	private void cargarNavPanelInvitado() {
 		// NavPanel invitado
 		navPanel_invitado = new JPanel();
@@ -450,6 +464,7 @@ public class Ventana {
 		nav_panel.add(navPanel_invitado);
 		navPanel_invitado.setOpaque(false);
 		navPanel_invitado.setLayout(null);
+		opciones_invitado.setNav_panel(navPanel_invitado);
 
 		// Nav options
 
@@ -529,7 +544,8 @@ public class Ventana {
 		opt_soporte_text.setBounds(68, 11, 222, 26);
 		opt_soporte.add(opt_soporte_text);
 
-	}
+	} 
+	
 
 	private void cargarDisplaysInvitado() {
 		// Carga los distintos displays y sus componentes utilizados durante la sesion
@@ -1161,6 +1177,105 @@ public class Ventana {
 		reg_password_check_textF.addFocusListener(new TextFocusListener(reg_password_check_tfg, checker));
 	}
 
+	// Sesion Administrador
+	
+	private void cargarSesionAdministrador() {
+		// Carga los componentes ultilizados durante la sesion de administrador
+		//cargarDisplaysInvitado();
+		cargarNavPanelAdministrador();
+		//cargarListenersInvitado();
+	}
+	
+	private void cargarNavPanelAdministrador() {
+		// NavPanel administrador
+				navPanel_administrador = new JPanel();
+				navPanel_administrador.setBounds(0, 0, 300, 464);
+				nav_panel.add(navPanel_administrador);
+				navPanel_administrador.setOpaque(false);
+				navPanel_administrador.setLayout(null);
+				navPanel_administrador.setVisible(false);
+				opciones_administrador.setNav_panel(navPanel_administrador);
+
+				// Nav options
+
+				// option ver usuarios
+				opt_verUsuarios = new JOption(display_login, "Ver usuarios", "/imagenes/buscar_32px.png", opciones_administrador);
+				opt_verUsuarios.setBounds(0, 11, 300, 48);
+				navPanel_administrador.add(opt_verUsuarios);
+				opt_verUsuarios.setBackground(COLOR_BACKGROUND);
+				opt_verUsuarios.setLayout(null);
+				opt_verUsuarios.addMouseListener(new OptionListener(opt_verUsuarios));
+
+				opt_verUsuarios_ico = new JLabel("");
+				opt_verUsuarios_ico.setIcon(new ImageIcon(Ventana.class.getResource(opt_verUsuarios.getIco_path())));
+				opt_verUsuarios_ico.setBounds(10, 0, 48, 48);
+				opt_verUsuarios.add(opt_verUsuarios_ico);
+
+				opt_verUsuarios_text = new JLabel(opt_verUsuarios.getText());
+				opt_verUsuarios_text.setForeground(Color.WHITE);
+				opt_verUsuarios_text.setFont(new Font("Tahoma", Font.PLAIN, 18));
+				opt_verUsuarios_text.setBounds(68, 11, 222, 26);
+				opt_verUsuarios.add(opt_verUsuarios_text);
+
+				// option soporte administrador
+				opt_soporte_administracion = new JOption(display_reg, "Soporte", "/imagenes/soporte_32px.png", opciones_administrador);
+				opt_soporte_administracion.setLayout(null);
+				opt_soporte_administracion.setBackground(new Color(54, 33, 89));
+				opt_soporte_administracion.setBounds(0, 59, 300, 48);
+				navPanel_administrador.add(opt_soporte_administracion);
+				opt_soporte_administracion.addMouseListener(new OptionListener(opt_soporte_administracion));
+
+				opt_soporte_administrador_ico = new JLabel("");
+				opt_soporte_administrador_ico.setIcon(new ImageIcon(Ventana.class.getResource(opt_soporte_administracion.getIco_path())));
+				opt_soporte_administrador_ico.setBounds(10, 0, 48, 48);
+				opt_soporte_administracion.add(opt_soporte_administrador_ico);
+
+				opt_soporte_administrador_text = new JLabel("Soporte");
+				opt_soporte_administrador_text.setForeground(Color.WHITE);
+				opt_soporte_administrador_text.setFont(new Font("Tahoma", Font.PLAIN, 18));
+				opt_soporte_administrador_text.setBounds(68, 11, 222, 26);
+				opt_soporte_administracion.add(opt_soporte_administrador_text);
+
+				// option entrar como (administrador)
+				opt_entrarComo_administrador = new JOption(display_info, "Entrar como", "/imagenes/cambiar_32px.png", opciones_administrador);
+				opt_entrarComo_administrador.setLayout(null);
+				opt_entrarComo_administrador.setBackground(new Color(54, 33, 89));
+				opt_entrarComo_administrador.setBounds(0, 107, 300, 48);
+				navPanel_administrador.add(opt_entrarComo_administrador);
+				opt_entrarComo_administrador.addMouseListener(new OptionListener(opt_entrarComo_administrador));
+
+				opt_entrarComo_administrador_ico = new JLabel("");
+				opt_entrarComo_administrador_ico.setIcon(new ImageIcon(Ventana.class.getResource(opt_entrarComo_administrador.getIco_path())));
+				opt_entrarComo_administrador_ico.setBounds(10, 0, 48, 48);
+				opt_entrarComo_administrador.add(opt_entrarComo_administrador_ico);
+
+				opt_entrarComo_administrador_text = new JLabel("Entrar como");
+				opt_entrarComo_administrador_text.setForeground(Color.WHITE);
+				opt_entrarComo_administrador_text.setFont(new Font("Tahoma", Font.PLAIN, 18));
+				opt_entrarComo_administrador_text.setBounds(68, 11, 222, 26);
+				opt_entrarComo_administrador.add(opt_entrarComo_administrador_text);
+
+				// option cerrar sesion
+				opt_cerrarSesion_administrador = new JOption(display_soporte, "Cerrar sesion", "/imagenes/cerrar_32px.png", opciones_administrador);
+				opt_cerrarSesion_administrador.setLayout(null);
+				opt_cerrarSesion_administrador.setBackground(new Color(54, 33, 89));
+				opt_cerrarSesion_administrador.setBounds(0, 155, 300, 48);
+				navPanel_administrador.add(opt_cerrarSesion_administrador);
+				opt_cerrarSesion_administrador.addMouseListener(new OptionListener(opt_cerrarSesion_administrador));
+
+				opt_cerrarSesion_administrador_ico = new JLabel("");
+				opt_cerrarSesion_administrador_ico.setIcon(new ImageIcon(Ventana.class.getResource(opt_cerrarSesion_administrador.getIco_path())));
+				opt_cerrarSesion_administrador_ico.setBounds(10, 0, 48, 48);
+				opt_cerrarSesion_administrador.add(opt_cerrarSesion_administrador_ico);
+
+				opt_cerrarSesion_administrador_text = new JLabel("Cerrar sesion");
+				opt_cerrarSesion_administrador_text.setForeground(Color.WHITE);
+				opt_cerrarSesion_administrador_text.setFont(new Font("Tahoma", Font.PLAIN, 18));
+				opt_cerrarSesion_administrador_text.setBounds(68, 11, 222, 26);
+				opt_cerrarSesion_administrador.add(opt_cerrarSesion_administrador_text);
+	}
+	
+	
 	/*
 	 * |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 	 * POPUP CONTROL
@@ -1335,6 +1450,53 @@ public class Ventana {
 
 	public Sesion getSesionActual() {
 		return sesionActual;
+	}
+	
+	public void cambiarVistaSesion(String vista) {
+		switch(vista){
+		case "invitado":
+			alumno.cerrarVistaDeSesion();
+			profesor.cerrarVistaDeSesion();
+			administrador.cerrarVistaDeSesion();
+			desarrollador.cerrarVistaDeSesion();
+			//--
+			invitado.abrirVistaDeSesion();
+			break;
+		case "alumno":
+			invitado.cerrarVistaDeSesion();
+			profesor.cerrarVistaDeSesion();
+			administrador.cerrarVistaDeSesion();
+			desarrollador.cerrarVistaDeSesion();
+			//--
+			alumno.abrirVistaDeSesion();
+			break;	
+		case "profesor":
+			invitado.cerrarVistaDeSesion();
+			alumno.cerrarVistaDeSesion();
+			administrador.cerrarVistaDeSesion();
+			desarrollador.cerrarVistaDeSesion();
+			//--
+			profesor.abrirVistaDeSesion();
+			break;	
+		case "administrador":
+			invitado.cerrarVistaDeSesion();
+			//alumno.cerrarVistaDeSesion();
+			//profesor.cerrarVistaDeSesion();
+			//desarrollador.cerrarVistaDeSesion();
+			//--
+			administrador.abrirVistaDeSesion();
+			
+			break;
+		case "desarrollador":
+			invitado.cerrarVistaDeSesion();
+			alumno.cerrarVistaDeSesion();
+			profesor.cerrarVistaDeSesion();
+			administrador.cerrarVistaDeSesion();
+			//--
+			desarrollador.abrirVistaDeSesion();
+			break;		
+		}
+		
 	}
 	
 	/*

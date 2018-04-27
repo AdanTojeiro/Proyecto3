@@ -11,9 +11,8 @@ public class OptionGroup {
 	private JPanel nav_panel;
 	private ArrayList<JOption> grupo;
 	
-	public OptionGroup(JPanel nav_panel) {
+	public OptionGroup() {
 		super();
-		this.nav_panel = nav_panel;
 		this.grupo = new ArrayList<JOption>();
 	}
 
