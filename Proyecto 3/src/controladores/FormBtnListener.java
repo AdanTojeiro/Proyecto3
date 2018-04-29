@@ -45,12 +45,12 @@ public class FormBtnListener implements MouseListener {
 							ventana.iniciarSesion(ventana.getGestorSesiones().abrirSesion(rs));
 							switch (ventana.getSesionActual().getUsuario().getAcceso()) {
 							case 0:
-								// sesion alumno
-								//ventana.cambiarVistaSesion("alumno");
+								//sesion alumno
+								ventana.cambiarVistaSesion("alumno");
 								break;
 							case 1:
 								// sesion profesor
-								//ventana.cambiarVistaSesion("profesor");
+								ventana.cambiarVistaSesion("profesor");
 								break;
 							case 2:
 								// sesion administrador
@@ -58,7 +58,7 @@ public class FormBtnListener implements MouseListener {
 								break;
 							case 3:
 								// sesion desarrollador
-								//ventana.cambiarVistaSesion("desarrollador");
+								ventana.cambiarVistaSesion("desarrollador");
 								break;
 
 							}

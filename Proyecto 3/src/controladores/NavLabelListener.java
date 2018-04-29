@@ -22,8 +22,9 @@ public class NavLabelListener implements MouseListener {
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) throws java.awt.IllegalComponentStateException {
+	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
+		ventana.getFocusFixer().requestFocus();
 		ventana.setRegDisplay(navLabel.getActualIndex(), navLabel.getFunction());
 		
 	}
