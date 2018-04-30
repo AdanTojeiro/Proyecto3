@@ -1,6 +1,7 @@
 package interfaz;
 
 import java.awt.Color;
+import java.awt.Component;
 
 import javax.swing.*;
 
@@ -28,10 +29,13 @@ import interfaz.grupos.OptionGroup;
 import interfaz.grupos.SesionSteup;
 import interfaz.grupos.TextFieldGroup;
 import interfaz.grupos.TextFieldGroupRel;
+import interfaz.listas.JRowList;
 import controladores.ControlLabelListener;
 
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -122,7 +126,7 @@ public class Ventana {
 	private JSeparator separador_titulo;
 
 	// 2.2-Displays
-	private JDisplay display_index, display_login, display_reg, display_info, display_soporte;
+	private JDisplay display_index, display_login, display_reg, display_info, display_soporte, display_verUsuarios;
 
 	// 2.2.1-Index display
 	private JLabel mensaje_index;
@@ -266,13 +270,25 @@ public class Ventana {
 	private JLabel opt_verUsuarios_desarrollador_text;
 	private JOption opt_entrarComo_desarrollador;
 	private JLabel opt_entrarComo_desarrollador_ico;
-	private JComponent opt_entrarComo_desarrollador_text;
+	private JLabel opt_entrarComo_desarrollador_text;
 	private JOption opt_anadirPregunta;
 	private JLabel opt_anadirPregunta_ico;
 	private JLabel opt_anadirPregunta_text;
 	private JOption opt_cerrarSesion_desarrollador;
 	private JLabel opt_cerrarSesion_desarrollador_ico;
-	private JComponent opt_cerrarSesion_desarrollador_text;
+	private JLabel opt_cerrarSesion_desarrollador_text;
+	private JPanel panel;
+	private JScrollPane scrollPane;
+	private JPanel verUsuarios_nick_panel;
+	private JSeparator verUsuarios_nick_separator;
+	private JLabel verUsuarios_nick_icon;
+	private JTextField verUsuarios_nick_textF;
+	private JPanel verUsuarios_nick_info_panel;
+	private JLabel verUsuarios_nick_info_ico;
+	private JLabel verUsuarios_nick_info_text;
+	private TextFieldGroup verUsuarios_nick_tfg;
+	private ArrayList<TextFieldGroup> verUsuarios_grupo_logico = new ArrayList<TextFieldGroup>();
+	private JRowList jrlist;
 
 	/*
 	 * |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -1307,7 +1323,7 @@ public class Ventana {
 
 	}
 
-	// SesionAlumno
+	// Sesion Profesor
 
 	private void cargarSesionProfesor() {
 		// Carga los componentes ultilizados durante la sesion de alumno
@@ -1416,7 +1432,7 @@ public class Ventana {
 
 	private void cargarSesionAdministrador() {
 		// Carga los componentes ultilizados durante la sesion de administrador
-		// cargarDisplaysInvitado();
+		cargarDisplayVerUsuarios();
 		cargarNavPanelAdministrador();
 		// cargarListenersInvitado();
 	}
@@ -1434,7 +1450,7 @@ public class Ventana {
 		// Nav options
 
 		// option ver usuarios
-		opt_verUsuarios = new JOption(display_login, "Ver usuarios", "/imagenes/buscar_32px.png",
+		opt_verUsuarios = new JOption(display_verUsuarios, "Ver usuarios", "/imagenes/buscar_32px.png",
 				opciones_administrador);
 		opt_verUsuarios.setBounds(0, 11, 300, 48);
 		navPanel_administrador.add(opt_verUsuarios);
@@ -1517,9 +1533,99 @@ public class Ventana {
 		opt_cerrarSesion_administrador.add(opt_cerrarSesion_administrador_text);
 	}
 
+	private void cargarDisplayVerUsuarios() {
+		
+		display_verUsuarios = new JDisplay("Bienvenid@", "/imagenes/index_96px.png", displays);
+		display_verUsuarios.setBounds(0, 0, 800, 552);
+		display_panel.add(display_verUsuarios);
+		display_verUsuarios.setLayout(null);
+		display_verUsuarios.setOpaque(false);
+		display_verUsuarios.setVisible(false);
+		
+		verUsuarios_nick_panel = new JPanel();
+		verUsuarios_nick_panel.setBounds(204, 0, 390, 96);
+		display_verUsuarios.add(verUsuarios_nick_panel);
+		verUsuarios_nick_panel.setOpaque(false);
+		verUsuarios_nick_panel.setLayout(null);
+
+		verUsuarios_nick_separator = new JSeparator();
+		verUsuarios_nick_separator.setBounds(52, 41, 328, 2);
+		verUsuarios_nick_panel.add(verUsuarios_nick_separator);
+
+		verUsuarios_nick_icon = new JLabel("");
+		verUsuarios_nick_icon.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/user_text_32px.png")));
+		verUsuarios_nick_icon.setBounds(10, 11, 32, 32);
+		verUsuarios_nick_panel.add(verUsuarios_nick_icon);
+
+		verUsuarios_nick_textF = new JTextField("Buscar");
+		verUsuarios_nick_textF.setHorizontalAlignment(SwingConstants.LEFT);
+		verUsuarios_nick_textF.setFont(new Font("Tahoma", Font.BOLD, 20));
+		verUsuarios_nick_textF.setForeground(Color.WHITE);
+		verUsuarios_nick_textF.setBounds(52, 11, 328, 25);
+		verUsuarios_nick_panel.add(verUsuarios_nick_textF);
+		verUsuarios_nick_textF.setColumns(10);
+		verUsuarios_nick_textF.setBackground(COLOR_SELECTED);
+		verUsuarios_nick_textF.setBorder(null);
+
+		verUsuarios_nick_info_panel = new JPanel();
+		verUsuarios_nick_info_panel.setBounds(10, 50, 370, 32);
+		verUsuarios_nick_panel.add(verUsuarios_nick_info_panel);
+		verUsuarios_nick_info_panel.setBackground(COLOR_ERROR);
+		verUsuarios_nick_info_panel.setLayout(null);
+		verUsuarios_nick_info_panel.setVisible(false);
+
+		verUsuarios_nick_info_ico = new JLabel("");
+		verUsuarios_nick_info_ico.setBounds(0, 0, 32, 32);
+		verUsuarios_nick_info_panel.add(verUsuarios_nick_info_ico);
+		verUsuarios_nick_info_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/error_black_32px.png")));
+
+		verUsuarios_nick_info_text = new JLabel("Error");
+		verUsuarios_nick_info_text.setFont(new Font("Tahoma", Font.BOLD, 20));
+		verUsuarios_nick_info_text.setBounds(42, 0, 328, 32);
+		verUsuarios_nick_info_panel.add(verUsuarios_nick_info_text);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBorder(null);
+		scrollPane.setOpaque(false);
+		
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setBounds(10, 90, 780, 450);
+		display_verUsuarios.add(scrollPane);
+		
+		panel = new JPanel();
+		panel.setBackground(COLOR_SELECTED);
+		scrollPane.setViewportView(panel);
+		panel.setLayout(new GridLayout(0, 1, 0, 20));
+		
+		ArrayList<Usuario> listaUsers = new ArrayList<Usuario>();
+		ResultSet rsu = gestorUsuarios.getAllUsuarios();
+		try {
+			while(rsu.next()) {
+				listaUsers.add(new Usuario(rsu));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		jrlist = new JRowList(listaUsers, panel);
+		jrlist.cargarLista();
+		
+		verUsuarios_nick_tfg = new TextFieldGroup(verUsuarios_nick_panel, verUsuarios_nick_info_panel, verUsuarios_nick_icon,
+				verUsuarios_nick_info_ico, verUsuarios_nick_info_text, verUsuarios_nick_textF, verUsuarios_nick_separator, "buscar",
+				verUsuarios_grupo_logico);
+		
+		verUsuarios_nick_textF.addKeyListener(new TextFieldKeyListener(verUsuarios_nick_tfg, checker, this));
+		verUsuarios_nick_textF.addFocusListener(new TextFocusListener(verUsuarios_nick_tfg, checker));
+		
+		
+		
+	}
+	
+	
 	// Sesion Administrador
 
-	private void cargarSesionDesarrollador() {
+ 	private void cargarSesionDesarrollador() {
 		// Carga los componentes ultilizados durante la sesion de administrador
 		// cargarDisplaysInvitado();
 		cargarNavPanelDesarrollador();
@@ -1868,5 +1974,25 @@ public class Ventana {
 
 	public GestorSesiones getGestorSesiones() {
 		return gestorSesiones;
+	}
+	
+	/*
+	 * |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+	 * ACTUALIZAR LISTAS
+	 */
+	
+	public void actualizarLista(ResultSet rs) {
+		ArrayList<Usuario> listaUsers = new ArrayList<Usuario>();
+		try {
+			while(rs.next()) {
+				listaUsers.add(new Usuario(rs));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		jrlist.limpiarLista();
+		jrlist.setLista(listaUsers);
+		jrlist.cargarLista();
 	}
 }

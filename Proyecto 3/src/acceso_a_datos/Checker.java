@@ -1,6 +1,7 @@
 package acceso_a_datos;
 
 import java.awt.Color;
+import java.sql.ResultSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -299,6 +300,14 @@ public class Checker {
 					COLOR_ERROR);
 		}
 		return info;
+	}
+	
+	public ResultSet buscar(String s) {
+		ResultSet rs = null;
+		
+		rs = gestorUsuarios.getUsuarioFilter(s);
+		
+		return rs;
 	}
 	
 	

@@ -64,11 +64,33 @@ public class GestorUsuarios {
 			
 	 }
 	 
+	 public ResultSet getUsuarioFilter(String value) {
+		 ResultSet rs = null;
+		 if(mysqlc.conectar()) {
+			// Cumple formato
+				rs = mysqlc.selectFrom("usuario","nick LIKE '%"+value+"%' OR dni LIKE '%"+value+"%' OR estado LIKE '%"+value+"%'");
+		 }
+		 mysqlc.desconectar();
+		 return rs;
+			
+	 }
+	 
 	 public ResultSet getUsuario(String campo, String value) {
 		 ResultSet rs = null;
 		 if(mysqlc.conectar()) {
 			// Cumple formato
 				rs = mysqlc.selectFrom("usuario"," "+campo+"='" + value + "'");
+		 }
+		 mysqlc.desconectar();
+		 return rs;
+			
+	 }
+	 
+	 public ResultSet getAllUsuarios() {
+		 ResultSet rs = null;
+		 if(mysqlc.conectar()) {
+			// Cumple formato
+				rs = mysqlc.selectFrom("usuario");
 		 }
 		 mysqlc.desconectar();
 		 return rs;

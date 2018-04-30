@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Usuario {
 
-		private String nick, pass, nombre, apellidos, dni, email;
+		private String nick, pass, nombre, apellidos, dni, email, estado;
 		private Date fecha_registro;
 		private int acceso, pk_usuario;
 		
@@ -27,22 +27,24 @@ public class Usuario {
 		}
 		
 		public Usuario(ResultSet rs) {
-			try {
-				if(rs.next()) {
-					this.nick =(rs.getString("nick"));
-					this.nombre = (rs.getString("nombre"));
-					this.apellidos =(rs.getString("apellidos"));
-					this.dni = (rs.getString("dni"));
-					this.email =(rs.getString("email"));
-					this.acceso =(rs.getInt("acceso"));
-					this.fecha_registro = (rs.getDate("fecha_Registro"));
-					this.pk_usuario = (rs.getInt("pk_usuario"));
-				}
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
+					try {
+						this.nick =(rs.getString("nick"));
+						this.nombre = (rs.getString("nombre"));
+						this.apellidos =(rs.getString("apellidos"));
+						this.dni = (rs.getString("dni"));
+						this.email =(rs.getString("email"));
+						this.acceso =(rs.getInt("acceso"));
+						this.fecha_registro = (rs.getDate("fecha_Registro"));
+						this.pk_usuario = (rs.getInt("pk_usuario"));
+						this.estado =(rs.getString("estado"));
+					
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+			
 		}
 
 		public String getNick() {
@@ -111,6 +113,14 @@ public class Usuario {
 
 		public int getPk_usuario() {
 			return pk_usuario;
+		}
+
+		public String getEstado() {
+			return estado;
+		}
+
+		public void setEstado(String estado) {
+			this.estado = estado;
 		}
 		
 		

@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 
 import acceso_a_datos.Checker;
 import acceso_a_datos.InfoMsg;
+import interfaz.Ventana;
 import interfaz.grupos.TextFieldGroup;
 import interfaz.grupos.TextFieldGroupRel;
 
@@ -13,6 +14,7 @@ public class TextFieldKeyListener implements KeyListener {
 	
 	TextFieldGroup tFGroup;
 	Checker checker;
+	Ventana ventana;
 	private final Color COLOR_DANGER = new Color(222, 69, 69);
 	
 
@@ -20,6 +22,13 @@ public class TextFieldKeyListener implements KeyListener {
 		super();
 		this.tFGroup = tFGroup;
 		this.checker = checker;
+	}
+	
+	public TextFieldKeyListener(TextFieldGroup tFGroup, Checker checker, Ventana ventana) {
+		super();
+		this.tFGroup = tFGroup;
+		this.checker = checker;
+		this.ventana = ventana;
 	}
 
 	@Override
@@ -76,6 +85,9 @@ public class TextFieldKeyListener implements KeyListener {
 					break;			
 				}
 			}
+			break;
+		case "buscar":
+			 ventana.actualizarLista(checker.buscar(tFGroup.getTextF().getText()));
 			break;
 		}
 		} else {

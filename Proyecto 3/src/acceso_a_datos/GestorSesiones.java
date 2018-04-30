@@ -28,12 +28,6 @@ public class GestorSesiones {
 	public Sesion abrirSesion(ResultSet rs) {
 		Sesion sesion = null;
 
-		try {
-			rs.beforeFirst();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		sesion = new Sesion(rs, generarCodigo(getAllSesions()));
 		if (mysqlc.conectar()) {
 			mysqlc.insertInto("sesion", "codigo, tiempo_inicio, fk_usuario",
