@@ -68,7 +68,7 @@ public class GestorUsuarios {
 		 ResultSet rs = null;
 		 if(mysqlc.conectar()) {
 			// Cumple formato
-				rs = mysqlc.selectFrom("usuario","nick LIKE '%"+value+"%' OR dni LIKE '%"+value+"%' OR estado LIKE '%"+value+"%'");
+				rs = mysqlc.selectFrom("usuario","nick LIKE '%"+value+"%' OR dni LIKE '%"+value+"%' OR estado LIKE '%"+value+"%'OR acceso LIKE '%"+value+"%'");
 		 }
 		 mysqlc.desconectar();
 		 return rs;

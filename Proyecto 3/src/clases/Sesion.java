@@ -13,13 +13,13 @@ public class Sesion {
 
 	public Sesion(ResultSet rs , String codigo) {
 		super();
-		usuario = setUsuario(rs);
+		usuario = new Usuario(rs);
 		this.codigo = codigo;
 	}
 
-	public Usuario setUsuario(ResultSet rs) {
-		usuario = new Usuario(rs);
-		return usuario;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+
 	}
 
 	public Usuario getUsuario() {

@@ -8,18 +8,21 @@ import javax.swing.JPanel;
 
 import clases.Usuario;
 import interfaz.JRowPanel;
+import interfaz.Ventana;
 
 public class JRowList {
 	
 	private ArrayList<Usuario> lista;
 	private JPanel contenedor;
+	private Ventana ventana;
 	
 	
 	
-	public JRowList(ArrayList<Usuario> lista, JPanel contendor) {
+	public JRowList(ArrayList<Usuario> lista, JPanel contendor, Ventana ventana) {
 		super();
 		this.lista = lista;
 		this.contenedor = contendor;
+		this.ventana = ventana;
 	}
 
 	
@@ -31,7 +34,7 @@ public class JRowList {
 		}
 		Iterator<Usuario> it = lista.iterator();
 		while(it.hasNext()) {
-			contenedor.add(new JRowPanel(it.next()));
+			contenedor.add(new JRowPanel(it.next(), ventana));
 			
 		}
 	}

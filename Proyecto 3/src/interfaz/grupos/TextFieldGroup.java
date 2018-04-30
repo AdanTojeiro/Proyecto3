@@ -41,6 +41,22 @@ public class TextFieldGroup {
 		grupo_logico.add(this);
 	}
 	
+	public TextFieldGroup(JPanel content_panel, JPanel info_panel, JLabel textF_icon, JLabel info_ico, JLabel info_text,
+			JTextField textF, JSeparator separator, String tipo) {
+		super();
+		this.content_panel = content_panel;
+		this.info_panel = info_panel;
+		this.textF_icon = textF_icon;
+		this.info_ico = info_ico;
+		this.info_text = info_text;
+		this.textF = textF;
+		this.separator = separator;
+		this.tipo = tipo;
+		check = false;
+		connected = true;
+		defaultText = textF.getText();
+	}
+	
 	public void  hideInfo() {
 		info_panel.setVisible(false);
 	}

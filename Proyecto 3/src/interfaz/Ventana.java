@@ -68,7 +68,7 @@ public class Ventana {
 
 	private ArrayList<JFormDisplay> grupo_reg = new ArrayList<JFormDisplay>();
 
-	// COLORES INICIO
+	// COLORES
 	private final Color COLOR_ERROR = new Color(219, 186, 70);
 	private final Color COLOR_SELECTED = new Color(85, 65, 118);
 	private final Color COLOR_BACKGROUND = new Color(54, 33, 89);
@@ -101,21 +101,29 @@ public class Ventana {
 	// 1.2.1-Index nav
 	// Invitado
 	private JOption opt_login, opt_reg, opt_info, opt_soporte;
+	private JLabel opt_login_ico, opt_login_text, opt_reg_ico, opt_reg_text, opt_info_ico, opt_info_text,
+			opt_soporte_ico, opt_soporte_text;
+	// Alumno
+	private JOption opt_iniciarTest, opt_estadisticas_alumno, opt_cerrarSesion_alumno, opt_soporte_alumno;
+	private JLabel opt_iniciarTest_ico, opt_iniciarTest_text, opt_estadisticas_alumno_ico, opt_estadisticas_alumno_text,
+			opt_soporte_alumno_ico, opt_soporte_alumno_text, opt_cerrarSesion_alumno_ico, opt_cerrarSesion_alumno_text;
+	// Profesor
+	private JOption opt_estadisticas_profesor, opt_entrarComo_profesor, opt_cerrarSesion_profesor, opt_soporte_profesor;
+	private JLabel opt_estadisticas_profesor_ico, opt_entrarComo_profesor_ico, opt_entrarComo_profesor_text,
+			opt_soporte_profesor_ico, opt_soporte_profesor_text, opt_cerrarSesion_profesor_ico,
+			opt_cerrarSesion_profesor_text;
 	// Admin
 	private JOption opt_verUsuarios, opt_soporte_administrador, opt_entrarComo_administrador,
 			opt_cerrarSesion_administrador;
-
-	// 1.2.1.1-Opt_Login
-	private JLabel opt_login_ico, opt_login_text;
-
-	// 1.2.1.2-Opt_Reg
-	private JLabel opt_reg_ico, opt_reg_text;
-
-	// 1.2.1.3-Opt_Info
-	private JLabel opt_info_ico, opt_info_text;
-
-	// 1.2.1.4-Opt_Soporte
-	private JLabel opt_soporte_ico, opt_soporte_text;
+	private JLabel opt_verUsuarios_ico, opt_verUsuarios_text, opt_soporte_administrador_ico,
+			opt_soporte_administrador_text, opt_entrarComo_administrador_ico, opt_entrarComo_administrador_text,
+			opt_cerrarSesion_administrador_ico, opt_cerrarSesion_administrador_text;
+	// Desarrollador
+	private JOption opt_verUsuarios_desarrollador, opt_entrarComo_desarrollador, opt_anadirPregunta,
+			opt_cerrarSesion_desarrollador;
+	private JLabel opt_verUsuarios_desarrollador_ico, opt_verUsuarios_desarrollador_text,
+			opt_entrarComo_desarrollador_ico, opt_entrarComo_desarrollador_text, opt_anadirPregunta_ico,
+			opt_anadirPregunta_text, opt_cerrarSesion_desarrollador_ico, opt_cerrarSesion_desarrollador_text;
 
 	// 2-Center panel
 	private JPanel titulo_panel, display_panel;
@@ -218,6 +226,14 @@ public class Ventana {
 
 	// 2.2.4-Info display
 	// 2.2.5-Soporte display
+	// 2.2.6-
+	// 2.2.7-Ver usuarios
+	private JPanel panel, verUsuarios_nick_info_panel, verUsuarios_nick_panel;
+	private JScrollPane scrollPane;
+	private JSeparator verUsuarios_nick_separator;
+	private JTextField verUsuarios_nick_textF;
+	private JLabel verUsuarios_nick_info_ico, verUsuarios_nick_info_text, verUsuarios_nick_icon;
+	private JRowList listUpdater_verUsuarios;
 
 	// 3-PopUp Panel
 	private JLabel popUp_ico, popUp_text;
@@ -232,63 +248,9 @@ public class Ventana {
 	private ArrayList<TextFieldGroup> reg_grupo_logico = new ArrayList<TextFieldGroup>();
 	private TextFieldGroup reg_nick_tfg, reg_password_tfg, reg_name_tfg, reg_apellido_tfg, reg_dni_tfg, reg_email_tfg;
 	private TextFieldGroup reg_password_check_tfg;
-	////////////////////////////////////////////////////////////////////////////
-	private JLabel opt_verUsuarios_ico;
-	private JLabel opt_verUsuarios_text;
-	private JOption opt_soporte_administracion;
-	private JLabel opt_soporte_administrador_ico;
-	private JLabel opt_soporte_administrador_text;
-	private JLabel opt_entrarComo_administrador_ico;
-	private JLabel opt_entrarComo_administrador_text;
-	private JLabel opt_cerrarSesion_administrador_ico;
-	private JLabel opt_cerrarSesion_administrador_text;
-	private JOption opt_iniciarTest;
-	private JLabel opt_iniciarTest_ico;
-	private JLabel opt_iniciarTest_text;
-	private JOption opt_estadisticas_alumno;
-	private JLabel opt_estadisticas_alumno_ico;
-	private JLabel opt_estadisticas_alumno_text;
-	private JOption opt_soporte_alumno;
-	private JLabel opt_soporte_alumno_ico;
-	private JLabel opt_soporte_alumno_text;
-	private JOption opt_cerrarSesion_alumno;
-	private JLabel opt_cerrarSesion_alumno_ico;
-	private JLabel opt_cerrarSesion_alumno_text;
-	private JOption opt_estadisticas_profesor;
-	private JLabel opt_estadisticas_profesor_ico;
-	private JOption opt_entrarComo_profesor;
-	private JLabel opt_entrarComo_profesor_ico;
-	private JLabel opt_entrarComo_profesor_text;
-	private JOption opt_soporte_profesor;
-	private JLabel opt_soporte_profesor_ico;
-	private JLabel opt_soporte_profesor_text;
-	private JOption opt_cerrarSesion_profesor;
-	private JLabel opt_cerrarSesion_profesor_ico;
-	private JLabel opt_cerrarSesion_profesor_text;
-	private JOption opt_verUsuarios_desarrollador;
-	private JLabel opt_verUsuarios_desarrollador_ico;
-	private JLabel opt_verUsuarios_desarrollador_text;
-	private JOption opt_entrarComo_desarrollador;
-	private JLabel opt_entrarComo_desarrollador_ico;
-	private JLabel opt_entrarComo_desarrollador_text;
-	private JOption opt_anadirPregunta;
-	private JLabel opt_anadirPregunta_ico;
-	private JLabel opt_anadirPregunta_text;
-	private JOption opt_cerrarSesion_desarrollador;
-	private JLabel opt_cerrarSesion_desarrollador_ico;
-	private JLabel opt_cerrarSesion_desarrollador_text;
-	private JPanel panel;
-	private JScrollPane scrollPane;
-	private JPanel verUsuarios_nick_panel;
-	private JSeparator verUsuarios_nick_separator;
-	private JLabel verUsuarios_nick_icon;
-	private JTextField verUsuarios_nick_textF;
-	private JPanel verUsuarios_nick_info_panel;
-	private JLabel verUsuarios_nick_info_ico;
-	private JLabel verUsuarios_nick_info_text;
+	//Buscador verUsuarios
 	private TextFieldGroup verUsuarios_nick_tfg;
-	private ArrayList<TextFieldGroup> verUsuarios_grupo_logico = new ArrayList<TextFieldGroup>();
-	private JRowList jrlist;
+	
 
 	/*
 	 * |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -324,11 +286,12 @@ public class Ventana {
 		cargarPopUpPanel();
 		cargarEstructura();
 		cargarSesionSteups();
-		cargarSesionInvitado();
-		cargarSesionAlumno();
-		cargarSesionProfesor();
-		cargarSesionAdministrador();
-		cargarSesionDesarrollador();
+		cargarDisplays();
+		cargarNavPanelInvitado();
+		cargarNavPanelAlumno();
+		cargarNavPanelProfesor();
+		cargarNavPanelAdministrador();
+		cargarNavPanelDesarrollador();
 
 		// Comprobar driver
 
@@ -492,108 +455,20 @@ public class Ventana {
 		desarrollador = new SesionSteup(opciones_desarrollador, displays);
 	}
 
-	// Sesion Invitado
+	//DISPLAYS
+	// DISPLAYS
 
-	private void cargarSesionInvitado() {
-		// Carga los componentes ultilizados durante la sesion de invitado
-		cargarDisplaysInvitado();
-		cargarNavPanelInvitado();
-		cargarListenersInvitado();
-	}
-
-	private void cargarNavPanelInvitado() {
-		// NavPanel invitado
-		navPanel_invitado = new JPanel();
-		navPanel_invitado.setBounds(0, 0, 300, 464);
-		nav_panel.add(navPanel_invitado);
-		navPanel_invitado.setOpaque(false);
-		navPanel_invitado.setLayout(null);
-		opciones_invitado.setNav_panel(navPanel_invitado);
-
-		// Nav options
-
-		// option login
-		opt_login = new JOption(display_login, "Iniciar sesi\u00F3n", "/imagenes/login_32px.png", opciones_invitado);
-		opt_login.setBounds(0, 11, 300, 48);
-		navPanel_invitado.add(opt_login);
-		opt_login.setBackground(COLOR_BACKGROUND);
-		opt_login.setLayout(null);
-		opt_login.addMouseListener(new OptionListener(opt_login));
-
-		opt_login_ico = new JLabel("");
-		opt_login_ico.setIcon(new ImageIcon(Ventana.class.getResource(opt_login.getIco_path())));
-		opt_login_ico.setBounds(10, 0, 48, 48);
-		opt_login.add(opt_login_ico);
-
-		opt_login_text = new JLabel(opt_login.getText());
-		opt_login_text.setForeground(Color.WHITE);
-		opt_login_text.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		opt_login_text.setBounds(68, 11, 222, 26);
-		opt_login.add(opt_login_text);
-
-		// option registro
-		opt_reg = new JOption(display_reg, "Crear una cuenta", "/imagenes/reg_32px.png", opciones_invitado);
-		opt_reg.setLayout(null);
-		opt_reg.setBackground(new Color(54, 33, 89));
-		opt_reg.setBounds(0, 59, 300, 48);
-		navPanel_invitado.add(opt_reg);
-		opt_reg.addMouseListener(new OptionListener(opt_reg));
-
-		opt_reg_ico = new JLabel("");
-		opt_reg_ico.setIcon(new ImageIcon(Ventana.class.getResource(opt_reg.getIco_path())));
-		opt_reg_ico.setBounds(10, 0, 48, 48);
-		opt_reg.add(opt_reg_ico);
-
-		opt_reg_text = new JLabel("Crear una cuenta");
-		opt_reg_text.setForeground(Color.WHITE);
-		opt_reg_text.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		opt_reg_text.setBounds(68, 11, 222, 26);
-		opt_reg.add(opt_reg_text);
-
-		// option info
-		opt_info = new JOption(display_info, "Informaci\\u00F3n", "/imagenes/info_32px.png", opciones_invitado);
-		opt_info.setLayout(null);
-		opt_info.setBackground(new Color(54, 33, 89));
-		opt_info.setBounds(0, 107, 300, 48);
-		navPanel_invitado.add(opt_info);
-		opt_info.addMouseListener(new OptionListener(opt_info));
-
-		opt_info_ico = new JLabel("");
-		opt_info_ico.setIcon(new ImageIcon(Ventana.class.getResource(opt_info.getIco_path())));
-		opt_info_ico.setBounds(10, 0, 48, 48);
-		opt_info.add(opt_info_ico);
-
-		opt_info_text = new JLabel("Informaci\u00F3n");
-		opt_info_text.setForeground(Color.WHITE);
-		opt_info_text.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		opt_info_text.setBounds(68, 11, 222, 26);
-		opt_info.add(opt_info_text);
-
-		// option soporte
-		opt_soporte = new JOption(display_soporte, "Soporte", "/imagenes/soporte_32px.png", opciones_invitado);
-		opt_soporte.setLayout(null);
-		opt_soporte.setBackground(new Color(54, 33, 89));
-		opt_soporte.setBounds(0, 155, 300, 48);
-		navPanel_invitado.add(opt_soporte);
-		opt_soporte.addMouseListener(new OptionListener(opt_soporte));
-
-		opt_soporte_ico = new JLabel("");
-		opt_soporte_ico.setIcon(new ImageIcon(Ventana.class.getResource(opt_soporte.getIco_path())));
-		opt_soporte_ico.setBounds(10, 0, 48, 48);
-		opt_soporte.add(opt_soporte_ico);
-
-		opt_soporte_text = new JLabel("Soporte");
-		opt_soporte_text.setForeground(Color.WHITE);
-		opt_soporte_text.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		opt_soporte_text.setBounds(68, 11, 222, 26);
-		opt_soporte.add(opt_soporte_text);
+	private void cargarDisplays() {
+		cargarDisplayIndex();
+		cargarDisplayLogin();
+		cargarDisplayReg();
+		cargarDisplaySoporte();
+		cargarDisplayInfo();
+		cargarDisplayVerUsuarios();
 
 	}
 
-	private void cargarDisplaysInvitado() {
-		// Carga los distintos displays y sus componentes utilizados durante la sesion
-		// de invitado
-
+	private void cargarDisplayIndex() {
 		// --> Display index
 		display_index = new JDisplay("Bienvenid@", "/imagenes/index_96px.png", displays);
 		display_index.setBounds(0, 0, 800, 552);
@@ -611,7 +486,9 @@ public class Ventana {
 		mensaje_index.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		mensaje_index.setBounds(26, 46, 753, 276);
 		display_index.add(mensaje_index);
+	}
 
+	private void cargarDisplayLogin() {
 		// --> Display Login
 		display_login = new JDisplay("Iniciar sesion", "/imagenes/login_96px.png", displays);
 		display_login.setBounds(0, 0, 800, 552);
@@ -723,6 +600,24 @@ public class Ventana {
 		login_iniciar_formBtn_text.setBounds(10, 0, 238, 62);
 		login_iniciar_FormBtn.add(login_iniciar_formBtn_text);
 
+		// Componentes logicos formulario Login
+		login_nick_tfg = new TextFieldGroup(login_nick_panel, login_nick_info_panel, login_nick_icon,
+				login_nick_info_ico, login_nick_info_text, login_nick_textF, login_nick_separator, "flex_key",
+				login_grupo_logico);
+		login_password_tfg = new TextFieldGroupRel(login_password_panel, login_password_info_panel, login_password_icon,
+				login_password_info_ico, login_password_info_text, login_password_textF, login_password_separator,
+				login_grupo_logico, login_nick_tfg, "correspondencia");
+
+		// Listener login
+		login_nick_textF.addKeyListener(new TextFieldKeyListener(login_nick_tfg, checker));
+		login_password_textF.addKeyListener(new TextFieldKeyListener(login_password_tfg, checker));
+		login_nick_textF.addKeyListener(new TextFieldKeyListener(login_password_tfg, checker));
+
+		login_nick_textF.addFocusListener(new TextFocusListener(login_nick_tfg, checker));
+		login_password_textF.addFocusListener(new TextFocusListener(login_password_tfg, checker));
+	}
+
+	private void cargarDisplayReg() {
 		// --> Display Reg
 		display_reg = new JDisplay("Crear una cuenta", "/imagenes/reg_96px.png", displays);
 		display_reg.setBounds(0, 0, 800, 552);
@@ -1147,39 +1042,6 @@ public class Ventana {
 		display_reg.add(reg_form_ico);
 		reg_form_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/user_info_64px.png")));
 
-		// --> Display Info
-		display_info = new JDisplay("Información", "/imagenes/info_96px.png", displays);
-		display_info.setBounds(0, 0, 800, 552);
-		display_panel.add(display_info);
-		display_info.setLayout(null);
-		display_info.setOpaque(false);
-		display_info.setVisible(false);
-		// --> Display Soporte
-		display_soporte = new JDisplay("Soporte", "/imagenes/soporte_96px.png", displays);
-		display_soporte.setBounds(0, 0, 800, 552);
-		display_panel.add(display_soporte);
-		display_soporte.setLayout(null);
-		display_soporte.setOpaque(false);
-		display_soporte.setVisible(false);
-	}
-
-	private void cargarListenersInvitado() {
-		// Componentes logicos formulario Login
-		login_nick_tfg = new TextFieldGroup(login_nick_panel, login_nick_info_panel, login_nick_icon,
-				login_nick_info_ico, login_nick_info_text, login_nick_textF, login_nick_separator, "flex_key",
-				login_grupo_logico);
-		login_password_tfg = new TextFieldGroupRel(login_password_panel, login_password_info_panel, login_password_icon,
-				login_password_info_ico, login_password_info_text, login_password_textF, login_password_separator,
-				login_grupo_logico, login_nick_tfg, "correspondencia");
-
-		// Listener login
-		login_nick_textF.addKeyListener(new TextFieldKeyListener(login_nick_tfg, checker));
-		login_password_textF.addKeyListener(new TextFieldKeyListener(login_password_tfg, checker));
-		login_nick_textF.addKeyListener(new TextFieldKeyListener(login_password_tfg, checker));
-
-		login_nick_textF.addFocusListener(new TextFocusListener(login_nick_tfg, checker));
-		login_password_textF.addFocusListener(new TextFocusListener(login_password_tfg, checker));
-
 		// Componentes logicos formulario Registro
 		reg_nick_tfg = new TextFieldGroup(reg_nick_panel, reg_nick_info_panel, reg_nick_ico, reg_nick_info_ico,
 				reg_nick_info_text, reg_nick_textF, reg_nick_separator, "flex", reg_grupo_logico);
@@ -1220,14 +1082,210 @@ public class Ventana {
 		reg_password_check_textF.addFocusListener(new TextFocusListener(reg_password_check_tfg, checker));
 	}
 
-	// SesionAlumno
-
-	private void cargarSesionAlumno() {
-		// Carga los componentes ultilizados durante la sesion de alumno
-		// cargarDisplaysInvitado();
-		cargarNavPanelAlumno();
-		// cargarListenersInvitado();
+	private void cargarDisplaySoporte() {
+		// --> Display Soporte
+		display_soporte = new JDisplay("Soporte", "/imagenes/soporte_96px.png", displays);
+		display_soporte.setBounds(0, 0, 800, 552);
+		display_panel.add(display_soporte);
+		display_soporte.setLayout(null);
+		display_soporte.setOpaque(false);
+		display_soporte.setVisible(false);
 	}
+
+	private void cargarDisplayInfo() {
+		// --> Display Info
+		display_info = new JDisplay("Información", "/imagenes/info_96px.png", displays);
+		display_info.setBounds(0, 0, 800, 552);
+		display_panel.add(display_info);
+		display_info.setLayout(null);
+		display_info.setOpaque(false);
+		display_info.setVisible(false);
+	}
+
+	private void cargarDisplayVerUsuarios() {
+
+		display_verUsuarios = new JDisplay("Buscar usuario", "/imagenes/buscar_96px.png", displays);
+		display_verUsuarios.setBounds(0, 0, 800, 552);
+		display_panel.add(display_verUsuarios);
+		display_verUsuarios.setLayout(null);
+		display_verUsuarios.setOpaque(false);
+		display_verUsuarios.setVisible(false);
+
+		verUsuarios_nick_panel = new JPanel();
+		verUsuarios_nick_panel.setBounds(204, 0, 390, 96);
+		display_verUsuarios.add(verUsuarios_nick_panel);
+		verUsuarios_nick_panel.setOpaque(false);
+		verUsuarios_nick_panel.setLayout(null);
+
+		verUsuarios_nick_separator = new JSeparator();
+		verUsuarios_nick_separator.setBounds(52, 41, 328, 2);
+		verUsuarios_nick_panel.add(verUsuarios_nick_separator);
+
+		verUsuarios_nick_icon = new JLabel("");
+		verUsuarios_nick_icon.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/buscar_32px.png")));
+		verUsuarios_nick_icon.setBounds(10, 11, 32, 32);
+		verUsuarios_nick_panel.add(verUsuarios_nick_icon);
+
+		verUsuarios_nick_textF = new JTextField("Buscar");
+		verUsuarios_nick_textF.setHorizontalAlignment(SwingConstants.LEFT);
+		verUsuarios_nick_textF.setFont(new Font("Tahoma", Font.BOLD, 20));
+		verUsuarios_nick_textF.setForeground(Color.WHITE);
+		verUsuarios_nick_textF.setBounds(52, 11, 328, 25);
+		verUsuarios_nick_panel.add(verUsuarios_nick_textF);
+		verUsuarios_nick_textF.setColumns(10);
+		verUsuarios_nick_textF.setBackground(COLOR_SELECTED);
+		verUsuarios_nick_textF.setBorder(null);
+
+		verUsuarios_nick_info_panel = new JPanel();
+		verUsuarios_nick_info_panel.setBounds(10, 50, 370, 32);
+		verUsuarios_nick_panel.add(verUsuarios_nick_info_panel);
+		verUsuarios_nick_info_panel.setBackground(COLOR_ERROR);
+		verUsuarios_nick_info_panel.setLayout(null);
+		verUsuarios_nick_info_panel.setVisible(false);
+
+		verUsuarios_nick_info_ico = new JLabel("");
+		verUsuarios_nick_info_ico.setBounds(0, 0, 32, 32);
+		verUsuarios_nick_info_panel.add(verUsuarios_nick_info_ico);
+		verUsuarios_nick_info_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/error_black_32px.png")));
+
+		verUsuarios_nick_info_text = new JLabel("Error");
+		verUsuarios_nick_info_text.setFont(new Font("Tahoma", Font.BOLD, 20));
+		verUsuarios_nick_info_text.setBounds(42, 0, 328, 32);
+		verUsuarios_nick_info_panel.add(verUsuarios_nick_info_text);
+
+		scrollPane = new JScrollPane();
+		scrollPane.setBorder(null);
+		scrollPane.setOpaque(false);
+
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setBounds(10, 90, 780, 450);
+		display_verUsuarios.add(scrollPane);
+
+		panel = new JPanel();
+		panel.setBackground(COLOR_SELECTED);
+		scrollPane.setViewportView(panel);
+		panel.setLayout(new GridLayout(0, 1, 0, 20));
+
+		ArrayList<Usuario> listaUsers = new ArrayList<Usuario>();
+		ResultSet rsu = gestorUsuarios.getAllUsuarios();
+		try {
+			while (rsu.next()) {
+				listaUsers.add(new Usuario(rsu));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		listUpdater_verUsuarios = new JRowList(listaUsers, panel, this);
+		listUpdater_verUsuarios.cargarLista();
+
+		verUsuarios_nick_tfg = new TextFieldGroup(verUsuarios_nick_panel, verUsuarios_nick_info_panel,
+				verUsuarios_nick_icon, verUsuarios_nick_info_ico, verUsuarios_nick_info_text, verUsuarios_nick_textF,
+				verUsuarios_nick_separator, "buscar");
+
+		verUsuarios_nick_textF.addKeyListener(new TextFieldKeyListener(verUsuarios_nick_tfg, checker, this));
+		verUsuarios_nick_textF.addFocusListener(new TextFocusListener(verUsuarios_nick_tfg, checker));
+
+	}
+
+	private void cargarDisplayMostrarUsuario() {
+		
+	}
+	//NavPanel inivitado
+	// Sesion Invitado
+
+	private void cargarNavPanelInvitado() {
+		// NavPanel invitado
+		navPanel_invitado = new JPanel();
+		navPanel_invitado.setBounds(0, 0, 300, 464);
+		nav_panel.add(navPanel_invitado);
+		navPanel_invitado.setOpaque(false);
+		navPanel_invitado.setLayout(null);
+		opciones_invitado.setNav_panel(navPanel_invitado);
+
+		// Nav options
+
+		// option login
+		opt_login = new JOption(display_login, "Iniciar sesi\u00F3n", "/imagenes/login_32px.png", opciones_invitado);
+		opt_login.setBounds(0, 11, 300, 48);
+		navPanel_invitado.add(opt_login);
+		opt_login.setBackground(COLOR_BACKGROUND);
+		opt_login.setLayout(null);
+		opt_login.addMouseListener(new OptionListener(opt_login));
+
+		opt_login_ico = new JLabel("");
+		opt_login_ico.setIcon(new ImageIcon(Ventana.class.getResource(opt_login.getIco_path())));
+		opt_login_ico.setBounds(10, 0, 48, 48);
+		opt_login.add(opt_login_ico);
+
+		opt_login_text = new JLabel(opt_login.getText());
+		opt_login_text.setForeground(Color.WHITE);
+		opt_login_text.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		opt_login_text.setBounds(68, 11, 222, 26);
+		opt_login.add(opt_login_text);
+
+		// option registro
+		opt_reg = new JOption(display_reg, "Crear una cuenta", "/imagenes/reg_32px.png", opciones_invitado);
+		opt_reg.setLayout(null);
+		opt_reg.setBackground(new Color(54, 33, 89));
+		opt_reg.setBounds(0, 59, 300, 48);
+		navPanel_invitado.add(opt_reg);
+		opt_reg.addMouseListener(new OptionListener(opt_reg));
+
+		opt_reg_ico = new JLabel("");
+		opt_reg_ico.setIcon(new ImageIcon(Ventana.class.getResource(opt_reg.getIco_path())));
+		opt_reg_ico.setBounds(10, 0, 48, 48);
+		opt_reg.add(opt_reg_ico);
+
+		opt_reg_text = new JLabel("Crear una cuenta");
+		opt_reg_text.setForeground(Color.WHITE);
+		opt_reg_text.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		opt_reg_text.setBounds(68, 11, 222, 26);
+		opt_reg.add(opt_reg_text);
+
+		// option info
+		opt_info = new JOption(display_info, "Informaci\\u00F3n", "/imagenes/info_32px.png", opciones_invitado);
+		opt_info.setLayout(null);
+		opt_info.setBackground(new Color(54, 33, 89));
+		opt_info.setBounds(0, 107, 300, 48);
+		navPanel_invitado.add(opt_info);
+		opt_info.addMouseListener(new OptionListener(opt_info));
+
+		opt_info_ico = new JLabel("");
+		opt_info_ico.setIcon(new ImageIcon(Ventana.class.getResource(opt_info.getIco_path())));
+		opt_info_ico.setBounds(10, 0, 48, 48);
+		opt_info.add(opt_info_ico);
+
+		opt_info_text = new JLabel("Informaci\u00F3n");
+		opt_info_text.setForeground(Color.WHITE);
+		opt_info_text.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		opt_info_text.setBounds(68, 11, 222, 26);
+		opt_info.add(opt_info_text);
+
+		// option soporte
+		opt_soporte = new JOption(display_soporte, "Soporte", "/imagenes/soporte_32px.png", opciones_invitado);
+		opt_soporte.setLayout(null);
+		opt_soporte.setBackground(new Color(54, 33, 89));
+		opt_soporte.setBounds(0, 155, 300, 48);
+		navPanel_invitado.add(opt_soporte);
+		opt_soporte.addMouseListener(new OptionListener(opt_soporte));
+
+		opt_soporte_ico = new JLabel("");
+		opt_soporte_ico.setIcon(new ImageIcon(Ventana.class.getResource(opt_soporte.getIco_path())));
+		opt_soporte_ico.setBounds(10, 0, 48, 48);
+		opt_soporte.add(opt_soporte_ico);
+
+		opt_soporte_text = new JLabel("Soporte");
+		opt_soporte_text.setForeground(Color.WHITE);
+		opt_soporte_text.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		opt_soporte_text.setBounds(68, 11, 222, 26);
+		opt_soporte.add(opt_soporte_text);
+
+	}
+
+	//NavPanel Alumno
+	// SesionAlumno
 
 	private void cargarNavPanelAlumno() {
 		// NavPanel alumno
@@ -1323,14 +1381,8 @@ public class Ventana {
 
 	}
 
+	//NavPanel Profesor
 	// Sesion Profesor
-
-	private void cargarSesionProfesor() {
-		// Carga los componentes ultilizados durante la sesion de alumno
-		// cargarDisplaysInvitado();
-		cargarNavPanelProfesor();
-		// cargarListenersInvitado();
-	}
 
 	private void cargarNavPanelProfesor() {
 		// NavPanel alumno
@@ -1428,15 +1480,7 @@ public class Ventana {
 
 	}
 
-	// Sesion Administrador
-
-	private void cargarSesionAdministrador() {
-		// Carga los componentes ultilizados durante la sesion de administrador
-		cargarDisplayVerUsuarios();
-		cargarNavPanelAdministrador();
-		// cargarListenersInvitado();
-	}
-
+	//NavPanel Administrador
 	private void cargarNavPanelAdministrador() {
 		// NavPanel administrador
 		navPanel_administrador = new JPanel();
@@ -1450,7 +1494,7 @@ public class Ventana {
 		// Nav options
 
 		// option ver usuarios
-		opt_verUsuarios = new JOption(display_verUsuarios, "Ver usuarios", "/imagenes/buscar_32px.png",
+		opt_verUsuarios = new JOption(display_verUsuarios, "Buscar usuario", "/imagenes/buscar_32px.png",
 				opciones_administrador);
 		opt_verUsuarios.setBounds(0, 11, 300, 48);
 		navPanel_administrador.add(opt_verUsuarios);
@@ -1470,25 +1514,25 @@ public class Ventana {
 		opt_verUsuarios.add(opt_verUsuarios_text);
 
 		// option soporte administrador
-		opt_soporte_administracion = new JOption(display_reg, "Soporte", "/imagenes/soporte_32px.png",
+		opt_soporte_administrador = new JOption(display_reg, "Soporte", "/imagenes/soporte_32px.png",
 				opciones_administrador);
-		opt_soporte_administracion.setLayout(null);
-		opt_soporte_administracion.setBackground(new Color(54, 33, 89));
-		opt_soporte_administracion.setBounds(0, 59, 300, 48);
-		navPanel_administrador.add(opt_soporte_administracion);
-		opt_soporte_administracion.addMouseListener(new OptionListener(opt_soporte_administracion));
+		opt_soporte_administrador.setLayout(null);
+		opt_soporte_administrador.setBackground(new Color(54, 33, 89));
+		opt_soporte_administrador.setBounds(0, 59, 300, 48);
+		navPanel_administrador.add(opt_soporte_administrador);
+		opt_soporte_administrador.addMouseListener(new OptionListener(opt_soporte_administrador));
 
 		opt_soporte_administrador_ico = new JLabel("");
 		opt_soporte_administrador_ico
-				.setIcon(new ImageIcon(Ventana.class.getResource(opt_soporte_administracion.getIco_path())));
+				.setIcon(new ImageIcon(Ventana.class.getResource(opt_soporte_administrador.getIco_path())));
 		opt_soporte_administrador_ico.setBounds(10, 0, 48, 48);
-		opt_soporte_administracion.add(opt_soporte_administrador_ico);
+		opt_soporte_administrador.add(opt_soporte_administrador_ico);
 
 		opt_soporte_administrador_text = new JLabel("Soporte");
 		opt_soporte_administrador_text.setForeground(Color.WHITE);
 		opt_soporte_administrador_text.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		opt_soporte_administrador_text.setBounds(68, 11, 222, 26);
-		opt_soporte_administracion.add(opt_soporte_administrador_text);
+		opt_soporte_administrador.add(opt_soporte_administrador_text);
 
 		// option entrar como (administrador)
 		opt_entrarComo_administrador = new JOption(display_info, "Entrar como", "/imagenes/cambiar_32px.png",
@@ -1533,105 +1577,9 @@ public class Ventana {
 		opt_cerrarSesion_administrador.add(opt_cerrarSesion_administrador_text);
 	}
 
-	private void cargarDisplayVerUsuarios() {
-		
-		display_verUsuarios = new JDisplay("Bienvenid@", "/imagenes/index_96px.png", displays);
-		display_verUsuarios.setBounds(0, 0, 800, 552);
-		display_panel.add(display_verUsuarios);
-		display_verUsuarios.setLayout(null);
-		display_verUsuarios.setOpaque(false);
-		display_verUsuarios.setVisible(false);
-		
-		verUsuarios_nick_panel = new JPanel();
-		verUsuarios_nick_panel.setBounds(204, 0, 390, 96);
-		display_verUsuarios.add(verUsuarios_nick_panel);
-		verUsuarios_nick_panel.setOpaque(false);
-		verUsuarios_nick_panel.setLayout(null);
+	//NavPanel Desarrollador
+	// Sesion Desarrollador
 
-		verUsuarios_nick_separator = new JSeparator();
-		verUsuarios_nick_separator.setBounds(52, 41, 328, 2);
-		verUsuarios_nick_panel.add(verUsuarios_nick_separator);
-
-		verUsuarios_nick_icon = new JLabel("");
-		verUsuarios_nick_icon.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/user_text_32px.png")));
-		verUsuarios_nick_icon.setBounds(10, 11, 32, 32);
-		verUsuarios_nick_panel.add(verUsuarios_nick_icon);
-
-		verUsuarios_nick_textF = new JTextField("Buscar");
-		verUsuarios_nick_textF.setHorizontalAlignment(SwingConstants.LEFT);
-		verUsuarios_nick_textF.setFont(new Font("Tahoma", Font.BOLD, 20));
-		verUsuarios_nick_textF.setForeground(Color.WHITE);
-		verUsuarios_nick_textF.setBounds(52, 11, 328, 25);
-		verUsuarios_nick_panel.add(verUsuarios_nick_textF);
-		verUsuarios_nick_textF.setColumns(10);
-		verUsuarios_nick_textF.setBackground(COLOR_SELECTED);
-		verUsuarios_nick_textF.setBorder(null);
-
-		verUsuarios_nick_info_panel = new JPanel();
-		verUsuarios_nick_info_panel.setBounds(10, 50, 370, 32);
-		verUsuarios_nick_panel.add(verUsuarios_nick_info_panel);
-		verUsuarios_nick_info_panel.setBackground(COLOR_ERROR);
-		verUsuarios_nick_info_panel.setLayout(null);
-		verUsuarios_nick_info_panel.setVisible(false);
-
-		verUsuarios_nick_info_ico = new JLabel("");
-		verUsuarios_nick_info_ico.setBounds(0, 0, 32, 32);
-		verUsuarios_nick_info_panel.add(verUsuarios_nick_info_ico);
-		verUsuarios_nick_info_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/error_black_32px.png")));
-
-		verUsuarios_nick_info_text = new JLabel("Error");
-		verUsuarios_nick_info_text.setFont(new Font("Tahoma", Font.BOLD, 20));
-		verUsuarios_nick_info_text.setBounds(42, 0, 328, 32);
-		verUsuarios_nick_info_panel.add(verUsuarios_nick_info_text);
-		
-		scrollPane = new JScrollPane();
-		scrollPane.setBorder(null);
-		scrollPane.setOpaque(false);
-		
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setBounds(10, 90, 780, 450);
-		display_verUsuarios.add(scrollPane);
-		
-		panel = new JPanel();
-		panel.setBackground(COLOR_SELECTED);
-		scrollPane.setViewportView(panel);
-		panel.setLayout(new GridLayout(0, 1, 0, 20));
-		
-		ArrayList<Usuario> listaUsers = new ArrayList<Usuario>();
-		ResultSet rsu = gestorUsuarios.getAllUsuarios();
-		try {
-			while(rsu.next()) {
-				listaUsers.add(new Usuario(rsu));
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		jrlist = new JRowList(listaUsers, panel);
-		jrlist.cargarLista();
-		
-		verUsuarios_nick_tfg = new TextFieldGroup(verUsuarios_nick_panel, verUsuarios_nick_info_panel, verUsuarios_nick_icon,
-				verUsuarios_nick_info_ico, verUsuarios_nick_info_text, verUsuarios_nick_textF, verUsuarios_nick_separator, "buscar",
-				verUsuarios_grupo_logico);
-		
-		verUsuarios_nick_textF.addKeyListener(new TextFieldKeyListener(verUsuarios_nick_tfg, checker, this));
-		verUsuarios_nick_textF.addFocusListener(new TextFocusListener(verUsuarios_nick_tfg, checker));
-		
-		
-		
-	}
-	
-	
-	// Sesion Administrador
-
- 	private void cargarSesionDesarrollador() {
-		// Carga los componentes ultilizados durante la sesion de administrador
-		// cargarDisplaysInvitado();
-		cargarNavPanelDesarrollador();
-		// cargarListenersInvitado();
-	}
-	
 	private void cargarNavPanelDesarrollador() {
 		// NavPanel desarollador
 		navPanel_desarrollador = new JPanel();
@@ -1645,7 +1593,8 @@ public class Ventana {
 		// Nav options
 
 		// option ver usuarios desarollador
-		opt_verUsuarios_desarrollador = new JOption(display_login, "Ver usuarios", "/imagenes/buscar_32px.png", opciones_desarrollador);
+		opt_verUsuarios_desarrollador = new JOption(display_login, "Ver usuarios", "/imagenes/buscar_32px.png",
+				opciones_desarrollador);
 		opt_verUsuarios_desarrollador.setBounds(0, 11, 300, 48);
 		navPanel_desarrollador.add(opt_verUsuarios_desarrollador);
 		opt_verUsuarios_desarrollador.setBackground(COLOR_BACKGROUND);
@@ -1653,7 +1602,8 @@ public class Ventana {
 		opt_verUsuarios_desarrollador.addMouseListener(new OptionListener(opt_verUsuarios_desarrollador));
 
 		opt_verUsuarios_desarrollador_ico = new JLabel("");
-		opt_verUsuarios_desarrollador_ico.setIcon(new ImageIcon(Ventana.class.getResource(opt_verUsuarios_desarrollador.getIco_path())));
+		opt_verUsuarios_desarrollador_ico
+				.setIcon(new ImageIcon(Ventana.class.getResource(opt_verUsuarios_desarrollador.getIco_path())));
 		opt_verUsuarios_desarrollador_ico.setBounds(10, 0, 48, 48);
 		opt_verUsuarios_desarrollador.add(opt_verUsuarios_desarrollador_ico);
 
@@ -1664,7 +1614,8 @@ public class Ventana {
 		opt_verUsuarios_desarrollador.add(opt_verUsuarios_desarrollador_text);
 
 		// option entrar como - desarollador
-		opt_entrarComo_desarrollador = new JOption(display_reg, "Entrar como", "/imagenes/cambiar_32px.png", opciones_desarrollador);
+		opt_entrarComo_desarrollador = new JOption(display_reg, "Entrar como", "/imagenes/cambiar_32px.png",
+				opciones_desarrollador);
 		opt_entrarComo_desarrollador.setLayout(null);
 		opt_entrarComo_desarrollador.setBackground(new Color(54, 33, 89));
 		opt_entrarComo_desarrollador.setBounds(0, 59, 300, 48);
@@ -1672,7 +1623,8 @@ public class Ventana {
 		opt_entrarComo_desarrollador.addMouseListener(new OptionListener(opt_entrarComo_desarrollador));
 
 		opt_entrarComo_desarrollador_ico = new JLabel("");
-		opt_entrarComo_desarrollador_ico.setIcon(new ImageIcon(Ventana.class.getResource(opt_entrarComo_desarrollador.getIco_path())));
+		opt_entrarComo_desarrollador_ico
+				.setIcon(new ImageIcon(Ventana.class.getResource(opt_entrarComo_desarrollador.getIco_path())));
 		opt_entrarComo_desarrollador_ico.setBounds(10, 0, 48, 48);
 		opt_entrarComo_desarrollador.add(opt_entrarComo_desarrollador_ico);
 
@@ -1683,7 +1635,8 @@ public class Ventana {
 		opt_entrarComo_desarrollador.add(opt_entrarComo_desarrollador_text);
 
 		// option añadir pregunta
-		opt_anadirPregunta = new JOption(display_info, "Añadir pregunta", "/imagenes/pregunta_32px.png", opciones_desarrollador);
+		opt_anadirPregunta = new JOption(display_info, "Añadir pregunta", "/imagenes/pregunta_32px.png",
+				opciones_desarrollador);
 		opt_anadirPregunta.setLayout(null);
 		opt_anadirPregunta.setBackground(new Color(54, 33, 89));
 		opt_anadirPregunta.setBounds(0, 107, 300, 48);
@@ -1702,7 +1655,8 @@ public class Ventana {
 		opt_anadirPregunta.add(opt_anadirPregunta_text);
 
 		// option cerrar sesion desarolloador
-		opt_cerrarSesion_desarrollador = new JOption(display_soporte, "Cerrar sesion", "/imagenes/cerrar_32px.png", opciones_desarrollador);
+		opt_cerrarSesion_desarrollador = new JOption(display_soporte, "Cerrar sesion", "/imagenes/cerrar_32px.png",
+				opciones_desarrollador);
 		opt_cerrarSesion_desarrollador.setLayout(null);
 		opt_cerrarSesion_desarrollador.setBackground(new Color(54, 33, 89));
 		opt_cerrarSesion_desarrollador.setBounds(0, 155, 300, 48);
@@ -1710,7 +1664,8 @@ public class Ventana {
 		opt_cerrarSesion_desarrollador.addMouseListener(new OptionListener(opt_cerrarSesion_desarrollador));
 
 		opt_cerrarSesion_desarrollador_ico = new JLabel("");
-		opt_cerrarSesion_desarrollador_ico.setIcon(new ImageIcon(Ventana.class.getResource(opt_cerrarSesion_desarrollador.getIco_path())));
+		opt_cerrarSesion_desarrollador_ico
+				.setIcon(new ImageIcon(Ventana.class.getResource(opt_cerrarSesion_desarrollador.getIco_path())));
 		opt_cerrarSesion_desarrollador_ico.setBounds(10, 0, 48, 48);
 		opt_cerrarSesion_desarrollador.add(opt_cerrarSesion_desarrollador_ico);
 
@@ -1720,8 +1675,8 @@ public class Ventana {
 		opt_cerrarSesion_desarrollador_text.setBounds(68, 11, 222, 26);
 		opt_cerrarSesion_desarrollador.add(opt_cerrarSesion_desarrollador_text);
 
-	}	
-	
+	}
+
 	/*
 	 * |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 	 * POPUP CONTROL
@@ -1975,24 +1930,24 @@ public class Ventana {
 	public GestorSesiones getGestorSesiones() {
 		return gestorSesiones;
 	}
-	
+
 	/*
 	 * |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 	 * ACTUALIZAR LISTAS
 	 */
-	
+
 	public void actualizarLista(ResultSet rs) {
 		ArrayList<Usuario> listaUsers = new ArrayList<Usuario>();
 		try {
-			while(rs.next()) {
+			while (rs.next()) {
 				listaUsers.add(new Usuario(rs));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		jrlist.limpiarLista();
-		jrlist.setLista(listaUsers);
-		jrlist.cargarLista();
+		listUpdater_verUsuarios.limpiarLista();
+		listUpdater_verUsuarios.setLista(listaUsers);
+		listUpdater_verUsuarios.cargarLista();
 	}
 }

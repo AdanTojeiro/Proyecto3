@@ -22,9 +22,11 @@ public class JRowPanel extends JPanel {
 	private JLabel nick, dni, acceso, estado;
 	private JRowBtn editar_btn;
 	
+	
 
 	
-	public JRowPanel(Usuario usuario) {
+	public JRowPanel(Usuario usuario, Ventana ventana) {
+		
 		this.setLayout(new GridLayout(1, 5, 10, 2));
 		this.setOpaque(false);
 		this.setBounds(0, 0, 780, 50);
@@ -44,16 +46,16 @@ public class JRowPanel extends JPanel {
 		
 		String accesoText = "";
 		switch(usuario.getAcceso()) {
-		case 0:
+		case "alumno":
 			accesoText = "Alumno";
 			break;
-		case 1:
+		case "profesor":
 			accesoText = "Profesor";
 			break;
-		case 2:
+		case "administrador":
 			accesoText = "Administrador";
 			break;
-		case 3:
+		case "desarrollador":
 			accesoText = "Desarrollador";
 			break;
 		}
@@ -74,7 +76,7 @@ public class JRowPanel extends JPanel {
 		estado.setVerticalAlignment(SwingConstants.CENTER);
 		
 		
-		editar_btn = new JRowBtn(usuario.getPk_usuario());
+		editar_btn = new JRowBtn(usuario.getPk_usuario(), ventana);
 		this.add(editar_btn);
 		
 		

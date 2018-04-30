@@ -6,9 +6,9 @@ import java.util.Date;
 
 public class Usuario {
 
-		private String nick, pass, nombre, apellidos, dni, email, estado;
+		private String nick, pass, nombre, apellidos, dni, email, acceso, estado;
 		private Date fecha_registro;
-		private int acceso, pk_usuario;
+		private int pk_usuario;
 		
 		public Usuario() {
 			
@@ -34,7 +34,7 @@ public class Usuario {
 						this.apellidos =(rs.getString("apellidos"));
 						this.dni = (rs.getString("dni"));
 						this.email =(rs.getString("email"));
-						this.acceso =(rs.getInt("acceso"));
+						this.acceso =(rs.getString("acceso"));
 						this.fecha_registro = (rs.getDate("fecha_Registro"));
 						this.pk_usuario = (rs.getInt("pk_usuario"));
 						this.estado =(rs.getString("estado"));
@@ -103,11 +103,11 @@ public class Usuario {
 			this.fecha_registro = fecha_registro;
 		}
 
-		public int getAcceso() {
+		public String getAcceso() {
 			return acceso;
 		}
 
-		public void setAcceso(int acceso) {
+		public void setAcceso(String acceso) {
 			this.acceso = acceso;
 		}
 
@@ -122,6 +122,8 @@ public class Usuario {
 		public void setEstado(String estado) {
 			this.estado = estado;
 		}
+		
+	
 		
 		
 		
