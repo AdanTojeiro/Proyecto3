@@ -134,22 +134,20 @@ public class Ventana {
 	private JSeparator separador_titulo;
 
 	// 2.2-Displays
-	private JDisplay display_index, display_login, display_reg, display_info, display_soporte, display_verUsuarios;
+	private JDisplay display_index, display_login, display_reg, display_info, display_soporte, display_verUsuarios, display_mostrarUsuario;
 
 	// 2.2.1-Index display
 	private JLabel mensaje_index;
 
 	// 2.2.2-Login display
-	private JPanel login_password_panel, login_nick_panel;
+	private JPanel login_password_panel;
 	private JLabel imagen_central_login;
 	private JFormBtn login_iniciar_FormBtn;
 	private JLabel login_iniciar_formBtn_text;
 
 	// 2.2.2.1-Login_nick_panel
 	private JPanel login_nick_info_panel;
-	private JLabel login_nick_icon, login_nick_info_ico, login_nick_info_text;
-	private JTextField login_nick_textF;
-	private JSeparator login_nick_separator;
+	private JLabel login_nick_info_ico, login_nick_info_text;
 
 	// 2.2.2.2-Login_pass_panel
 	private JPanel login_password_info_panel;
@@ -226,10 +224,11 @@ public class Ventana {
 
 	// 2.2.4-Info display
 	// 2.2.5-Soporte display
-	// 2.2.6-
+	// 2.2.6- Mostrar Usuario
+	
 	// 2.2.7-Ver usuarios
-	private JPanel panel, verUsuarios_nick_info_panel, verUsuarios_nick_panel;
-	private JScrollPane scrollPane;
+	private JPanel verUsuarios_contenedor, verUsuarios_nick_info_panel, verUsuarios_nick_panel;
+	private JScrollPane verUsuarios_scroll;
 	private JSeparator verUsuarios_nick_separator;
 	private JTextField verUsuarios_nick_textF;
 	private JLabel verUsuarios_nick_info_ico, verUsuarios_nick_info_text, verUsuarios_nick_icon;
@@ -250,6 +249,12 @@ public class Ventana {
 	private TextFieldGroup reg_password_check_tfg;
 	//Buscador verUsuarios
 	private TextFieldGroup verUsuarios_nick_tfg;
+	private JLabel label_9;
+	private JPanel login_nick_panel;
+	private JSeparator login_nick_separator;
+	private JLabel login_nick_icon;
+	private JTextField login_nick_textF;
+	
 	
 
 	/*
@@ -455,16 +460,18 @@ public class Ventana {
 		desarrollador = new SesionSteup(opciones_desarrollador, displays);
 	}
 
-	//DISPLAYS
 	// DISPLAYS
 
 	private void cargarDisplays() {
+		/*
 		cargarDisplayIndex();
 		cargarDisplayLogin();
 		cargarDisplayReg();
 		cargarDisplaySoporte();
 		cargarDisplayInfo();
 		cargarDisplayVerUsuarios();
+		*/
+		cargarDisplayMostrarUsuario();
 
 	}
 
@@ -1153,18 +1160,18 @@ public class Ventana {
 		verUsuarios_nick_info_text.setBounds(42, 0, 328, 32);
 		verUsuarios_nick_info_panel.add(verUsuarios_nick_info_text);
 
-		scrollPane = new JScrollPane();
-		scrollPane.setBorder(null);
-		scrollPane.setOpaque(false);
+		verUsuarios_scroll = new JScrollPane();
+		verUsuarios_scroll.setBorder(null);
+		verUsuarios_scroll.setOpaque(false);
 
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setBounds(10, 90, 780, 450);
-		display_verUsuarios.add(scrollPane);
+		verUsuarios_scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		verUsuarios_scroll.setBounds(10, 90, 780, 450);
+		display_verUsuarios.add(verUsuarios_scroll);
 
-		panel = new JPanel();
-		panel.setBackground(COLOR_SELECTED);
-		scrollPane.setViewportView(panel);
-		panel.setLayout(new GridLayout(0, 1, 0, 20));
+		verUsuarios_contenedor = new JPanel();
+		verUsuarios_contenedor.setBackground(COLOR_SELECTED);
+		verUsuarios_scroll.setViewportView(verUsuarios_contenedor);
+		verUsuarios_contenedor.setLayout(new GridLayout(0, 1, 0, 20));
 
 		ArrayList<Usuario> listaUsers = new ArrayList<Usuario>();
 		ResultSet rsu = gestorUsuarios.getAllUsuarios();
@@ -1177,7 +1184,7 @@ public class Ventana {
 			e.printStackTrace();
 		}
 
-		listUpdater_verUsuarios = new JRowList(listaUsers, panel, this);
+		listUpdater_verUsuarios = new JRowList(listaUsers, verUsuarios_contenedor, this);
 		listUpdater_verUsuarios.cargarLista();
 
 		verUsuarios_nick_tfg = new TextFieldGroup(verUsuarios_nick_panel, verUsuarios_nick_info_panel,
@@ -1191,9 +1198,170 @@ public class Ventana {
 
 	private void cargarDisplayMostrarUsuario() {
 		
+		display_mostrarUsuario = new JDisplay("Mostrar usuario", "/imagenes/info_96px.png", displays);
+		display_mostrarUsuario.setBounds(0, 0, 800, 552);
+		display_panel.add(display_mostrarUsuario);
+		display_mostrarUsuario.setLayout(null);
+		display_mostrarUsuario.setOpaque(false);
+		
+		JPanel panel = new JPanel();
+		panel.setLayout(null);
+		panel.setOpaque(false);
+		panel.setBounds(10, 11, 390, 52);
+		display_mostrarUsuario.add(panel);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(52, 41, 328, 2);
+		panel.add(separator);
+		
+		JLabel label = new JLabel("");
+		label.setBounds(10, 11, 32, 32);
+		panel.add(label);
+		
+		JLabel label_1 = new JLabel("Nick");
+		label_1.setForeground(Color.WHITE);
+		label_1.setFont(new Font("Tahoma", Font.BOLD, 20));
+		label_1.setBounds(52, 11, 328, 30);
+		panel.add(label_1);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setLayout(null);
+		panel_1.setOpaque(false);
+		panel_1.setBounds(10, 74, 390, 52);
+		display_mostrarUsuario.add(panel_1);
+		
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setBounds(52, 41, 328, 2);
+		panel_1.add(separator_1);
+		
+		JLabel label_2 = new JLabel("");
+		label_2.setBounds(10, 11, 32, 32);
+		panel_1.add(label_2);
+		
+		JLabel lblNombre = new JLabel("Nombre");
+		lblNombre.setForeground(Color.WHITE);
+		lblNombre.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNombre.setBounds(52, 11, 328, 30);
+		panel_1.add(lblNombre);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setLayout(null);
+		panel_2.setOpaque(false);
+		panel_2.setBounds(10, 137, 390, 52);
+		display_mostrarUsuario.add(panel_2);
+		
+		JSeparator separator_2 = new JSeparator();
+		separator_2.setBounds(52, 41, 328, 2);
+		panel_2.add(separator_2);
+		
+		JLabel label_3 = new JLabel("");
+		label_3.setBounds(10, 11, 32, 32);
+		panel_2.add(label_3);
+		
+		JLabel lblApellidos = new JLabel("Apellidos");
+		lblApellidos.setForeground(Color.WHITE);
+		lblApellidos.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblApellidos.setBounds(52, 11, 328, 30);
+		panel_2.add(lblApellidos);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setLayout(null);
+		panel_3.setOpaque(false);
+		panel_3.setBounds(10, 200, 390, 52);
+		display_mostrarUsuario.add(panel_3);
+		
+		JSeparator separator_3 = new JSeparator();
+		separator_3.setBounds(52, 41, 328, 2);
+		panel_3.add(separator_3);
+		
+		JLabel label_4 = new JLabel("");
+		label_4.setBounds(10, 11, 32, 32);
+		panel_3.add(label_4);
+		
+		JLabel lblDni = new JLabel("DNI");
+		lblDni.setForeground(Color.WHITE);
+		lblDni.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblDni.setBounds(52, 11, 328, 30);
+		panel_3.add(lblDni);
+		
+		JPanel panel_4 = new JPanel();
+		panel_4.setLayout(null);
+		panel_4.setOpaque(false);
+		panel_4.setBounds(10, 263, 390, 52);
+		display_mostrarUsuario.add(panel_4);
+		
+		JSeparator separator_4 = new JSeparator();
+		separator_4.setBounds(52, 41, 328, 2);
+		panel_4.add(separator_4);
+		
+		JLabel label_5 = new JLabel("");
+		label_5.setBounds(10, 11, 32, 32);
+		panel_4.add(label_5);
+		
+		JLabel lblCorreoElectronico = new JLabel("Correo electronico");
+		lblCorreoElectronico.setForeground(Color.WHITE);
+		lblCorreoElectronico.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblCorreoElectronico.setBounds(52, 11, 328, 30);
+		panel_4.add(lblCorreoElectronico);
+		
+		JPanel panel_5 = new JPanel();
+		panel_5.setLayout(null);
+		panel_5.setOpaque(false);
+		panel_5.setBounds(10, 326, 390, 52);
+		display_mostrarUsuario.add(panel_5);
+		
+		JSeparator separator_5 = new JSeparator();
+		separator_5.setBounds(52, 41, 328, 2);
+		panel_5.add(separator_5);
+		
+		JLabel label_6 = new JLabel("");
+		label_6.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/fecha_32px.png")));
+		label_6.setBounds(10, 11, 32, 32);
+		panel_5.add(label_6);
+		
+		JLabel lblFechaRegistro = new JLabel("Fecha registro");
+		lblFechaRegistro.setForeground(Color.WHITE);
+		lblFechaRegistro.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblFechaRegistro.setBounds(52, 11, 328, 30);
+		panel_5.add(lblFechaRegistro);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/time_96px.png")));
+		lblNewLabel.setBounds(410, 30, 96, 96);
+		display_mostrarUsuario.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("DD:HH:MM");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 26));
+		lblNewLabel_1.setForeground(Color.WHITE);
+		lblNewLabel_1.setBounds(516, 50, 221, 47);
+		display_mostrarUsuario.add(lblNewLabel_1);
+		
+		JLabel label_7 = new JLabel("");
+		label_7.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/dev_96px.png")));
+		label_7.setBounds(410, 282, 96, 96);
+		display_mostrarUsuario.add(label_7);
+		
+		JLabel lblAcceso = new JLabel("Acceso");
+		lblAcceso.setForeground(Color.WHITE);
+		lblAcceso.setFont(new Font("Tahoma", Font.BOLD, 26));
+		lblAcceso.setBounds(516, 175, 221, 47);
+		display_mostrarUsuario.add(lblAcceso);
+		
+		JLabel label_8 = new JLabel("");
+		label_8.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/online_96px.png")));
+		label_8.setBounds(410, 156, 96, 96);
+		display_mostrarUsuario.add(label_8);
+		
+		label_9 = new JLabel("Acceso");
+		label_9.setForeground(Color.WHITE);
+		label_9.setFont(new Font("Tahoma", Font.BOLD, 26));
+		label_9.setBounds(516, 304, 221, 47);
+		display_mostrarUsuario.add(label_9);
+
+		
 	}
+	
 	//NavPanel inivitado
-	// Sesion Invitado
 
 	private void cargarNavPanelInvitado() {
 		// NavPanel invitado
@@ -1285,7 +1453,6 @@ public class Ventana {
 	}
 
 	//NavPanel Alumno
-	// SesionAlumno
 
 	private void cargarNavPanelAlumno() {
 		// NavPanel alumno
@@ -1382,7 +1549,6 @@ public class Ventana {
 	}
 
 	//NavPanel Profesor
-	// Sesion Profesor
 
 	private void cargarNavPanelProfesor() {
 		// NavPanel alumno
@@ -1481,6 +1647,7 @@ public class Ventana {
 	}
 
 	//NavPanel Administrador
+	
 	private void cargarNavPanelAdministrador() {
 		// NavPanel administrador
 		navPanel_administrador = new JPanel();
@@ -1578,7 +1745,6 @@ public class Ventana {
 	}
 
 	//NavPanel Desarrollador
-	// Sesion Desarrollador
 
 	private void cargarNavPanelDesarrollador() {
 		// NavPanel desarollador
