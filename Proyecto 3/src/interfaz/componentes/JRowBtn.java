@@ -1,4 +1,4 @@
-package interfaz;
+package interfaz.componentes;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controladores.JRowBtnListener;
+import interfaz.Ventana;
 
 public class JRowBtn extends JPanel {
 

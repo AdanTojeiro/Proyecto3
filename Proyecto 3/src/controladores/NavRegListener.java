@@ -8,14 +8,14 @@ import javax.swing.ImageIcon;
 import interfaz.Ventana;
 import interfaz.componentes.JNavLabel;
 
-public class NavLabelListener implements MouseListener {
+public class NavRegListener implements MouseListener {
 	
 	private JNavLabel navLabel;
 	private Ventana ventana;
 	
 	
 	
-	public NavLabelListener(JNavLabel navLabel, Ventana ventana) {
+	public NavRegListener(JNavLabel navLabel, Ventana ventana) {
 		super();
 		this.navLabel = navLabel;
 		this.ventana = ventana;

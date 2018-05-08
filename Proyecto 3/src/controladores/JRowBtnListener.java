@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import clases.Usuario;
-import interfaz.JRowBtn;
 import interfaz.Ventana;
+import interfaz.componentes.JRowBtn;
 
 public class JRowBtnListener implements MouseListener {
 	

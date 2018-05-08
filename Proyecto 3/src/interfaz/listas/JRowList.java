@@ -7,8 +7,8 @@ import java.util.Iterator;
 import javax.swing.JPanel;
 
 import clases.Usuario;
-import interfaz.JRowPanel;
 import interfaz.Ventana;
+import interfaz.componentes.JRowPanel;
 
 public class JRowList {
 	

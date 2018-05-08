@@ -1,4 +1,4 @@
-package interfaz;
+package interfaz.componentes;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -11,6 +11,7 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
 import clases.Usuario;
+import interfaz.Ventana;
 
 public class JRowPanel extends JPanel {
 
