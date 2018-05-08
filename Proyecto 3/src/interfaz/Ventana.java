@@ -289,6 +289,10 @@ public class Ventana {
 	private JLabel label_1;
 	private JLabel label_2;
 	private JSeparator separator_1;
+	private JPanel estadoCambio_panel_mostrarUsuario;
+	private JLabel accesoCambio_bajar_mostrarUsuario;
+	private JLabel accesoCambio_subir_mostrarUsuario;
+	private JSeparator separator;
 
 	/*
 	 * |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -320,7 +324,7 @@ public class Ventana {
 		FrameDrager drager = new FrameDrager(frame);
 		frame.addMouseListener(drager);
 		frame.addMouseMotionListener(drager);
-		
+
 		cargarPopUpPanel();
 		cargarEstructura();
 		cargarSesionSteups();
@@ -330,15 +334,14 @@ public class Ventana {
 		cargarNavPanelProfesor();
 		cargarNavPanelAdministrador();
 		cargarNavPanelDesarrollador();
-		
+
 		// Comprobar driver
 
 		if (mysqlc.testConnection()) {
-			
+
 		} else {
 			this.showPopUp("mysqlerror");
 		}
-		
 
 	}
 
@@ -487,7 +490,7 @@ public class Ventana {
 		opciones_administrador = new OptionGroup();
 		opciones_desarrollador = new OptionGroup();
 
-		displays = new DisplayGroup(titulo_ico, titulo_text);
+		displays = new DisplayGroup(titulo_ico, titulo_text, this);
 
 		invitado = new SesionSteup(opciones_invitado, displays);
 		alumno = new SesionSteup(opciones_alumno, displays);
@@ -499,7 +502,7 @@ public class Ventana {
 	// DISPLAYS
 
 	private void cargarDisplays() {
-		
+
 		cargarDisplayIndex();
 		cargarDisplayLogin();
 		cargarDisplayReg();
@@ -1207,22 +1210,14 @@ public class Ventana {
 		verUsuarios_contenedor.setBackground(COLOR_SELECTED);
 		verUsuarios_scroll.setViewportView(verUsuarios_contenedor);
 		verUsuarios_contenedor.setLayout(new GridLayout(0, 1, 0, 20));
-		
-		
 
 		ArrayList<Usuario> listaUsers = new ArrayList<Usuario>();
 		/*
-		ResultSet rsu = gestorUsuarios.getAllUsuarios();
-		try {
-			while (rsu.next()) {
-				listaUsers.add(new Usuario(rsu));
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		*/
+		 * ResultSet rsu = gestorUsuarios.getAllUsuarios(); try { while (rsu.next()) {
+		 * listaUsers.add(new Usuario(rsu)); } } catch (SQLException e) { // TODO
+		 * Auto-generated catch block e.printStackTrace(); }
+		 * 
+		 */
 
 		listUpdater_verUsuarios = new JRowList(listaUsers, verUsuarios_contenedor, this);
 		listUpdater_verUsuarios.cargarLista();
@@ -1403,43 +1398,44 @@ public class Ventana {
 		acceso_text_mostrarUsuario.setFont(new Font("Tahoma", Font.BOLD, 26));
 		acceso_text_mostrarUsuario.setBounds(516, 304, 221, 47);
 		display_mostrarUsuario.add(acceso_text_mostrarUsuario);
-		
-		JPanel estadoCambio_panel_mostrarUsuario = new JPanel();
+
+		estadoCambio_panel_mostrarUsuario = new JPanel();
 		estadoCambio_panel_mostrarUsuario.setOpaque(false);
 		estadoCambio_panel_mostrarUsuario.setBounds(720, 165, 32, 68);
 		display_mostrarUsuario.add(estadoCambio_panel_mostrarUsuario);
 		estadoCambio_panel_mostrarUsuario.setLayout(null);
-		
-		JLabel accesoCambio_bajar_mostrarUsuario = new JLabel("");
-		accesoCambio_bajar_mostrarUsuario.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/arrow_down_32px.png")));
+
+		accesoCambio_bajar_mostrarUsuario = new JLabel("");
+		accesoCambio_bajar_mostrarUsuario
+				.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/arrow_down_32px.png")));
 		accesoCambio_bajar_mostrarUsuario.setBounds(0, 36, 32, 32);
 		estadoCambio_panel_mostrarUsuario.add(accesoCambio_bajar_mostrarUsuario);
-		
-		JLabel accesoCambio_subir_mostrarUsuario = new JLabel("");
+
+		accesoCambio_subir_mostrarUsuario = new JLabel("");
 		accesoCambio_subir_mostrarUsuario.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/subir_32px.png")));
 		accesoCambio_subir_mostrarUsuario.setBounds(0, 0, 32, 32);
 		estadoCambio_panel_mostrarUsuario.add(accesoCambio_subir_mostrarUsuario);
-		
-		JSeparator separator = new JSeparator();
+
+		separator = new JSeparator();
 		separator.setBounds(0, 34, 32, 2);
 		estadoCambio_panel_mostrarUsuario.add(separator);
-		
+
 		accesoCambio_panel_mostrarUsuario = new JPanel();
 		accesoCambio_panel_mostrarUsuario.setLayout(null);
 		accesoCambio_panel_mostrarUsuario.setOpaque(false);
 		accesoCambio_panel_mostrarUsuario.setBounds(720, 294, 32, 68);
 		display_mostrarUsuario.add(accesoCambio_panel_mostrarUsuario);
-		
+
 		label_1 = new JLabel("");
 		label_1.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/bajar_32px.png")));
 		label_1.setBounds(0, 36, 32, 32);
 		accesoCambio_panel_mostrarUsuario.add(label_1);
-		
+
 		label_2 = new JLabel("");
 		label_2.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/subir_32px.png")));
 		label_2.setBounds(0, 0, 32, 32);
 		accesoCambio_panel_mostrarUsuario.add(label_2);
-		
+
 		separator_1 = new JSeparator();
 		separator_1.setBounds(0, 34, 32, 2);
 		accesoCambio_panel_mostrarUsuario.add(separator_1);
@@ -2015,6 +2011,7 @@ public class Ventana {
 	}
 
 	public void setRegDisplay(int index, String function) throws java.awt.IllegalComponentStateException {
+		focusFixer.requestFocus();
 		switch (function) {
 		case "next":
 			index++;
@@ -2246,7 +2243,16 @@ public class Ventana {
 		case "suspendido":
 			estado_ico_mostrarUsuario.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/banned_96px.png")));
 			break;
-		
+
+		}
+
+		if (sesionActual.getUsuario().getAcceso().equals("administrador")
+				|| sesionActual.getUsuario().getAcceso().equals("desarollador")) {
+			estadoCambio_panel_mostrarUsuario.setVisible(true);
+			accesoCambio_panel_mostrarUsuario.setVisible(true);
+		} else {
+			estadoCambio_panel_mostrarUsuario.setVisible(false);
+			accesoCambio_panel_mostrarUsuario.setVisible(false);
 		}
 
 		displays.mostarDisplay(display_mostrarUsuario);
