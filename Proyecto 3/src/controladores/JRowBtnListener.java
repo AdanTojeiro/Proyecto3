@@ -2,7 +2,10 @@ package controladores;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
+import clases.Usuario;
 import interfaz.JRowBtn;
 import interfaz.Ventana;
 
@@ -22,6 +25,17 @@ public class JRowBtnListener implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
+		ResultSet rs = ventana.getGestorUsuarios().getUsuario("pk_usuario", ""+btn.getPk_usuario());
+		try {
+			if(rs.next()) {
+				Usuario  usuario=  new Usuario(rs);
+				ventana.actualizarMostraUsuario(usuario);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 
 	}
 

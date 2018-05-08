@@ -42,6 +42,14 @@ public class JRowBtn extends JPanel {
 	public Color getCOLOR_HOVER() {
 		return COLOR_HOVER;
 	}
+
+	public int getPk_usuario() {
+		return pk_usuario;
+	}
+
+	public void setPk_usuario(int pk_usuario) {
+		this.pk_usuario = pk_usuario;
+	}
 	
 	
 	
