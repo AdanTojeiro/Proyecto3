@@ -8,10 +8,12 @@ import clases.Sesion;
 public class GestorSesiones {
 
 	private MysqlC mysqlc;
+	GestorUsuarios gestorUsuarios;
 
-	public GestorSesiones(MysqlC mysqlc) {
+	public GestorSesiones(MysqlC mysqlc, GestorUsuarios gestorUsuarios) {
 		super();
 		this.mysqlc = mysqlc;
+		this.gestorUsuarios = gestorUsuarios;
 	}
 
 	public ResultSet getAllSesions() {
@@ -40,6 +42,8 @@ public class GestorSesiones {
 	public void cerrarSesion(Sesion sesion) {
 		if (mysqlc.conectar()) {
 			mysqlc.Update("sesion", "tiempo_inicio = tiempo_inicio, tiempo_final= CURRENT_TIMESTAMP()", "codigo='"+sesion.getCodigo()+"'");
+			String where = "nick='"+sesion.getUsuario().getNick()+"'";
+			gestorUsuarios.actualizarEstadoUsuario("offline", where);
 		}
 		mysqlc.desconectar();
 	}

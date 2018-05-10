@@ -10,11 +10,15 @@ public class Sesion {
 	private Usuario usuario;
 	private Timestamp tiempo_inicio;
 	private String codigo;
-
+	private boolean sesionPrincipal;
+	
+	
 	public Sesion(ResultSet rs , String codigo) {
 		super();
 		usuario = new Usuario(rs);
 		this.codigo = codigo;
+		sesionPrincipal = true;
+		
 	}
 
 	public void setUsuario(Usuario usuario) {
@@ -32,6 +36,14 @@ public class Sesion {
 
 	public String getCodigo() {
 		return codigo;
+	}
+
+	public boolean isSesionPrincipal() {
+		return sesionPrincipal;
+	}
+
+	public void setSesionPrincipal(boolean sesionPrincipal) {
+		this.sesionPrincipal = sesionPrincipal;
 	}
 
 	

@@ -16,6 +16,7 @@ import controladores.FormBtnListener;
 import controladores.FrameDrager;
 import controladores.NavRegListener;
 import controladores.OptionListener;
+import controladores.SesionBtnListener;
 import controladores.TextFieldKeyListener;
 import controladores.TextFocusListener;
 import interfaz.componentes.JDisplay;
@@ -32,6 +33,7 @@ import interfaz.grupos.TextFieldGroup;
 import interfaz.grupos.TextFieldGroupRel;
 import interfaz.listas.JRowList;
 import controladores.ControlLabelListener;
+import controladores.EntrarComoListener;
 
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -293,6 +295,28 @@ public class Ventana {
 	private JLabel accesoCambio_bajar_mostrarUsuario;
 	private JLabel accesoCambio_subir_mostrarUsuario;
 	private JSeparator separator;
+	// ---------------------------------------------------------------
+	private JDisplay display_cerrarSesion;
+	private JPanel panel_1;
+	private JLabel lblSesionPrincipal;
+	private JPanel cerrarSesion_btn_panel;
+	private JLabel cerrarSesion_btn_text;
+	// ---------------------------------------------------------------
+	private JDisplay display_entrarComo;
+	private JPanel entrarComo_alumno_btn_panel;
+	private JLabel entrarComo_alumno_btn_text;
+	private JLabel entrarComo_alumno_btn_ico;
+	private JPanel entrarComo_profesor_btn_panel;
+	private JLabel entrarComo_profesor_btn_text;
+	private JLabel entrarComo_profesor_btn_ico;
+	private JPanel entrarComo_administrador_btn_panel;
+	private JLabel entrarComo_administrador_btn_text;
+	private JLabel entrarComo_administrador_btn_ico;
+	// --------------------------------------------------------------
+	private JLabel mensaje_info;
+	private JLabel java_ico;
+	private JLabel label;
+	private JLabel label_3;
 
 	/*
 	 * |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -302,7 +326,7 @@ public class Ventana {
 	public Ventana() {
 		mysqlc = new MysqlC();
 		gestorUsuarios = new GestorUsuarios(mysqlc);
-		gestorSesiones = new GestorSesiones(mysqlc);
+		gestorSesiones = new GestorSesiones(mysqlc, gestorUsuarios);
 		checker = new Checker(gestorUsuarios);
 		initialize();
 	}
@@ -510,6 +534,8 @@ public class Ventana {
 		cargarDisplayInfo();
 		cargarDisplayVerUsuarios();
 		cargarDisplayMostrarUsuario();
+		cargarDisplayCerrarSesion();
+		cargarDisplayEntrarComo();
 
 	}
 
@@ -1145,6 +1171,31 @@ public class Ventana {
 		display_info.setLayout(null);
 		display_info.setOpaque(false);
 		display_info.setVisible(false);
+
+		mensaje_info = new JLabel(
+				"<html><p>HACENTEST\u00A9<br><br>Aplicacion de simalacion de test para el carnet de conducir en Espa\u00F1a.<br><br>"
+						+ "Version: D.0.7.1<br><br>Autor: Adan Jarillo Merida.<br><br>"
+						+ "Desarrollado como proyecto de programacion para el ciclo de grado superiror de D.A.M. en CES Fuencarral curso 2017/2018.<p><html>");
+		mensaje_info.setHorizontalAlignment(SwingConstants.CENTER);
+		mensaje_info.setForeground(Color.WHITE);
+		mensaje_info.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		mensaje_info.setBounds(10, 22, 753, 351);
+		display_info.add(mensaje_info);
+
+		java_ico = new JLabel("");
+		java_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/javaico_96px.png")));
+		java_ico.setBounds(225, 384, 96, 96);
+		display_info.add(java_ico);
+
+		label = new JLabel("");
+		label.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/eclipseico_96px.png")));
+		label.setBounds(456, 384, 96, 96);
+		display_info.add(label);
+
+		label_3 = new JLabel("");
+		label_3.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/mysqlico_96px.png")));
+		label_3.setBounds(341, 384, 96, 96);
+		display_info.add(label_3);
 	}
 
 	private void cargarDisplayVerUsuarios() {
@@ -1212,12 +1263,6 @@ public class Ventana {
 		verUsuarios_contenedor.setLayout(new GridLayout(0, 1, 0, 20));
 
 		ArrayList<Usuario> listaUsers = new ArrayList<Usuario>();
-		/*
-		 * ResultSet rsu = gestorUsuarios.getAllUsuarios(); try { while (rsu.next()) {
-		 * listaUsers.add(new Usuario(rsu)); } } catch (SQLException e) { // TODO
-		 * Auto-generated catch block e.printStackTrace(); }
-		 * 
-		 */
 
 		listUpdater_verUsuarios = new JRowList(listaUsers, verUsuarios_contenedor, this);
 		listUpdater_verUsuarios.cargarLista();
@@ -1442,6 +1487,100 @@ public class Ventana {
 
 	}
 
+	private void cargarDisplayCerrarSesion() {
+		// --> Display Info
+		display_cerrarSesion = new JDisplay("Cerrar sesion", "/imagenes/cerrar_96px.png", displays);
+		display_cerrarSesion.setBounds(0, 0, 800, 552);
+		display_panel.add(display_cerrarSesion);
+		display_cerrarSesion.setLayout(null);
+		display_cerrarSesion.setOpaque(false);
+		display_cerrarSesion.setVisible(false);
+
+		cerrarSesion_btn_panel = new JPanel();
+		cerrarSesion_btn_panel.setBackground(COLOR_BACKGROUND);
+		cerrarSesion_btn_panel.setBounds(228, 200, 356, 150);
+		display_cerrarSesion.add(cerrarSesion_btn_panel);
+		cerrarSesion_btn_panel.setLayout(null);
+		cerrarSesion_btn_panel.addMouseListener(new SesionBtnListener(this));
+
+		cerrarSesion_btn_text = new JLabel("Cerrar sesion");
+		cerrarSesion_btn_text.setHorizontalAlignment(SwingConstants.CENTER);
+		cerrarSesion_btn_text.setFont(new Font("Tahoma", Font.BOLD, 34));
+		cerrarSesion_btn_text.setForeground(Color.WHITE);
+		cerrarSesion_btn_text.setBounds(10, 44, 336, 60);
+		cerrarSesion_btn_panel.add(cerrarSesion_btn_text);
+
+	}
+
+	private void cargarDisplayEntrarComo() {
+		// --> Display Info
+		display_entrarComo = new JDisplay("Cerrar sesion", "/imagenes/cerrar_96px.png", displays);
+		display_entrarComo.setBounds(0, 0, 800, 552);
+		display_panel.add(display_entrarComo);
+		display_entrarComo.setLayout(null);
+		display_entrarComo.setOpaque(false);
+		display_entrarComo.setVisible(false);
+
+		entrarComo_alumno_btn_panel = new JPanel();
+		entrarComo_alumno_btn_panel.setBackground(COLOR_BACKGROUND);
+		entrarComo_alumno_btn_panel.setBounds(144, 38, 493, 150);
+		display_entrarComo.add(entrarComo_alumno_btn_panel);
+		entrarComo_alumno_btn_panel.setLayout(null);
+
+		entrarComo_alumno_btn_text = new JLabel("Alumno");
+		entrarComo_alumno_btn_text.setHorizontalAlignment(SwingConstants.LEFT);
+		entrarComo_alumno_btn_text.setFont(new Font("Tahoma", Font.BOLD, 36));
+		entrarComo_alumno_btn_text.setForeground(Color.WHITE);
+		entrarComo_alumno_btn_text.setBounds(163, 46, 360, 60);
+		entrarComo_alumno_btn_panel.add(entrarComo_alumno_btn_text);
+
+		entrarComo_alumno_btn_ico = new JLabel("");
+		entrarComo_alumno_btn_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/alumno_96px.png")));
+		entrarComo_alumno_btn_ico.setBounds(41, 29, 96, 96);
+		entrarComo_alumno_btn_panel.add(entrarComo_alumno_btn_ico);
+
+		entrarComo_profesor_btn_panel = new JPanel();
+		entrarComo_profesor_btn_panel.setLayout(null);
+		entrarComo_profesor_btn_panel.setBackground(new Color(54, 33, 89));
+		entrarComo_profesor_btn_panel.setBounds(144, 199, 493, 150);
+		display_entrarComo.add(entrarComo_profesor_btn_panel);
+
+		entrarComo_profesor_btn_text = new JLabel("Profesor");
+		entrarComo_profesor_btn_text.setHorizontalAlignment(SwingConstants.LEFT);
+		entrarComo_profesor_btn_text.setForeground(Color.WHITE);
+		entrarComo_profesor_btn_text.setFont(new Font("Tahoma", Font.BOLD, 36));
+		entrarComo_profesor_btn_text.setBounds(163, 46, 360, 60);
+		entrarComo_profesor_btn_panel.add(entrarComo_profesor_btn_text);
+
+		entrarComo_profesor_btn_ico = new JLabel("");
+		entrarComo_profesor_btn_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/profesor_96px.png")));
+		entrarComo_profesor_btn_ico.setBounds(41, 29, 96, 96);
+		entrarComo_profesor_btn_panel.add(entrarComo_profesor_btn_ico);
+
+		entrarComo_administrador_btn_panel = new JPanel();
+		entrarComo_administrador_btn_panel.setLayout(null);
+		entrarComo_administrador_btn_panel.setBackground(new Color(54, 33, 89));
+		entrarComo_administrador_btn_panel.setBounds(144, 360, 493, 150);
+		display_entrarComo.add(entrarComo_administrador_btn_panel);
+
+		entrarComo_administrador_btn_text = new JLabel("Administrador");
+		entrarComo_administrador_btn_text.setHorizontalAlignment(SwingConstants.LEFT);
+		entrarComo_administrador_btn_text.setForeground(Color.WHITE);
+		entrarComo_administrador_btn_text.setFont(new Font("Tahoma", Font.BOLD, 36));
+		entrarComo_administrador_btn_text.setBounds(163, 46, 360, 60);
+		entrarComo_administrador_btn_panel.add(entrarComo_administrador_btn_text);
+
+		entrarComo_administrador_btn_ico = new JLabel("");
+		entrarComo_administrador_btn_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/admin_96px.png")));
+		entrarComo_administrador_btn_ico.setBounds(41, 29, 96, 96);
+		entrarComo_administrador_btn_panel.add(entrarComo_administrador_btn_ico);
+
+		entrarComo_alumno_btn_panel.addMouseListener(new EntrarComoListener(this, entrarComo_alumno_btn_text));
+		entrarComo_profesor_btn_panel.addMouseListener(new EntrarComoListener(this, entrarComo_profesor_btn_text));
+		entrarComo_administrador_btn_panel
+				.addMouseListener(new EntrarComoListener(this, entrarComo_administrador_btn_text));
+
+	}
 	// NavPanel inivitado
 
 	private void cargarNavPanelInvitado() {
@@ -1607,7 +1746,7 @@ public class Ventana {
 		opt_soporte_alumno.add(opt_soporte_alumno_text);
 
 		// option cerrar sesion alumno
-		opt_cerrarSesion_alumno = new JOption(display_soporte, "Cerrar sesion", "/imagenes/cerrar_32px.png",
+		opt_cerrarSesion_alumno = new JOption(display_cerrarSesion, "Cerrar sesion", "/imagenes/cerrar_32px.png",
 				opciones_alumno);
 		opt_cerrarSesion_alumno.setLayout(null);
 		opt_cerrarSesion_alumno.setBackground(new Color(54, 33, 89));
@@ -1665,7 +1804,7 @@ public class Ventana {
 		opt_estadisticas_profesor.add(opt_iniciarTest_text);
 
 		// option entrar como - profesor
-		opt_entrarComo_profesor = new JOption(display_reg, "Entrar como", "/imagenes/cambiar_32px.png",
+		opt_entrarComo_profesor = new JOption(display_entrarComo, "Entrar como", "/imagenes/cambiar_32px.png",
 				opciones_profesor);
 		opt_entrarComo_profesor.setLayout(null);
 		opt_entrarComo_profesor.setBackground(new Color(54, 33, 89));
@@ -1705,7 +1844,7 @@ public class Ventana {
 		opt_soporte_profesor.add(opt_soporte_profesor_text);
 
 		// option cerrar sesion profesor
-		opt_cerrarSesion_profesor = new JOption(display_soporte, "Cerrar sesion", "/imagenes/cerrar_32px.png",
+		opt_cerrarSesion_profesor = new JOption(display_cerrarSesion, "Cerrar sesion", "/imagenes/cerrar_32px.png",
 				opciones_profesor);
 		opt_cerrarSesion_profesor.setLayout(null);
 		opt_cerrarSesion_profesor.setBackground(new Color(54, 33, 89));
@@ -1783,7 +1922,7 @@ public class Ventana {
 		opt_soporte_administrador.add(opt_soporte_administrador_text);
 
 		// option entrar como (administrador)
-		opt_entrarComo_administrador = new JOption(display_info, "Entrar como", "/imagenes/cambiar_32px.png",
+		opt_entrarComo_administrador = new JOption(display_entrarComo, "Entrar como", "/imagenes/cambiar_32px.png",
 				opciones_administrador);
 		opt_entrarComo_administrador.setLayout(null);
 		opt_entrarComo_administrador.setBackground(new Color(54, 33, 89));
@@ -1804,7 +1943,7 @@ public class Ventana {
 		opt_entrarComo_administrador.add(opt_entrarComo_administrador_text);
 
 		// option cerrar sesion
-		opt_cerrarSesion_administrador = new JOption(display_soporte, "Cerrar sesion", "/imagenes/cerrar_32px.png",
+		opt_cerrarSesion_administrador = new JOption(display_cerrarSesion, "Cerrar sesion", "/imagenes/cerrar_32px.png",
 				opciones_administrador);
 		opt_cerrarSesion_administrador.setLayout(null);
 		opt_cerrarSesion_administrador.setBackground(new Color(54, 33, 89));
@@ -1840,7 +1979,7 @@ public class Ventana {
 		// Nav options
 
 		// option ver usuarios desarollador
-		opt_verUsuarios_desarrollador = new JOption(display_login, "Ver usuarios", "/imagenes/buscar_32px.png",
+		opt_verUsuarios_desarrollador = new JOption(display_verUsuarios, "Ver usuarios", "/imagenes/buscar_32px.png",
 				opciones_desarrollador);
 		opt_verUsuarios_desarrollador.setBounds(0, 11, 300, 48);
 		navPanel_desarrollador.add(opt_verUsuarios_desarrollador);
@@ -1861,7 +2000,7 @@ public class Ventana {
 		opt_verUsuarios_desarrollador.add(opt_verUsuarios_desarrollador_text);
 
 		// option entrar como - desarollador
-		opt_entrarComo_desarrollador = new JOption(display_reg, "Entrar como", "/imagenes/cambiar_32px.png",
+		opt_entrarComo_desarrollador = new JOption(display_entrarComo, "Entrar como", "/imagenes/cambiar_32px.png",
 				opciones_desarrollador);
 		opt_entrarComo_desarrollador.setLayout(null);
 		opt_entrarComo_desarrollador.setBackground(new Color(54, 33, 89));
@@ -1902,7 +2041,7 @@ public class Ventana {
 		opt_anadirPregunta.add(opt_anadirPregunta_text);
 
 		// option cerrar sesion desarolloador
-		opt_cerrarSesion_desarrollador = new JOption(display_soporte, "Cerrar sesion", "/imagenes/cerrar_32px.png",
+		opt_cerrarSesion_desarrollador = new JOption(display_cerrarSesion, "Cerrar sesion", "/imagenes/cerrar_32px.png",
 				opciones_desarrollador);
 		opt_cerrarSesion_desarrollador.setLayout(null);
 		opt_cerrarSesion_desarrollador.setBackground(new Color(54, 33, 89));
@@ -1964,7 +2103,28 @@ public class Ventana {
 					"<HTML>Sesion inciada con exito. Bienvenid@ " + sesionActual.getUsuario().getNick() + "</HTML>",
 					"/imagenes/user_96px.png");
 			break;
+		case "entrarcomoAlumno":
+
+			popUp_panel.infoStyle();
+			popUp_panel.showPanel("<HTML>Sesion cambiada a modo alumno. Cierra la sesion para volver al modo "
+					+ sesionActual.getUsuario().getAcceso() + "</HTML>", "/imagenes/alumno_96px.png");
+			break;
+		case "entrarcomoProfesor":
+
+			popUp_panel.infoStyle();
+			popUp_panel.showPanel("<HTML>Sesion cambiada a modo profesor. Cierra la sesion para volver al modo "
+					+ sesionActual.getUsuario().getAcceso() + "</HTML>", "/imagenes/profesor_96px.png");
+			break;
+		case "entrarcomoAdministrador":
+
+			popUp_panel.infoStyle();
+			popUp_panel.showPanel("<HTML>Sesion cambiada a modo administrador. Cierra la sesion para volver al modo "
+					+ sesionActual.getUsuario().getAcceso() + "</HTML>", "/imagenes/admin_96px.png");
+			break;
 		}
+		// solucion al bug de solapamiento
+		popUp_panel.setVisible(false);
+		popUp_panel.setVisible(true);
 
 	}
 
@@ -2102,12 +2262,17 @@ public class Ventana {
 	}
 
 	public void cambiarVistaSesion(String vista) {
-		switch (vista) {
+		switch (vista.toLowerCase()) {
+
 		case "invitado":
 			alumno.cerrarVistaDeSesion();
 			profesor.cerrarVistaDeSesion();
 			administrador.cerrarVistaDeSesion();
 			desarrollador.cerrarVistaDeSesion();
+			// --
+			sesionActual = null;
+			// --
+			displays.mostarDisplay(display_index);
 			// --
 			invitado.abrirVistaDeSesion();
 			break;
@@ -2116,6 +2281,7 @@ public class Ventana {
 			profesor.cerrarVistaDeSesion();
 			administrador.cerrarVistaDeSesion();
 			desarrollador.cerrarVistaDeSesion();
+			actualizarMostraUsuario(sesionActual.getUsuario());
 			// --
 			alumno.abrirVistaDeSesion();
 			break;
@@ -2125,6 +2291,11 @@ public class Ventana {
 			administrador.cerrarVistaDeSesion();
 			desarrollador.cerrarVistaDeSesion();
 			// --
+			actualizarMostraUsuario(sesionActual.getUsuario());
+			entrarComo_alumno_btn_panel.setVisible(true);
+			entrarComo_profesor_btn_panel.setVisible(false);
+			entrarComo_administrador_btn_panel.setVisible(false);
+			// --
 			profesor.abrirVistaDeSesion();
 			break;
 		case "administrador":
@@ -2132,6 +2303,11 @@ public class Ventana {
 			alumno.cerrarVistaDeSesion();
 			profesor.cerrarVistaDeSesion();
 			desarrollador.cerrarVistaDeSesion();
+			// --
+			actualizarMostraUsuario(sesionActual.getUsuario());
+			entrarComo_alumno_btn_panel.setVisible(true);
+			entrarComo_profesor_btn_panel.setVisible(true);
+			entrarComo_administrador_btn_panel.setVisible(false);
 			// --
 			administrador.abrirVistaDeSesion();
 
@@ -2142,9 +2318,15 @@ public class Ventana {
 			profesor.cerrarVistaDeSesion();
 			administrador.cerrarVistaDeSesion();
 			// --
+			actualizarMostraUsuario(sesionActual.getUsuario());
+			entrarComo_alumno_btn_panel.setVisible(true);
+			entrarComo_profesor_btn_panel.setVisible(true);
+			entrarComo_administrador_btn_panel.setVisible(true);
+			// --
 			desarrollador.abrirVistaDeSesion();
 			break;
 		}
+		hidePopUp();
 
 	}
 

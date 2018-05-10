@@ -30,8 +30,6 @@ public class ControlLabelListener  implements MouseListener {
 		switch(lbl.getFunction()) {
 		case 0:
 			if(ventana.getSesionActual() != null) {
-				String where = "nick='"+ventana.getSesionActual().getUsuario().getNick()+"'";
-				ventana.getGestorUsuarios().actualizarEstadoUsuario("offline", where);
 				ventana.getGestorSesiones().cerrarSesion(ventana.getSesionActual());
 			}
 			System.exit(0);
