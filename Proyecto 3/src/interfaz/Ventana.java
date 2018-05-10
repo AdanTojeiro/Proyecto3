@@ -41,6 +41,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.awt.Toolkit;
 
 public class Ventana {
 
@@ -86,7 +87,7 @@ public class Ventana {
 	// COMPONENTES INICIO
 
 	// Estructura
-	private JFrame frame;
+	private JFrame frmHacentest;
 	private JPanel background_panel, side_panel, center_panel;
 	private JPopUp popUp_panel;
 	private JButton focusFixer;
@@ -251,6 +252,9 @@ public class Ventana {
 	private ArrayList<TextFieldGroup> reg_grupo_logico = new ArrayList<TextFieldGroup>();
 	private TextFieldGroup reg_nick_tfg, reg_password_tfg, reg_name_tfg, reg_apellido_tfg, reg_dni_tfg, reg_email_tfg;
 	private TextFieldGroup reg_password_check_tfg;
+	//Formulario soporte 
+	private ArrayList<TextFieldGroup> soporte_grupo_logico = new ArrayList<TextFieldGroup>();
+	private TextFieldGroup soporte_asunto_tfg, soporte_textArea_tfg;
 	// Buscador verUsuarios
 	private TextFieldGroup verUsuarios_nick_tfg;
 	private JLabel acceso_text_mostrarUsuario;
@@ -297,8 +301,6 @@ public class Ventana {
 	private JSeparator separator;
 	// ---------------------------------------------------------------
 	private JDisplay display_cerrarSesion;
-	private JPanel panel_1;
-	private JLabel lblSesionPrincipal;
 	private JPanel cerrarSesion_btn_panel;
 	private JLabel cerrarSesion_btn_text;
 	// ---------------------------------------------------------------
@@ -315,8 +317,19 @@ public class Ventana {
 	// --------------------------------------------------------------
 	private JLabel mensaje_info;
 	private JLabel java_ico;
-	private JLabel label;
-	private JLabel label_3;
+	private JLabel eclipse_ico;
+	private JLabel mysql_ico;
+	private JPanel soporte_asunto_panel;
+	// --------------------------------------------------------------
+	private JSeparator soporte_asunto_separator;
+	private JLabel soporte_asunto_icon;
+	private JTextField soporte_asunto_textF;
+	private JPanel soporte_asunto_info_panel;
+	private JLabel soporte_asunto_info_ico;
+	private JLabel soporte_asunto_info_text;
+	private JLabel soporte_caracteres_text;
+	private JFormBtn soporte_enviar_FormBtn;
+	private JLabel soporte_enviar_formBtn_text;
 
 	/*
 	 * |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -338,16 +351,18 @@ public class Ventana {
 	// Inicializacion de componentes
 	private void initialize() {
 		// Frame
-		frame = new JFrame();
-		frame.setBounds(100, 100, 1100, 700);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setUndecorated(true);
-		frame.setVisible(true);
-		frame.getContentPane().setLayout(null);
-		frame.setResizable(false);
-		FrameDrager drager = new FrameDrager(frame);
-		frame.addMouseListener(drager);
-		frame.addMouseMotionListener(drager);
+		frmHacentest = new JFrame();
+		frmHacentest.setIconImage(Toolkit.getDefaultToolkit().getImage(Ventana.class.getResource("/imagenes/hacentestico.png")));
+		frmHacentest.setTitle("Hacentest");
+		frmHacentest.setBounds(100, 100, 1100, 700);
+		frmHacentest.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmHacentest.setUndecorated(true);
+		frmHacentest.setVisible(true);
+		frmHacentest.getContentPane().setLayout(null);
+		frmHacentest.setResizable(false);
+		FrameDrager drager = new FrameDrager(frmHacentest);
+		frmHacentest.addMouseListener(drager);
+		frmHacentest.addMouseMotionListener(drager);
 
 		cargarPopUpPanel();
 		cargarEstructura();
@@ -375,7 +390,7 @@ public class Ventana {
 		// Background Panel
 		background_panel = new JPanel();
 		background_panel.setBounds(0, 0, 1100, 700);
-		frame.getContentPane().add(background_panel);
+		frmHacentest.getContentPane().add(background_panel);
 		background_panel.setLayout(null);
 
 		// Estructura panels
@@ -393,7 +408,7 @@ public class Ventana {
 
 		focusFixer = new JButton("");
 		focusFixer.setBounds(42, 0, 1, 1);
-		frame.getContentPane().add(focusFixer);
+		frmHacentest.getContentPane().add(focusFixer);
 
 		cargarCenterPanel();
 		cargarSidePanel();
@@ -475,7 +490,7 @@ public class Ventana {
 		// PopUp Panel
 		popUp_panel = new JPopUp();
 		popUp_panel.setBounds(5, 540, 290, 150);
-		frame.getContentPane().add(popUp_panel);
+		frmHacentest.getContentPane().add(popUp_panel);
 		popUp_panel.setBackground(Color.RED);
 		popUp_panel.setLayout(null);
 
@@ -527,15 +542,15 @@ public class Ventana {
 
 	private void cargarDisplays() {
 
-		cargarDisplayIndex();
+		/*cargarDisplayIndex();
 		cargarDisplayLogin();
-		cargarDisplayReg();
+		cargarDisplayReg();*/
 		cargarDisplaySoporte();
-		cargarDisplayInfo();
+		/*cargarDisplayInfo();
 		cargarDisplayVerUsuarios();
 		cargarDisplayMostrarUsuario();
 		cargarDisplayCerrarSesion();
-		cargarDisplayEntrarComo();
+		cargarDisplayEntrarComo();*/
 
 	}
 
@@ -572,7 +587,7 @@ public class Ventana {
 		imagen_central_login.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/user_96px.png")));
 		imagen_central_login.setBounds(352, 27, 96, 96);
 		display_login.add(imagen_central_login);
-
+/*
 		login_nick_panel = new JPanel();
 		login_nick_panel.setBounds(204, 144, 390, 96);
 		display_login.add(login_nick_panel);
@@ -614,7 +629,7 @@ public class Ventana {
 		login_nick_info_text.setFont(new Font("Tahoma", Font.BOLD, 20));
 		login_nick_info_text.setBounds(42, 0, 328, 32);
 		login_nick_info_panel.add(login_nick_info_text);
-
+*/
 		login_password_panel = new JPanel();
 		login_password_panel.setLayout(null);
 		login_password_panel.setOpaque(false);
@@ -1161,6 +1176,74 @@ public class Ventana {
 		display_soporte.setLayout(null);
 		display_soporte.setOpaque(false);
 		display_soporte.setVisible(false);
+		
+		soporte_asunto_panel = new JPanel();
+		soporte_asunto_panel.setBounds(12, 30, 390, 96);
+		display_soporte.add(soporte_asunto_panel);
+		soporte_asunto_panel.setOpaque(false);
+		soporte_asunto_panel.setLayout(null);
+
+		soporte_asunto_separator = new JSeparator();
+		soporte_asunto_separator.setBounds(52, 41, 328, 2);
+		soporte_asunto_panel.add(soporte_asunto_separator);
+
+		soporte_asunto_icon = new JLabel("");
+		soporte_asunto_icon.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/asunto_32px.png")));
+		soporte_asunto_icon.setBounds(10, 11, 32, 32);
+		soporte_asunto_panel.add(soporte_asunto_icon);
+
+		soporte_asunto_textF = new JTextField("Asunto");
+		soporte_asunto_textF.setHorizontalAlignment(SwingConstants.LEFT);
+		soporte_asunto_textF.setFont(new Font("Tahoma", Font.BOLD, 20));
+		soporte_asunto_textF.setForeground(Color.WHITE);
+		soporte_asunto_textF.setBounds(52, 11, 328, 25);
+		soporte_asunto_panel.add(soporte_asunto_textF);
+		soporte_asunto_textF.setColumns(10);
+		soporte_asunto_textF.setBackground(COLOR_SELECTED);
+		soporte_asunto_textF.setBorder(null);
+
+		soporte_asunto_info_panel = new JPanel();
+		soporte_asunto_info_panel.setBounds(10, 50, 370, 32);
+		soporte_asunto_panel.add(soporte_asunto_info_panel);
+		soporte_asunto_info_panel.setBackground(COLOR_ERROR);
+		soporte_asunto_info_panel.setLayout(null);
+		soporte_asunto_info_panel.setVisible(false);
+
+		soporte_asunto_info_ico = new JLabel("");
+		soporte_asunto_info_ico.setBounds(0, 0, 32, 32);
+		soporte_asunto_info_panel.add(soporte_asunto_info_ico);
+		soporte_asunto_info_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/error_black_32px.png")));
+
+		soporte_asunto_info_text = new JLabel("Error");
+		soporte_asunto_info_text.setFont(new Font("Tahoma", Font.BOLD, 20));
+		soporte_asunto_info_text.setBounds(42, 0, 328, 32);
+		soporte_asunto_info_panel.add(soporte_asunto_info_text);
+		
+		JTextArea soporte_textArea = new JTextArea();
+		soporte_textArea.setFont(new Font("Monospaced", Font.PLAIN, 22));
+		soporte_textArea.setText("Describre detalladamente la incidencia.");
+		soporte_textArea.setBounds(12, 127, 776, 239);
+		display_soporte.add(soporte_textArea);
+		
+		soporte_caracteres_text = new JLabel("Maximo 300 caracteres");
+		soporte_caracteres_text.setForeground(Color.WHITE);
+		soporte_caracteres_text.setBounds(12, 366, 329, 47);
+		display_soporte.add(soporte_caracteres_text);
+		soporte_caracteres_text.setFont(new Font("Tahoma", Font.BOLD, 20));
+		
+		soporte_enviar_FormBtn = new JFormBtn("soporte", soporte_grupo_logico);
+		soporte_enviar_FormBtn.setBackground(COLOR_CHECK);
+		soporte_enviar_FormBtn.setBounds(297, 436, 258, 62);
+		display_soporte.add(soporte_enviar_FormBtn);
+		soporte_enviar_FormBtn.setLayout(null);
+		//soporte_enviar_FormBtn.addMouseListener(new FormBtnListener(reg_confirmar_FormBtn, this));
+
+		soporte_enviar_formBtn_text = new JLabel("Enviar");
+		soporte_enviar_formBtn_text.setBounds(10, 0, 238, 62);
+		soporte_enviar_FormBtn.add(soporte_enviar_formBtn_text);
+		soporte_enviar_formBtn_text.setForeground(Color.WHITE);
+		soporte_enviar_formBtn_text.setFont(new Font("Tahoma", Font.BOLD, 25));
+		soporte_enviar_formBtn_text.setHorizontalAlignment(SwingConstants.CENTER);
 	}
 
 	private void cargarDisplayInfo() {
@@ -1179,7 +1262,7 @@ public class Ventana {
 		mensaje_info.setHorizontalAlignment(SwingConstants.CENTER);
 		mensaje_info.setForeground(Color.WHITE);
 		mensaje_info.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		mensaje_info.setBounds(10, 22, 753, 351);
+		mensaje_info.setBounds(50, 22, 700, 351);
 		display_info.add(mensaje_info);
 
 		java_ico = new JLabel("");
@@ -1187,15 +1270,15 @@ public class Ventana {
 		java_ico.setBounds(225, 384, 96, 96);
 		display_info.add(java_ico);
 
-		label = new JLabel("");
-		label.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/eclipseico_96px.png")));
-		label.setBounds(456, 384, 96, 96);
-		display_info.add(label);
+		eclipse_ico = new JLabel("");
+		eclipse_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/eclipseico_96px.png")));
+		eclipse_ico.setBounds(456, 384, 96, 96);
+		display_info.add(eclipse_ico);
 
-		label_3 = new JLabel("");
-		label_3.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/mysqlico_96px.png")));
-		label_3.setBounds(341, 384, 96, 96);
-		display_info.add(label_3);
+		mysql_ico = new JLabel("");
+		mysql_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/mysqlico_96px.png")));
+		mysql_ico.setBounds(341, 384, 96, 96);
+		display_info.add(mysql_ico);
 	}
 
 	private void cargarDisplayVerUsuarios() {
@@ -2337,7 +2420,7 @@ public class Ventana {
 
 	// Getters
 	public JFrame getFrame() {
-		return frame;
+		return frmHacentest;
 	}
 
 	public JButton getFocusFixer() {
@@ -2373,7 +2456,7 @@ public class Ventana {
 				listaUsers.add(new Usuario(rs));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		}
 		listUpdater_verUsuarios.limpiarLista();

@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/imagenes/asunto_32px.png</name>
+			<type>1</type>
+			<location>C:/Users/Tojeiro/AppData/Local/Temp/icons8_Help_32px.png</location>
+		</link>
+	</linkedResources>
 </projectDescription>
