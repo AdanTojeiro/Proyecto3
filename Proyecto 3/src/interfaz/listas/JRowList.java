@@ -27,12 +27,13 @@ public class JRowList {
 
 	
 	public void cargarLista() {
-		if(lista.size() < 8) {
+		if(lista.size() < 7) {
 			contenedor.setLayout(new GridLayout(9, 1, 0, 20));
 		} else {
 			contenedor.setLayout(new GridLayout(0, 1, 0, 20));
 		}
 		Iterator<Usuario> it = lista.iterator();
+		contenedor.add(new JRowPanel("NICK", "DNI", "ACCESO", "ESTADO", "  "));
 		while(it.hasNext()) {
 			contenedor.add(new JRowPanel(it.next(), ventana));
 			

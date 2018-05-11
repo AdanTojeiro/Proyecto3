@@ -2370,8 +2370,8 @@ public class Ventana {
 	}
 
 	public void cambiarVistaSesion(String vista) {
+		reniciarFormularioSoporte();
 		switch (vista.toLowerCase()) {
-
 		case "invitado":
 			alumno.cerrarVistaDeSesion();
 			profesor.cerrarVistaDeSesion();

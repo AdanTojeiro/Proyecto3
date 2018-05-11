@@ -48,7 +48,7 @@ public class SoporteBtnListener implements MouseListener {
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if(!textFieldGroup.isCheck() || textArea.getText().equals("")) {
+		if(!textFieldGroup.isCheck() || textArea.getText().equals("") || textArea.getText().length() > 300) {
 			e.getComponent().setEnabled(false);
 			e.getComponent().setBackground(COLOR_DISABLED);
 		} else {

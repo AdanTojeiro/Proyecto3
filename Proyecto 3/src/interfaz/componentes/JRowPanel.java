@@ -20,28 +20,74 @@ public class JRowPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private JLabel nick, dni, acceso, estado;
+	private JLabel col1, col2, col3, col4, col5;
 	private JRowBtn editar_btn;
+	
 	
 	
 
 	
+	
+
+	public JRowPanel(String col1t, String col2t, String col3t, String col4t, String col5t) {
+		super();
+		
+		this.setLayout(new GridLayout(1, 5, 10, 2));
+		this.setOpaque(false);
+		this.setBounds(0, 0, 780, 50);
+		
+		col1 = new JLabel(col1t);
+		this.add(col1);
+		col1.setForeground(Color.WHITE);
+		col1.setFont(new Font("Tahoma", Font.BOLD, 18));
+		
+		
+		col2 = new JLabel(col2t);
+		this.add(col2);
+		col2.setForeground(Color.WHITE);
+		col2.setFont(new Font("Tahoma", Font.BOLD, 18));
+	
+
+		col3 = new JLabel(col3t);
+		this.add(col3);
+		col3.setBounds(0, 0, 70, 50);
+		col3.setForeground(Color.WHITE);
+		col3.setFont(new Font("Tahoma", Font.BOLD, 18));
+		
+		
+		col4 = new JLabel(col4t);
+		this.add(col4);
+		col4.setBounds(0, 0, 70, 50);
+		col4.setForeground(Color.WHITE);
+		col4.setFont(new Font("Tahoma", Font.BOLD, 18));
+		col4.setHorizontalAlignment(SwingConstants.CENTER);
+		col4.setVerticalAlignment(SwingConstants.CENTER);
+		
+		col5 = new JLabel(col5t);
+		this.add(col5);
+		col5.setBounds(0, 0, 70, 50);
+		col5.setForeground(Color.WHITE);
+		col5.setFont(new Font("Tahoma", Font.BOLD, 18));
+		col5.setHorizontalAlignment(SwingConstants.CENTER);
+		col5.setVerticalAlignment(SwingConstants.CENTER);
+	}
+
 	public JRowPanel(Usuario usuario, Ventana ventana) {
 		
 		this.setLayout(new GridLayout(1, 5, 10, 2));
 		this.setOpaque(false);
 		this.setBounds(0, 0, 780, 50);
 		
-		nick = new JLabel("<html>"+usuario.getNick());
-		this.add(nick);
-		nick.setForeground(Color.WHITE);
-		nick.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		col1 = new JLabel("<html>"+usuario.getNick());
+		this.add(col1);
+		col1.setForeground(Color.WHITE);
+		col1.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		
-		dni = new JLabel(usuario.getDni());
-		this.add(dni);
-		dni.setForeground(Color.WHITE);
-		dni.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		col2 = new JLabel(usuario.getDni());
+		this.add(col2);
+		col2.setForeground(Color.WHITE);
+		col2.setFont(new Font("Tahoma", Font.PLAIN, 18));
 	
 		
 		
@@ -61,20 +107,20 @@ public class JRowPanel extends JPanel {
 			break;
 		}
 		
-		acceso = new JLabel(accesoText);
-		this.add(acceso);
-		acceso.setBounds(0, 0, 70, 50);
-		acceso.setForeground(Color.WHITE);
-		acceso.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		col3 = new JLabel(accesoText);
+		this.add(col3);
+		col3.setBounds(0, 0, 70, 50);
+		col3.setForeground(Color.WHITE);
+		col3.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		
-		estado = new JLabel(usuario.getEstado());
-		this.add(estado);
-		estado.setBounds(0, 0, 70, 50);
-		estado.setForeground(Color.WHITE);
-		estado.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		estado.setHorizontalAlignment(SwingConstants.CENTER);
-		estado.setVerticalAlignment(SwingConstants.CENTER);
+		col4 = new JLabel(usuario.getEstado());
+		this.add(col4);
+		col4.setBounds(0, 0, 70, 50);
+		col4.setForeground(Color.WHITE);
+		col4.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		col4.setHorizontalAlignment(SwingConstants.CENTER);
+		col4.setVerticalAlignment(SwingConstants.CENTER);
 		
 		
 		editar_btn = new JRowBtn(usuario.getPk_usuario(), ventana);

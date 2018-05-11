@@ -68,7 +68,7 @@ public class GestorUsuarios {
 		 ResultSet rs = null;
 		 if(mysqlc.conectar()) {
 			// Cumple formato
-				rs = mysqlc.selectFrom("usuario","nick LIKE '%"+value+"%' OR dni LIKE '%"+value+"%' OR estado LIKE '%"+value+"%'OR acceso LIKE '%"+value+"%'");
+				rs = mysqlc.selectFrom("usuario","(nick LIKE '%"+value+"%' OR dni LIKE '%"+value+"%' OR estado LIKE '%"+value+"%'OR acceso LIKE '%"+value+"%') AND pk_usuario > 1");
 		 }
 		 mysqlc.desconectar();
 		 return rs;
@@ -90,7 +90,7 @@ public class GestorUsuarios {
 		 ResultSet rs = null;
 		 if(mysqlc.conectar()) {
 			// Cumple formato
-				rs = mysqlc.selectFrom("usuario");
+				rs = mysqlc.selectFrom("usuario", "pk_usuario > 1");
 		 }
 		 mysqlc.desconectar();
 		 return rs;
