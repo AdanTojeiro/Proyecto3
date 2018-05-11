@@ -309,6 +309,22 @@ public class Checker {
 		
 		return rs;
 	}
+
+	public InfoMsg checkFreeString(String s) {
+		InfoMsg info = null;
+		if(s.length() >  60) {
+			info = new InfoMsg("Maximo 60 caracteres", "/imagenes/error_black_32px.png", false,
+					COLOR_ERROR);
+		} else {
+			if(s.length() < 4) {
+				info = new InfoMsg("Minimo 4 caracteres", "/imagenes/error_black_32px.png", false,
+						COLOR_ERROR);
+			} else {
+				info = new InfoMsg("Formato correcto", "/imagenes/checkbox_32px.png", true, COLOR_CHECK);
+			}
+		}
+		return info;
+	}
 	
 	
 

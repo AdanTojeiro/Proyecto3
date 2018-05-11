@@ -7,6 +7,7 @@ import java.awt.Container;
 import javax.swing.*;
 
 import acceso_a_datos.Checker;
+import acceso_a_datos.GestorConsultas;
 import acceso_a_datos.GestorSesiones;
 import acceso_a_datos.GestorUsuarios;
 import acceso_a_datos.MysqlC;
@@ -17,6 +18,8 @@ import controladores.FrameDrager;
 import controladores.NavRegListener;
 import controladores.OptionListener;
 import controladores.SesionBtnListener;
+import controladores.SoporteBtnListener;
+import controladores.TextAreaListener;
 import controladores.TextFieldKeyListener;
 import controladores.TextFocusListener;
 import interfaz.componentes.JDisplay;
@@ -49,6 +52,7 @@ public class Ventana {
 	private MysqlC mysqlc;
 	private GestorUsuarios gestorUsuarios;
 	private GestorSesiones gestorSesiones;
+	private GestorConsultas gestorConsultas;
 	private Checker checker;
 
 	// DATOS DE SESION
@@ -253,7 +257,7 @@ public class Ventana {
 	private TextFieldGroup reg_nick_tfg, reg_password_tfg, reg_name_tfg, reg_apellido_tfg, reg_dni_tfg, reg_email_tfg;
 	private TextFieldGroup reg_password_check_tfg;
 	//Formulario soporte 
-	private ArrayList<TextFieldGroup> soporte_grupo_logico = new ArrayList<TextFieldGroup>();
+
 	private TextFieldGroup soporte_asunto_tfg, soporte_textArea_tfg;
 	// Buscador verUsuarios
 	private TextFieldGroup verUsuarios_nick_tfg;
@@ -330,6 +334,7 @@ public class Ventana {
 	private JLabel soporte_caracteres_text;
 	private JFormBtn soporte_enviar_FormBtn;
 	private JLabel soporte_enviar_formBtn_text;
+	private JTextArea soporte_textArea;
 
 	/*
 	 * |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -340,6 +345,7 @@ public class Ventana {
 		mysqlc = new MysqlC();
 		gestorUsuarios = new GestorUsuarios(mysqlc);
 		gestorSesiones = new GestorSesiones(mysqlc, gestorUsuarios);
+		gestorConsultas = new GestorConsultas(mysqlc);
 		checker = new Checker(gestorUsuarios);
 		initialize();
 	}
@@ -541,16 +547,16 @@ public class Ventana {
 	// DISPLAYS
 
 	private void cargarDisplays() {
-
-		/*cargarDisplayIndex();
+		
+		cargarDisplayIndex();
 		cargarDisplayLogin();
-		cargarDisplayReg();*/
+		cargarDisplayReg();
 		cargarDisplaySoporte();
-		/*cargarDisplayInfo();
+		cargarDisplayInfo();
 		cargarDisplayVerUsuarios();
 		cargarDisplayMostrarUsuario();
 		cargarDisplayCerrarSesion();
-		cargarDisplayEntrarComo();*/
+		cargarDisplayEntrarComo();
 
 	}
 
@@ -587,7 +593,7 @@ public class Ventana {
 		imagen_central_login.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/user_96px.png")));
 		imagen_central_login.setBounds(352, 27, 96, 96);
 		display_login.add(imagen_central_login);
-/*
+
 		login_nick_panel = new JPanel();
 		login_nick_panel.setBounds(204, 144, 390, 96);
 		display_login.add(login_nick_panel);
@@ -629,7 +635,7 @@ public class Ventana {
 		login_nick_info_text.setFont(new Font("Tahoma", Font.BOLD, 20));
 		login_nick_info_text.setBounds(42, 0, 328, 32);
 		login_nick_info_panel.add(login_nick_info_text);
-*/
+
 		login_password_panel = new JPanel();
 		login_password_panel.setLayout(null);
 		login_password_panel.setOpaque(false);
@@ -1178,13 +1184,13 @@ public class Ventana {
 		display_soporte.setVisible(false);
 		
 		soporte_asunto_panel = new JPanel();
-		soporte_asunto_panel.setBounds(12, 30, 390, 96);
+		soporte_asunto_panel.setBounds(3, 29, 636, 96);
 		display_soporte.add(soporte_asunto_panel);
 		soporte_asunto_panel.setOpaque(false);
 		soporte_asunto_panel.setLayout(null);
 
 		soporte_asunto_separator = new JSeparator();
-		soporte_asunto_separator.setBounds(52, 41, 328, 2);
+		soporte_asunto_separator.setBounds(52, 41, 574, 2);
 		soporte_asunto_panel.add(soporte_asunto_separator);
 
 		soporte_asunto_icon = new JLabel("");
@@ -1203,7 +1209,7 @@ public class Ventana {
 		soporte_asunto_textF.setBorder(null);
 
 		soporte_asunto_info_panel = new JPanel();
-		soporte_asunto_info_panel.setBounds(10, 50, 370, 32);
+		soporte_asunto_info_panel.setBounds(10, 50, 616, 32);
 		soporte_asunto_panel.add(soporte_asunto_info_panel);
 		soporte_asunto_info_panel.setBackground(COLOR_ERROR);
 		soporte_asunto_info_panel.setLayout(null);
@@ -1216,14 +1222,17 @@ public class Ventana {
 
 		soporte_asunto_info_text = new JLabel("Error");
 		soporte_asunto_info_text.setFont(new Font("Tahoma", Font.BOLD, 20));
-		soporte_asunto_info_text.setBounds(42, 0, 328, 32);
+		soporte_asunto_info_text.setBounds(42, 0, 572, 32);
 		soporte_asunto_info_panel.add(soporte_asunto_info_text);
 		
-		JTextArea soporte_textArea = new JTextArea();
+		soporte_textArea = new JTextArea();
+		soporte_textArea.setLineWrap(true);
 		soporte_textArea.setFont(new Font("Monospaced", Font.PLAIN, 22));
 		soporte_textArea.setText("Describre detalladamente la incidencia.");
 		soporte_textArea.setBounds(12, 127, 776, 239);
 		display_soporte.add(soporte_textArea);
+		
+		
 		
 		soporte_caracteres_text = new JLabel("Maximo 300 caracteres");
 		soporte_caracteres_text.setForeground(Color.WHITE);
@@ -1231,12 +1240,23 @@ public class Ventana {
 		display_soporte.add(soporte_caracteres_text);
 		soporte_caracteres_text.setFont(new Font("Tahoma", Font.BOLD, 20));
 		
-		soporte_enviar_FormBtn = new JFormBtn("soporte", soporte_grupo_logico);
+		
+		TextAreaListener textAreaListener = new TextAreaListener(soporte_textArea, soporte_caracteres_text);
+		soporte_textArea.addKeyListener(textAreaListener);
+		soporte_textArea.addFocusListener(textAreaListener);
+		
+		soporte_asunto_tfg = new TextFieldGroup(soporte_asunto_panel,soporte_asunto_info_panel, soporte_asunto_icon, soporte_asunto_info_ico,
+				soporte_asunto_info_text, soporte_asunto_textF, soporte_asunto_separator, "soporte");
+		soporte_asunto_textF.addKeyListener(new TextFieldKeyListener(soporte_asunto_tfg, checker));
+		soporte_asunto_textF.addFocusListener(new TextFocusListener(soporte_asunto_tfg, checker));
+		
+		
+		soporte_enviar_FormBtn = new JFormBtn("soporte");
 		soporte_enviar_FormBtn.setBackground(COLOR_CHECK);
 		soporte_enviar_FormBtn.setBounds(297, 436, 258, 62);
 		display_soporte.add(soporte_enviar_FormBtn);
 		soporte_enviar_FormBtn.setLayout(null);
-		//soporte_enviar_FormBtn.addMouseListener(new FormBtnListener(reg_confirmar_FormBtn, this));
+		soporte_enviar_FormBtn.addMouseListener(new SoporteBtnListener(soporte_textArea, soporte_asunto_tfg, this));
 
 		soporte_enviar_formBtn_text = new JLabel("Enviar");
 		soporte_enviar_formBtn_text.setBounds(10, 0, 238, 62);
@@ -1810,7 +1830,7 @@ public class Ventana {
 		opt_estadisticas_alumno.add(opt_estadisticas_alumno_text);
 
 		// option soporte alumno
-		opt_soporte_alumno = new JOption(display_info, "Soporte", "/imagenes/soporte_32px.png", opciones_alumno);
+		opt_soporte_alumno = new JOption(display_soporte, "Soporte", "/imagenes/soporte_32px.png", opciones_alumno);
 		opt_soporte_alumno.setLayout(null);
 		opt_soporte_alumno.setBackground(new Color(54, 33, 89));
 		opt_soporte_alumno.setBounds(0, 107, 300, 48);
@@ -1908,7 +1928,7 @@ public class Ventana {
 		opt_entrarComo_profesor.add(opt_entrarComo_profesor_text);
 
 		// option soporte profesor
-		opt_soporte_profesor = new JOption(display_info, "Soporte", "/imagenes/soporte_32px.png", opciones_profesor);
+		opt_soporte_profesor = new JOption(display_soporte, "Soporte", "/imagenes/soporte_32px.png", opciones_profesor);
 		opt_soporte_profesor.setLayout(null);
 		opt_soporte_profesor.setBackground(new Color(54, 33, 89));
 		opt_soporte_profesor.setBounds(0, 107, 300, 48);
@@ -1984,7 +2004,7 @@ public class Ventana {
 		opt_verUsuarios.add(opt_verUsuarios_text);
 
 		// option soporte administrador
-		opt_soporte_administrador = new JOption(display_reg, "Soporte", "/imagenes/soporte_32px.png",
+		opt_soporte_administrador = new JOption(display_soporte, "Soporte", "/imagenes/soporte_32px.png",
 				opciones_administrador);
 		opt_soporte_administrador.setLayout(null);
 		opt_soporte_administrador.setBackground(new Color(54, 33, 89));
@@ -2204,6 +2224,11 @@ public class Ventana {
 			popUp_panel.showPanel("<HTML>Sesion cambiada a modo administrador. Cierra la sesion para volver al modo "
 					+ sesionActual.getUsuario().getAcceso() + "</HTML>", "/imagenes/admin_96px.png");
 			break;
+		case "nuevaconsulta":
+
+			popUp_panel.infoStyle();
+			popUp_panel.showPanel("<HTML>Gracias por notificar tu incidencia, un desarrollador revisara la consulta en cuanto sea posible</HTML>", "/imagenes/asunto_96px.png");
+			break;	
 		}
 		// solucion al bug de solapamiento
 		popUp_panel.setVisible(false);
@@ -2443,6 +2468,10 @@ public class Ventana {
 	public GestorSesiones getGestorSesiones() {
 		return gestorSesiones;
 	}
+	
+	public GestorConsultas getGestorConsultas() {
+		return gestorConsultas;
+	}
 
 	/*
 	 * |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -2522,5 +2551,11 @@ public class Ventana {
 
 		displays.mostarDisplay(display_mostrarUsuario);
 
+	}
+
+	public void reniciarFormularioSoporte() {
+		soporte_asunto_textF.setText(soporte_asunto_tfg.getDefaultText());
+		soporte_asunto_tfg.setCheck(false);
+		soporte_textArea.setText("Describre detalladamente la incidencia.");
 	}
 }

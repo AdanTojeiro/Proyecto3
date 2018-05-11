@@ -89,6 +89,10 @@ public class TextFieldKeyListener implements KeyListener {
 		case "buscar":
 			 ventana.actualizarLista(checker.buscar(tFGroup.getTextF().getText()));
 			break;
+		case "soporte":
+			info = checker.checkFreeString(tFGroup.getTextF().getText());
+			tFGroup.showInfo(info);
+			break;
 		}
 		} else {
 			info = new InfoMsg("Imposible conectar a la base de datos", "/imagenes/error_black_32px.png", false, COLOR_DANGER);

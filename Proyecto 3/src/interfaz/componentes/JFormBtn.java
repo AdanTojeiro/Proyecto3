@@ -31,6 +31,10 @@ public class JFormBtn extends JPanel {
 		
 	}
 
+	public JFormBtn(String string) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void setStatus() {
 		if(this.isEnabled()) {
 			this.setBackground(COLOR_CHECK);
