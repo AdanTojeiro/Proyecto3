@@ -51,6 +51,18 @@ public class GestorConsultas {
 		 return rs;
 			
 	 }
+	
+	public ResultSet getConsulta(String value) {
+		 ResultSet rs = null;
+		 if(mysqlc.conectar()) {
+			// Cumple formato
+				rs = mysqlc.selectFrom("consulta inner join usuario on consulta.fk_usuario=usuario.pk_usuario", value);
+		 }
+		 mysqlc.desconectar();
+		 return rs;
+			
+	 }
+	
 	public ResultSet getAllConsultas() {
 		 ResultSet rs = null;
 		 if(mysqlc.conectar()) {

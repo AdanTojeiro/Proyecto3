@@ -124,7 +124,7 @@ public class JRowPanel extends JPanel {
 		col4.setVerticalAlignment(SwingConstants.CENTER);
 		
 		
-		editar_btn = new JRowBtn(usuario.getPk_usuario(), ventana);
+		editar_btn = new JRowBtn(usuario.getPk_usuario(), ventana, "usuario");
 		this.add(editar_btn);	
 	}
 
@@ -181,7 +181,7 @@ public class JRowPanel extends JPanel {
 		col4.setVerticalAlignment(SwingConstants.CENTER);
 		
 		
-		editar_btn = new JRowBtn(consulta.getPk_consulta(), ventana);
+		editar_btn = new JRowBtn(consulta.getPk_consulta(), ventana, "consulta");
 		this.add(editar_btn);	
 	}
 

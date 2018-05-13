@@ -350,6 +350,21 @@ public class Ventana {
 	private JPanel verConsultas__contenedor;
 	private JConsultaRowList listUpdater_verConsultas;
 	private TextFieldGroup verConsultas_filto_tfg;
+	// ----------------------------------------------------------------
+	private JDisplay display_mostrarConsulta;
+	private JPanel asunto_panel_mostrarConsulta;
+	private JSeparator asunto_separator_mostrarConsulta;
+	private JLabel asunto_ico_mostrarConsulta;
+	private JLabel asunto_text_mostrarConsulta;
+	private JPanel nick_panel_mostrarConsulta;
+	private JSeparator nick_separator_mostrarConsulta;
+	private JLabel nick_ico_mostrarConsulta;
+	private JLabel nick_text_mostrarConsulta;
+	private JPanel fecha_panel_mostrarConsulta;
+	private JSeparator fecha_separator_mostrarConsulta;
+	private JLabel fecha_ico_mostrarConsulta;
+	private JLabel fecha_text_mostrarConsulta;
+	private JLabel descripcion_mostrarConsulta;
 
 	/*
 	 * |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -562,7 +577,7 @@ public class Ventana {
 	// DISPLAYS
 
 	private void cargarDisplays() {
-		
+	
 		cargarDisplayIndex();
 		cargarDisplayLogin();
 		cargarDisplayReg();
@@ -573,6 +588,7 @@ public class Ventana {
 		cargarDisplayCerrarSesion();
 		cargarDisplayEntrarComo();
 		cargarDisplayVerConsultas();
+		cargarDisplayMostrarConsulta();
 
 	}
 
@@ -1778,6 +1794,84 @@ public class Ventana {
 		verConsultas_filtro_textF.addFocusListener(new TextFocusListener(verConsultas_filto_tfg, checker));
 
 	}
+	
+	private void cargarDisplayMostrarConsulta() {
+		display_mostrarConsulta = new JDisplay("Mostrar Consulta", "/imagenes/login_96px.png", displays);
+		display_mostrarConsulta.setBounds(0, 0, 800, 552);
+		display_panel.add(display_mostrarConsulta);
+		display_mostrarConsulta.setLayout(null);
+		display_mostrarConsulta.setOpaque(false);
+		display_mostrarConsulta.setVisible(false);
+		
+		asunto_panel_mostrarConsulta = new JPanel();
+		asunto_panel_mostrarConsulta.setLayout(null);
+		asunto_panel_mostrarConsulta.setOpaque(false);
+		asunto_panel_mostrarConsulta.setBounds(10, 11, 780, 52);
+		display_mostrarConsulta.add(asunto_panel_mostrarConsulta);
+
+		asunto_separator_mostrarConsulta = new JSeparator();
+		asunto_separator_mostrarConsulta.setBounds(52, 41, 721, 2);
+		asunto_panel_mostrarConsulta.add(asunto_separator_mostrarConsulta);
+
+		asunto_ico_mostrarConsulta = new JLabel("");
+		asunto_ico_mostrarConsulta.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/user_text_32px.png")));
+		asunto_ico_mostrarConsulta.setBounds(10, 11, 32, 32);
+		asunto_panel_mostrarConsulta.add(asunto_ico_mostrarConsulta);
+
+		asunto_text_mostrarConsulta = new JLabel("Asunto");
+		asunto_text_mostrarConsulta.setForeground(Color.WHITE);
+		asunto_text_mostrarConsulta.setFont(new Font("Tahoma", Font.BOLD, 20));
+		asunto_text_mostrarConsulta.setBounds(52, 11, 721, 30);
+		asunto_panel_mostrarConsulta.add(asunto_text_mostrarConsulta);
+		
+		descripcion_mostrarConsulta = new JLabel("<html><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec.</p></html>");
+		descripcion_mostrarConsulta.setForeground(Color.WHITE);
+		descripcion_mostrarConsulta.setFont(new Font("Tahoma", Font.BOLD, 20));
+		descripcion_mostrarConsulta.setBounds(20, 74, 759, 307);
+		display_mostrarConsulta.add(descripcion_mostrarConsulta);
+		
+		nick_panel_mostrarConsulta = new JPanel();
+		nick_panel_mostrarConsulta.setLayout(null);
+		nick_panel_mostrarConsulta.setOpaque(false);
+		nick_panel_mostrarConsulta.setBounds(10, 392, 360, 52);
+		display_mostrarConsulta.add(nick_panel_mostrarConsulta);
+		
+		nick_separator_mostrarConsulta = new JSeparator();
+		nick_separator_mostrarConsulta.setBounds(52, 41, 300, 2);
+		nick_panel_mostrarConsulta.add(nick_separator_mostrarConsulta);
+		
+		nick_ico_mostrarConsulta = new JLabel("");
+		nick_ico_mostrarConsulta.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/user_text_32px.png")));
+		nick_ico_mostrarConsulta.setBounds(10, 11, 32, 32);
+		nick_panel_mostrarConsulta.add(nick_ico_mostrarConsulta);
+		
+		nick_text_mostrarConsulta = new JLabel("Nick");
+		nick_text_mostrarConsulta.setForeground(Color.WHITE);
+		nick_text_mostrarConsulta.setFont(new Font("Tahoma", Font.BOLD, 20));
+		nick_text_mostrarConsulta.setBounds(52, 11, 300, 30);
+		nick_panel_mostrarConsulta.add(nick_text_mostrarConsulta);
+		
+		fecha_panel_mostrarConsulta = new JPanel();
+		fecha_panel_mostrarConsulta.setLayout(null);
+		fecha_panel_mostrarConsulta.setOpaque(false);
+		fecha_panel_mostrarConsulta.setBounds(430, 392, 360, 52);
+		display_mostrarConsulta.add(fecha_panel_mostrarConsulta);
+		
+		fecha_separator_mostrarConsulta = new JSeparator();
+		fecha_separator_mostrarConsulta.setBounds(52, 41, 300, 2);
+		fecha_panel_mostrarConsulta.add(fecha_separator_mostrarConsulta);
+		
+		fecha_ico_mostrarConsulta = new JLabel("");
+		fecha_ico_mostrarConsulta.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/fecha_32px.png")));
+		fecha_ico_mostrarConsulta.setBounds(10, 11, 32, 32);
+		fecha_panel_mostrarConsulta.add(fecha_ico_mostrarConsulta);
+		
+		fecha_text_mostrarConsulta = new JLabel("Fecha");
+		fecha_text_mostrarConsulta.setForeground(Color.WHITE);
+		fecha_text_mostrarConsulta.setFont(new Font("Tahoma", Font.BOLD, 20));
+		fecha_text_mostrarConsulta.setBounds(52, 11, 300, 30);
+		fecha_panel_mostrarConsulta.add(fecha_text_mostrarConsulta);
+	}
 	// NavPanel inivitado
 
 	private void cargarNavPanelInvitado() {
@@ -2661,6 +2755,17 @@ public class Ventana {
 		displays.mostarDisplay(display_mostrarUsuario);
 
 	}
+	
+	public void actualizarMostrarConsulta(Consulta consulta) {
+		
+		asunto_text_mostrarConsulta.setText(consulta.getAsunto());
+		descripcion_mostrarConsulta.setText("<html><p>"+consulta.getDescripcion()+"</p></html>");
+		nick_text_mostrarConsulta.setText(consulta.getUsuario().getNick());
+		fecha_text_mostrarConsulta.setText(consulta.getFecha().toString());
+		
+		displays.mostarDisplay(display_mostrarConsulta);
+	}
+	
 
 	public void reniciarFormularioSoporte() {
 		soporte_asunto_textF.setText(soporte_asunto_tfg.getDefaultText());
@@ -2668,8 +2773,4 @@ public class Ventana {
 		soporte_textArea.setText("Describre detalladamente la incidencia.");
 	}
 
-	public GestorConsultas getGestorCosnultas() {
-		// TODO Auto-generated method stub
-		return gestorConsultas;
-	}
 }

@@ -5,6 +5,7 @@ import java.awt.event.MouseListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import clases.Consulta;
 import clases.Usuario;
 import interfaz.Ventana;
 import interfaz.componentes.JRowBtn;
@@ -25,16 +26,33 @@ public class JRowBtnListener implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		ResultSet rs = ventana.getGestorUsuarios().getUsuario("pk_usuario", ""+btn.getPk());
-		try {
-			if(rs.next()) {
-				Usuario  usuario=  new Usuario(rs);
-				ventana.actualizarMostraUsuario(usuario);
+		switch(btn.getTipo()) {
+		case "usuario":
+			ResultSet rsu = ventana.getGestorUsuarios().getUsuario("pk_usuario", ""+btn.getPk());
+			try {
+				if(rsu.next()) {
+					Usuario  usuario=  new Usuario(rsu);
+					ventana.actualizarMostraUsuario(usuario);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			break;
+		case "consulta":
+			ResultSet rsc = ventana.getGestorConsultas().getConsulta("pk_consulta ="+btn.getPk());
+			try {
+				if(rsc.next()) {
+					Consulta  consulta=  new Consulta(rsc);
+					ventana.actualizarMostrarConsulta(consulta);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;	
 		}
+		
 		
 
 	}

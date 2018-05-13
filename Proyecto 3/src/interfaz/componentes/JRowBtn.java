@@ -25,9 +25,10 @@ public class JRowBtn extends JPanel {
 	private int pk;
 	private String tipo;
 	
-	public JRowBtn(int pk_usuario, Ventana ventana) {
+	public JRowBtn(int pk_usuario, Ventana ventana, String tipo) {
 		this.ventana = ventana;
 		this.pk = pk_usuario;
+		this.tipo = tipo;
 		this.setBackground(COLOR_CHECK);
 		text  = new JLabel("Inspeccionar");
 		text.setForeground(Color.WHITE);
@@ -51,6 +52,14 @@ public class JRowBtn extends JPanel {
 
 	public void setPk(int pk) {
 		this.pk = pk;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 	
 	
