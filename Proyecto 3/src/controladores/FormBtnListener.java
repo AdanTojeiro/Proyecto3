@@ -63,7 +63,8 @@ public class FormBtnListener implements MouseListener {
 								break;
 
 							}
-							ventana.actualizarLista(ventana.getGestorUsuarios().getAllUsuarios());
+							ventana.actualizarListaUsuarios(ventana.getGestorUsuarios().getAllUsuarios());
+							ventana.actualizarListaConsultas(ventana.getGestorCosnultas().getAllConsultas());
 							ventana.getSesionActual().getUsuario().setEstado("online");
 							ventana.actualizarMostraUsuario(ventana.getSesionActual().getUsuario());
 							ventana.showPopUp("logincomplete");

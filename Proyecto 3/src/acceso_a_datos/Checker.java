@@ -10,9 +10,11 @@ public class Checker {
 	private final Color COLOR_ERROR = new Color(219, 186, 70);
 	private final Color COLOR_CHECK = new Color(50, 205, 50);
 	GestorUsuarios gestorUsuarios;
+	GestorConsultas gestorConsultas;
 
-	public Checker(GestorUsuarios gestorUsuarios) {
+	public Checker(GestorUsuarios gestorUsuarios, GestorConsultas gestorConsultas) {
 		this.gestorUsuarios = gestorUsuarios;
+		this.gestorConsultas = gestorConsultas;
 	}
 
 	public InfoMsg checkPassword(String s) {
@@ -324,6 +326,14 @@ public class Checker {
 			}
 		}
 		return info;
+	}
+
+	public ResultSet consultas(String s) {
+		ResultSet rs = null;
+		
+		rs = gestorConsultas.getConsultaFilter(s);
+		
+		return rs;
 	}
 	
 	

@@ -10,6 +10,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
+import clases.Consulta;
 import clases.Usuario;
 import interfaz.Ventana;
 
@@ -60,7 +61,7 @@ public class JRowPanel extends JPanel {
 		col4.setBounds(0, 0, 70, 50);
 		col4.setForeground(Color.WHITE);
 		col4.setFont(new Font("Tahoma", Font.BOLD, 18));
-		col4.setHorizontalAlignment(SwingConstants.CENTER);
+		//col4.setHorizontalAlignment(SwingConstants.CENTER);
 		col4.setVerticalAlignment(SwingConstants.CENTER);
 		
 		col5 = new JLabel(col5t);
@@ -74,7 +75,7 @@ public class JRowPanel extends JPanel {
 
 	public JRowPanel(Usuario usuario, Ventana ventana) {
 		
-		this.setLayout(new GridLayout(1, 5, 10, 2));
+		this.setLayout(new GridLayout(1, 4, 10, 2));
 		this.setOpaque(false);
 		this.setBounds(0, 0, 780, 50);
 		
@@ -119,19 +120,69 @@ public class JRowPanel extends JPanel {
 		col4.setBounds(0, 0, 70, 50);
 		col4.setForeground(Color.WHITE);
 		col4.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		col4.setHorizontalAlignment(SwingConstants.CENTER);
+		//col4.setHorizontalAlignment(SwingConstants.CENTER);
 		col4.setVerticalAlignment(SwingConstants.CENTER);
 		
 		
 		editar_btn = new JRowBtn(usuario.getPk_usuario(), ventana);
-		this.add(editar_btn);
-		
-		
-		
-		
+		this.add(editar_btn);	
+	}
 
+	public JRowPanel(Consulta consulta, Ventana ventana) {
+		// TODO Auto-generated constructor stub
+		this.setLayout(new GridLayout(1, 5, 10, 2));
+		this.setOpaque(false);
+		this.setBounds(0, 0, 780, 50);
+		
+		col1 = new JLabel("<html>"+consulta.getUsuario().getNick());
+		this.add(col1);
+		col1.setForeground(Color.WHITE);
+		col1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		String accesoText = "";
+		switch(consulta.getUsuario().getAcceso()) {
+		case "alumno":
+			accesoText = "Alumno";
+			break;
+		case "profesor":
+			accesoText = "Profesor";
+			break;
+		case "administrador":
+			accesoText = "Administrador";
+			break;
+		case "desarrollador":
+			accesoText = "Desarrollador";
+			break;
+		default:
+			accesoText = "Invitado";
+		}
 		
 		
+		col2 = new JLabel(accesoText);
+		this.add(col2);
+		col2.setForeground(Color.WHITE);
+		col2.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		
+		
+		col3 = new JLabel(consulta.getAsunto().length()<16?consulta.getAsunto():consulta.getAsunto().substring(0, 16));
+		this.add(col3);
+		col3.setBounds(0, 0, 70, 50);
+		col3.setForeground(Color.WHITE);
+		col3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		
+		col4 = new JLabel(consulta.getFecha().toString().substring(0, 16));
+		this.add(col4);
+		col4.setBounds(0, 0, 70, 50);
+		col4.setForeground(Color.WHITE);
+		col4.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		//col4.setHorizontalAlignment(SwingConstants.CENTER);
+		col4.setVerticalAlignment(SwingConstants.CENTER);
+		
+		
+		editar_btn = new JRowBtn(consulta.getPk_consulta(), ventana);
+		this.add(editar_btn);	
 	}
 
 }

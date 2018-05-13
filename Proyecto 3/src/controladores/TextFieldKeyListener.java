@@ -87,8 +87,11 @@ public class TextFieldKeyListener implements KeyListener {
 			}
 			break;
 		case "buscar":
-			 ventana.actualizarLista(checker.buscar(tFGroup.getTextF().getText()));
+			 ventana.actualizarListaUsuarios(checker.buscar(tFGroup.getTextF().getText()));
 			break;
+		case "consulta":
+			 ventana.actualizarListaConsultas(checker.consultas(tFGroup.getTextF().getText()));
+			break;	
 		case "soporte":
 			info = checker.checkFreeString(tFGroup.getTextF().getText());
 			tFGroup.showInfo(info);

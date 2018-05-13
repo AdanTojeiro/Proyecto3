@@ -49,6 +49,10 @@ public class DisplayGroup {
 	public void setGrupo(ArrayList<JDisplay> grupo) {
 		this.grupo = grupo;
 	}
+
+	public Ventana getVentana() {
+		return ventana;
+	}
 	
 	
 	

@@ -22,11 +22,12 @@ public class JRowBtn extends JPanel {
 	private Ventana ventana;
 	
 	private JLabel text;
-	private int pk_usuario;
+	private int pk;
+	private String tipo;
 	
 	public JRowBtn(int pk_usuario, Ventana ventana) {
 		this.ventana = ventana;
-		this.pk_usuario = pk_usuario;
+		this.pk = pk_usuario;
 		this.setBackground(COLOR_CHECK);
 		text  = new JLabel("Inspeccionar");
 		text.setForeground(Color.WHITE);
@@ -44,12 +45,12 @@ public class JRowBtn extends JPanel {
 		return COLOR_HOVER;
 	}
 
-	public int getPk_usuario() {
-		return pk_usuario;
+	public int getPk() {
+		return pk;
 	}
 
-	public void setPk_usuario(int pk_usuario) {
-		this.pk_usuario = pk_usuario;
+	public void setPk(int pk) {
+		this.pk = pk;
 	}
 	
 	

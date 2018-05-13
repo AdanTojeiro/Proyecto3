@@ -11,6 +11,7 @@ import acceso_a_datos.GestorConsultas;
 import acceso_a_datos.GestorSesiones;
 import acceso_a_datos.GestorUsuarios;
 import acceso_a_datos.MysqlC;
+import clases.Consulta;
 import clases.Sesion;
 import clases.Usuario;
 import controladores.FormBtnListener;
@@ -34,7 +35,8 @@ import interfaz.grupos.OptionGroup;
 import interfaz.grupos.SesionSteup;
 import interfaz.grupos.TextFieldGroup;
 import interfaz.grupos.TextFieldGroupRel;
-import interfaz.listas.JRowList;
+import interfaz.listas.JConsultaRowList;
+import interfaz.listas.JUserRowList;
 import controladores.ControlLabelListener;
 import controladores.EntrarComoListener;
 
@@ -241,7 +243,7 @@ public class Ventana {
 	private JSeparator verUsuarios_nick_separator;
 	private JTextField verUsuarios_nick_textF;
 	private JLabel verUsuarios_nick_info_ico, verUsuarios_nick_info_text, verUsuarios_nick_icon;
-	private JRowList listUpdater_verUsuarios;
+	private JUserRowList listUpdater_verUsuarios;
 
 	// 3-PopUp Panel
 	private JLabel popUp_ico, popUp_text;
@@ -335,6 +337,19 @@ public class Ventana {
 	private JFormBtn soporte_enviar_FormBtn;
 	private JLabel soporte_enviar_formBtn_text;
 	private JTextArea soporte_textArea;
+	private JDisplay display_verConsultas;
+	// ---------------------------------------------------------------
+	private JPanel verConsultas_filtro_panel;
+	private JSeparator verConsultas_filtro_separator;
+	private JLabel verConsultas_filtro_icon;
+	private JTextField verConsultas_filtro_textF;
+	private JPanel verConsultas_filtro_info_panel;
+	private JLabel verConsultas_filtro_info_ico;
+	private JLabel verConsultas_filtro_info_text;
+	private JScrollPane verConsultas_scroll;
+	private JPanel verConsultas__contenedor;
+	private JConsultaRowList listUpdater_verConsultas;
+	private TextFieldGroup verConsultas_filto_tfg;
 
 	/*
 	 * |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -346,7 +361,7 @@ public class Ventana {
 		gestorUsuarios = new GestorUsuarios(mysqlc);
 		gestorSesiones = new GestorSesiones(mysqlc, gestorUsuarios);
 		gestorConsultas = new GestorConsultas(mysqlc);
-		checker = new Checker(gestorUsuarios);
+		checker = new Checker(gestorUsuarios, gestorConsultas);
 		initialize();
 	}
 
@@ -557,6 +572,7 @@ public class Ventana {
 		cargarDisplayMostrarUsuario();
 		cargarDisplayCerrarSesion();
 		cargarDisplayEntrarComo();
+		cargarDisplayVerConsultas();
 
 	}
 
@@ -1367,7 +1383,7 @@ public class Ventana {
 
 		ArrayList<Usuario> listaUsers = new ArrayList<Usuario>();
 
-		listUpdater_verUsuarios = new JRowList(listaUsers, verUsuarios_contenedor, this);
+		listUpdater_verUsuarios = new JUserRowList(listaUsers, verUsuarios_contenedor, this);
 		listUpdater_verUsuarios.cargarLista();
 
 		verUsuarios_nick_tfg = new TextFieldGroup(verUsuarios_nick_panel, verUsuarios_nick_info_panel,
@@ -1682,6 +1698,84 @@ public class Ventana {
 		entrarComo_profesor_btn_panel.addMouseListener(new EntrarComoListener(this, entrarComo_profesor_btn_text));
 		entrarComo_administrador_btn_panel
 				.addMouseListener(new EntrarComoListener(this, entrarComo_administrador_btn_text));
+
+	}
+	
+	private void cargarDisplayVerConsultas() {
+
+		display_verConsultas = new JDisplay("Buscar consulta", "/imagenes/buscar_96px.png", displays);
+		display_verConsultas.setBounds(0, 0, 800, 552);
+		display_panel.add(display_verConsultas);
+		display_verConsultas.setLayout(null);
+		display_verConsultas.setOpaque(false);
+		display_verConsultas.setVisible(false);
+
+		verConsultas_filtro_panel = new JPanel();
+		verConsultas_filtro_panel.setBounds(204, 0, 390, 96);
+		display_verConsultas.add(verConsultas_filtro_panel);
+		verConsultas_filtro_panel.setOpaque(false);
+		verConsultas_filtro_panel.setLayout(null);
+
+		verConsultas_filtro_separator = new JSeparator();
+		verConsultas_filtro_separator.setBounds(52, 41, 328, 2);
+		verConsultas_filtro_panel.add(verConsultas_filtro_separator);
+
+		verConsultas_filtro_icon = new JLabel("");
+		verConsultas_filtro_icon.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/buscar_32px.png")));
+		verConsultas_filtro_icon.setBounds(10, 11, 32, 32);
+		verConsultas_filtro_panel.add(verConsultas_filtro_icon);
+
+		verConsultas_filtro_textF = new JTextField("Buscar");
+		verConsultas_filtro_textF.setHorizontalAlignment(SwingConstants.LEFT);
+		verConsultas_filtro_textF.setFont(new Font("Tahoma", Font.BOLD, 20));
+		verConsultas_filtro_textF.setForeground(Color.WHITE);
+		verConsultas_filtro_textF.setBounds(52, 11, 328, 25);
+		verConsultas_filtro_panel.add(verConsultas_filtro_textF);
+		verConsultas_filtro_textF.setColumns(10);
+		verConsultas_filtro_textF.setBackground(COLOR_SELECTED);
+		verConsultas_filtro_textF.setBorder(null);
+
+		verConsultas_filtro_info_panel = new JPanel();
+		verConsultas_filtro_info_panel.setBounds(10, 50, 370, 32);
+		verConsultas_filtro_panel.add(verConsultas_filtro_info_panel);
+		verConsultas_filtro_info_panel.setBackground(COLOR_ERROR);
+		verConsultas_filtro_info_panel.setLayout(null);
+		verConsultas_filtro_info_panel.setVisible(false);
+
+		verConsultas_filtro_info_ico = new JLabel("");
+		verConsultas_filtro_info_ico.setBounds(0, 0, 32, 32);
+		verConsultas_filtro_info_panel.add(verConsultas_filtro_info_ico);
+		verConsultas_filtro_info_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/error_black_32px.png")));
+
+		verConsultas_filtro_info_text = new JLabel("Error");
+		verConsultas_filtro_info_text.setFont(new Font("Tahoma", Font.BOLD, 20));
+		verConsultas_filtro_info_text.setBounds(42, 0, 328, 32);
+		verConsultas_filtro_info_panel.add(verConsultas_filtro_info_text);
+
+		verConsultas_scroll = new JScrollPane();
+		verConsultas_scroll.setBorder(null);
+		verConsultas_scroll.setOpaque(false);
+
+		verConsultas_scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		verConsultas_scroll.setBounds(10, 90, 780, 450);
+		display_verConsultas.add(verConsultas_scroll);
+
+		verConsultas__contenedor = new JPanel();
+		verConsultas__contenedor.setBackground(COLOR_SELECTED);
+		verConsultas_scroll.setViewportView(verConsultas__contenedor);
+		verConsultas__contenedor.setLayout(new GridLayout(0, 1, 0, 20));
+
+		ArrayList<Consulta> listaConsultas = new ArrayList<Consulta>();
+
+		listUpdater_verConsultas = new JConsultaRowList(listaConsultas, verConsultas__contenedor, this);
+		listUpdater_verConsultas.cargarLista();
+
+		verConsultas_filto_tfg = new TextFieldGroup(verConsultas_filtro_panel, verConsultas_filtro_info_panel,
+				verConsultas_filtro_icon, verConsultas_filtro_info_ico, verConsultas_filtro_info_text, verConsultas_filtro_textF,
+				verConsultas_filtro_separator, "consulta");
+
+		verConsultas_filtro_textF.addKeyListener(new TextFieldKeyListener(verConsultas_filto_tfg, checker, this));
+		verConsultas_filtro_textF.addFocusListener(new TextFocusListener(verConsultas_filto_tfg, checker));
 
 	}
 	// NavPanel inivitado
@@ -2082,7 +2176,7 @@ public class Ventana {
 		// Nav options
 
 		// option ver usuarios desarollador
-		opt_verUsuarios_desarrollador = new JOption(display_verUsuarios, "Ver usuarios", "/imagenes/buscar_32px.png",
+		opt_verUsuarios_desarrollador = new JOption(display_verConsultas, "Ver consultas", "/imagenes/buscar_32px.png",
 				opciones_desarrollador);
 		opt_verUsuarios_desarrollador.setBounds(0, 11, 300, 48);
 		navPanel_desarrollador.add(opt_verUsuarios_desarrollador);
@@ -2478,7 +2572,7 @@ public class Ventana {
 	 * ACTUALIZAR LISTAS
 	 */
 
-	public void actualizarLista(ResultSet rs) {
+	public void actualizarListaUsuarios(ResultSet rs) {
 		ArrayList<Usuario> listaUsers = new ArrayList<Usuario>();
 		try {
 			while (rs.next()) {
@@ -2491,6 +2585,21 @@ public class Ventana {
 		listUpdater_verUsuarios.limpiarLista();
 		listUpdater_verUsuarios.setLista(listaUsers);
 		listUpdater_verUsuarios.cargarLista();
+	}
+	
+	public void actualizarListaConsultas(ResultSet rs) {
+		ArrayList<Consulta> listaConsultas = new ArrayList<Consulta>();
+		try {
+			while (rs.next()) {
+				listaConsultas.add(new Consulta(rs));
+			}
+		} catch (SQLException e) {
+		
+			e.printStackTrace();
+		}
+		listUpdater_verConsultas.limpiarLista();
+		listUpdater_verConsultas.setLista(listaConsultas);
+		listUpdater_verConsultas.cargarLista();
 	}
 
 	/*
@@ -2557,5 +2666,10 @@ public class Ventana {
 		soporte_asunto_textF.setText(soporte_asunto_tfg.getDefaultText());
 		soporte_asunto_tfg.setCheck(false);
 		soporte_textArea.setText("Describre detalladamente la incidencia.");
+	}
+
+	public GestorConsultas getGestorCosnultas() {
+		// TODO Auto-generated method stub
+		return gestorConsultas;
 	}
 }

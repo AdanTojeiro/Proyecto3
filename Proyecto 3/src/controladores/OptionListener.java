@@ -33,6 +33,7 @@ public class OptionListener implements MouseListener {
 		if(opt.getDisplay() == null) {
 			System.out.println("falla");
 		}
+		opt.getDisplay().getGrupo().getVentana().getFocusFixer().requestFocus();
 		opt.getDisplay().getGrupo().mostarDisplay(opt.getDisplay());
 		
 	}

@@ -1,5 +1,7 @@
 package clases;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 public class Consulta {
@@ -27,6 +29,20 @@ public class Consulta {
 	}
 	
 	
+	public Consulta(ResultSet rs) {
+		try {
+			usuario = new Usuario(rs);
+			pk_consulta = rs.getInt("pk_consulta");
+			fecha = rs.getTimestamp("fecha");
+			asunto = rs.getString("asunto");
+			descripcion = rs.getString("descripcion");
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	public int getPk_consulta() {
 		return pk_consulta;
 	}
