@@ -93,9 +93,17 @@ public class TextFieldKeyListener implements KeyListener {
 			 ventana.actualizarListaConsultas(checker.consultas(tFGroup.getTextF().getText()));
 			break;	
 		case "soporte":
-			info = checker.checkFreeString(tFGroup.getTextF().getText());
+			info = checker.checkFreeString(tFGroup.getTextF().getText(), 60);
 			tFGroup.showInfo(info);
 			break;
+		case "enunciado":
+			info = checker.checkFreeString(tFGroup.getTextF().getText(), 120);
+			tFGroup.showInfo(info);
+			break;
+		case "respuesta":
+			info = checker.checkFreeString(tFGroup.getTextF().getText(), 60);
+			tFGroup.showInfo(info);
+			break;	
 		}
 		} else {
 			info = new InfoMsg("Imposible conectar a la base de datos", "/imagenes/error_black_32px.png", false, COLOR_DANGER);

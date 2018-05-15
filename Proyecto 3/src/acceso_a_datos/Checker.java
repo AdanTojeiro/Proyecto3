@@ -312,14 +312,14 @@ public class Checker {
 		return rs;
 	}
 
-	public InfoMsg checkFreeString(String s) {
+	public InfoMsg checkFreeString(String s, int caracteres) {
 		InfoMsg info = null;
-		if(s.length() >  60) {
-			info = new InfoMsg("Maximo 60 caracteres", "/imagenes/error_black_32px.png", false,
+		if(s.length() >  caracteres) {
+			info = new InfoMsg("Maximo "+caracteres+" caracteres", "/imagenes/error_black_32px.png", false,
 					COLOR_ERROR);
 		} else {
-			if(s.length() < 4) {
-				info = new InfoMsg("Minimo 4 caracteres", "/imagenes/error_black_32px.png", false,
+			if(s.length() < 2) {
+				info = new InfoMsg("Minimo 2 caracteres", "/imagenes/error_black_32px.png", false,
 						COLOR_ERROR);
 			} else {
 				info = new InfoMsg("Formato correcto", "/imagenes/checkbox_32px.png", true, COLOR_CHECK);

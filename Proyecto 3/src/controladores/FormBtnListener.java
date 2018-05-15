@@ -4,6 +4,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import clases.Pregunta;
 import interfaz.Ventana;
 import interfaz.componentes.JFormBtn;
 
@@ -85,6 +87,14 @@ public class FormBtnListener implements MouseListener {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				break;
+			case "pregunta":
+				Pregunta pregunta = ventana.getPreguntaData();
+				if(ventana.getGestorTest().añadirPregunta(pregunta)) {
+					ventana.showPopUp("addpregunta");
+					ventana.reniciarFormularioPregunta();
+				}
+				break;
 			}
 
 		}

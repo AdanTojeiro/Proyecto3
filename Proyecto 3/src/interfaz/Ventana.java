@@ -9,15 +9,19 @@ import javax.swing.*;
 import acceso_a_datos.Checker;
 import acceso_a_datos.GestorConsultas;
 import acceso_a_datos.GestorSesiones;
+import acceso_a_datos.GestorTest;
 import acceso_a_datos.GestorUsuarios;
 import acceso_a_datos.MysqlC;
 import clases.Consulta;
+import clases.Pregunta;
+import clases.Respuesta;
 import clases.Sesion;
 import clases.Usuario;
 import controladores.FormBtnListener;
 import controladores.FrameDrager;
 import controladores.NavRegListener;
 import controladores.OptionListener;
+import controladores.RadioButtonListener;
 import controladores.SesionBtnListener;
 import controladores.SoporteBtnListener;
 import controladores.TextAreaListener;
@@ -47,6 +51,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.awt.Toolkit;
+import java.awt.ComponentOrientation;
 
 public class Ventana {
 
@@ -55,6 +60,7 @@ public class Ventana {
 	private GestorUsuarios gestorUsuarios;
 	private GestorSesiones gestorSesiones;
 	private GestorConsultas gestorConsultas;
+	private GestorTest gestorTest;
 	private Checker checker;
 
 	// DATOS DE SESION
@@ -258,7 +264,7 @@ public class Ventana {
 	private ArrayList<TextFieldGroup> reg_grupo_logico = new ArrayList<TextFieldGroup>();
 	private TextFieldGroup reg_nick_tfg, reg_password_tfg, reg_name_tfg, reg_apellido_tfg, reg_dni_tfg, reg_email_tfg;
 	private TextFieldGroup reg_password_check_tfg;
-	//Formulario soporte 
+	// Formulario soporte
 
 	private TextFieldGroup soporte_asunto_tfg, soporte_textArea_tfg;
 	// Buscador verUsuarios
@@ -365,6 +371,46 @@ public class Ventana {
 	private JLabel fecha_ico_mostrarConsulta;
 	private JLabel fecha_text_mostrarConsulta;
 	private JLabel descripcion_mostrarConsulta;
+	// ---------------------------------------------------------------
+	private JDisplay display_anadirPregunta;
+	private JPanel anadirPregunta_enunciado_panel;
+	private JSeparator anadirPregunta_enunciado_separator;
+	private JLabel anadirPregunta_enunciado_icon;
+	private JTextField anadirPregunta_enunciado_textF;
+	private JPanel anadirPregunta_enunciado_info_panel;
+	private JLabel anadirPregunta_enunciado_info_ico;
+	private JLabel anadirPregunta_enunciado_info_text;
+	private JPanel anadirPregunta_respuestaB_panel;
+	private JSeparator anadirPregunta_respuestaB_separator;
+	private JTextField anadirPregunta_respuestaB_textF;
+	private JPanel anadirPregunta_respuestaB_info_panel;
+	private JLabel anadirPregunta_respuestaB_info_ico;
+	private JLabel anadirPregunta_respuestaB_info_text;
+	private JLabel anadirPregunta_respuestaB_icon;
+	private JPanel anadirPregunta_respuestaC_panel;
+	private JSeparator anadirPregunta_respuestaC_separator;
+	private JLabel anadirPregunta_respuestaC_icon;
+	private JTextField anadirPregunta_respuestaC_textF;
+	private JPanel anadirPregunta_respuestaC_info_panel;
+	private JLabel anadirPregunta_respuestaC_info_ico;
+	private JLabel anadirPregunta_respuestaC_info_text;
+	private JPanel anadirPregunta_respuestaA_panel;
+	private JSeparator anadirPregunta_respuestaA_separator;
+	private JLabel anadirPregunta_respuestaA_icon;
+	private JTextField anadirPregunta_respuestaA_textF;
+	private JPanel anadirPregunta_respuestaA_info_panel;
+	private JLabel anadirPregunta_respuestaA_info_ico;
+	private JLabel anadirPregunta_respuestaA_info_text;
+	private JFormBtn anadirPregunta_FormBtn;
+	private JLabel anadirPregunta_FormBtn_text;
+	private JRadioButton anadirPregunta_respuestaA_radioBtn;
+	private JRadioButton anadirPregunta_respuestaB_radioBtn;
+	private JRadioButton anadirPregunta_respuestaC_radioBtn;
+	private TextFieldGroup anadirPregunta_enunciado_tfg;
+	private TextFieldGroup anadirPregunta_respuestaA_tfg;
+	private TextFieldGroup anadirPregunta_respuestaB_tfg;
+	private TextFieldGroup anadirPregunta_respuestaC_tfg;
+	private ArrayList<TextFieldGroup> anadirPregunta_grupo_logico = new ArrayList<TextFieldGroup>();
 
 	/*
 	 * |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -376,6 +422,7 @@ public class Ventana {
 		gestorUsuarios = new GestorUsuarios(mysqlc);
 		gestorSesiones = new GestorSesiones(mysqlc, gestorUsuarios);
 		gestorConsultas = new GestorConsultas(mysqlc);
+		gestorTest = new GestorTest(mysqlc);
 		checker = new Checker(gestorUsuarios, gestorConsultas);
 		initialize();
 	}
@@ -388,7 +435,8 @@ public class Ventana {
 	private void initialize() {
 		// Frame
 		frmHacentest = new JFrame();
-		frmHacentest.setIconImage(Toolkit.getDefaultToolkit().getImage(Ventana.class.getResource("/imagenes/hacentestico.png")));
+		frmHacentest.setIconImage(
+				Toolkit.getDefaultToolkit().getImage(Ventana.class.getResource("/imagenes/hacentestico.png")));
 		frmHacentest.setTitle("Hacentest");
 		frmHacentest.setBounds(100, 100, 1100, 700);
 		frmHacentest.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -577,7 +625,7 @@ public class Ventana {
 	// DISPLAYS
 
 	private void cargarDisplays() {
-	
+
 		cargarDisplayIndex();
 		cargarDisplayLogin();
 		cargarDisplayReg();
@@ -589,6 +637,7 @@ public class Ventana {
 		cargarDisplayEntrarComo();
 		cargarDisplayVerConsultas();
 		cargarDisplayMostrarConsulta();
+		cargarDisplayAñadirPregunta();
 
 	}
 
@@ -1214,7 +1263,7 @@ public class Ventana {
 		display_soporte.setLayout(null);
 		display_soporte.setOpaque(false);
 		display_soporte.setVisible(false);
-		
+
 		soporte_asunto_panel = new JPanel();
 		soporte_asunto_panel.setBounds(3, 29, 636, 96);
 		display_soporte.add(soporte_asunto_panel);
@@ -1256,33 +1305,30 @@ public class Ventana {
 		soporte_asunto_info_text.setFont(new Font("Tahoma", Font.BOLD, 20));
 		soporte_asunto_info_text.setBounds(42, 0, 572, 32);
 		soporte_asunto_info_panel.add(soporte_asunto_info_text);
-		
+
 		soporte_textArea = new JTextArea();
 		soporte_textArea.setLineWrap(true);
 		soporte_textArea.setFont(new Font("Monospaced", Font.PLAIN, 22));
 		soporte_textArea.setText("Describre detalladamente la incidencia.");
 		soporte_textArea.setBounds(12, 127, 776, 239);
 		display_soporte.add(soporte_textArea);
-		
-		
-		
+
 		soporte_caracteres_text = new JLabel("Maximo 300 caracteres");
 		soporte_caracteres_text.setForeground(Color.WHITE);
 		soporte_caracteres_text.setBounds(12, 366, 329, 47);
 		display_soporte.add(soporte_caracteres_text);
 		soporte_caracteres_text.setFont(new Font("Tahoma", Font.BOLD, 20));
-		
-		
+
 		TextAreaListener textAreaListener = new TextAreaListener(soporte_textArea, soporte_caracteres_text);
 		soporte_textArea.addKeyListener(textAreaListener);
 		soporte_textArea.addFocusListener(textAreaListener);
-		
-		soporte_asunto_tfg = new TextFieldGroup(soporte_asunto_panel,soporte_asunto_info_panel, soporte_asunto_icon, soporte_asunto_info_ico,
-				soporte_asunto_info_text, soporte_asunto_textF, soporte_asunto_separator, "soporte");
+
+		soporte_asunto_tfg = new TextFieldGroup(soporte_asunto_panel, soporte_asunto_info_panel, soporte_asunto_icon,
+				soporte_asunto_info_ico, soporte_asunto_info_text, soporte_asunto_textF, soporte_asunto_separator,
+				"soporte");
 		soporte_asunto_textF.addKeyListener(new TextFieldKeyListener(soporte_asunto_tfg, checker));
 		soporte_asunto_textF.addFocusListener(new TextFocusListener(soporte_asunto_tfg, checker));
-		
-		
+
 		soporte_enviar_FormBtn = new JFormBtn("soporte");
 		soporte_enviar_FormBtn.setBackground(COLOR_CHECK);
 		soporte_enviar_FormBtn.setBounds(297, 436, 258, 62);
@@ -1716,7 +1762,7 @@ public class Ventana {
 				.addMouseListener(new EntrarComoListener(this, entrarComo_administrador_btn_text));
 
 	}
-	
+
 	private void cargarDisplayVerConsultas() {
 
 		display_verConsultas = new JDisplay("Buscar consulta", "/imagenes/buscar_96px.png", displays);
@@ -1761,7 +1807,8 @@ public class Ventana {
 		verConsultas_filtro_info_ico = new JLabel("");
 		verConsultas_filtro_info_ico.setBounds(0, 0, 32, 32);
 		verConsultas_filtro_info_panel.add(verConsultas_filtro_info_ico);
-		verConsultas_filtro_info_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/error_black_32px.png")));
+		verConsultas_filtro_info_ico
+				.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/error_black_32px.png")));
 
 		verConsultas_filtro_info_text = new JLabel("Error");
 		verConsultas_filtro_info_text.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -1787,14 +1834,273 @@ public class Ventana {
 		listUpdater_verConsultas.cargarLista();
 
 		verConsultas_filto_tfg = new TextFieldGroup(verConsultas_filtro_panel, verConsultas_filtro_info_panel,
-				verConsultas_filtro_icon, verConsultas_filtro_info_ico, verConsultas_filtro_info_text, verConsultas_filtro_textF,
-				verConsultas_filtro_separator, "consulta");
+				verConsultas_filtro_icon, verConsultas_filtro_info_ico, verConsultas_filtro_info_text,
+				verConsultas_filtro_textF, verConsultas_filtro_separator, "consulta");
 
 		verConsultas_filtro_textF.addKeyListener(new TextFieldKeyListener(verConsultas_filto_tfg, checker, this));
 		verConsultas_filtro_textF.addFocusListener(new TextFocusListener(verConsultas_filto_tfg, checker));
 
 	}
-	
+
+	private void cargarDisplayAñadirPregunta() {
+
+		display_anadirPregunta = new JDisplay("Añadir pregunta", "/imagenes/pregunta_96px.png", displays);
+		display_anadirPregunta.setBounds(0, 0, 790, 552);
+		display_panel.add(display_anadirPregunta);
+		display_anadirPregunta.setLayout(null);
+		display_anadirPregunta.setOpaque(false);
+		display_anadirPregunta.setVisible(false);
+
+		anadirPregunta_enunciado_panel = new JPanel();
+		anadirPregunta_enunciado_panel.setBounds(10, 29, 780, 96);
+		display_anadirPregunta.add(anadirPregunta_enunciado_panel);
+		anadirPregunta_enunciado_panel.setOpaque(false);
+		anadirPregunta_enunciado_panel.setLayout(null);
+
+		anadirPregunta_enunciado_separator = new JSeparator();
+		anadirPregunta_enunciado_separator.setBounds(52, 41, 718, 2);
+		anadirPregunta_enunciado_panel.add(anadirPregunta_enunciado_separator);
+
+		anadirPregunta_enunciado_icon = new JLabel("");
+		anadirPregunta_enunciado_icon.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/enunciado_32px.png")));
+		anadirPregunta_enunciado_icon.setBounds(10, 11, 32, 32);
+		anadirPregunta_enunciado_panel.add(anadirPregunta_enunciado_icon);
+
+		anadirPregunta_enunciado_textF = new JTextField("Enunciado");
+		anadirPregunta_enunciado_textF.setHorizontalAlignment(SwingConstants.LEFT);
+		anadirPregunta_enunciado_textF.setFont(new Font("Tahoma", Font.BOLD, 20));
+		anadirPregunta_enunciado_textF.setForeground(Color.WHITE);
+		anadirPregunta_enunciado_textF.setBounds(52, 11, 718, 25);
+		anadirPregunta_enunciado_panel.add(anadirPregunta_enunciado_textF);
+		anadirPregunta_enunciado_textF.setColumns(10);
+		anadirPregunta_enunciado_textF.setBackground(COLOR_SELECTED);
+		anadirPregunta_enunciado_textF.setBorder(null);
+
+		anadirPregunta_enunciado_info_panel = new JPanel();
+		anadirPregunta_enunciado_info_panel.setBounds(10, 50, 760, 32);
+		anadirPregunta_enunciado_panel.add(anadirPregunta_enunciado_info_panel);
+		anadirPregunta_enunciado_info_panel.setBackground(COLOR_ERROR);
+		anadirPregunta_enunciado_info_panel.setLayout(null);
+		anadirPregunta_enunciado_info_panel.setVisible(false);
+
+		anadirPregunta_enunciado_info_ico = new JLabel("");
+		anadirPregunta_enunciado_info_ico.setBounds(0, 0, 32, 32);
+		anadirPregunta_enunciado_info_panel.add(anadirPregunta_enunciado_info_ico);
+		anadirPregunta_enunciado_info_ico
+				.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/error_black_32px.png")));
+
+		anadirPregunta_enunciado_info_text = new JLabel("Error");
+		anadirPregunta_enunciado_info_text.setFont(new Font("Tahoma", Font.BOLD, 20));
+		anadirPregunta_enunciado_info_text.setBounds(42, 0, 572, 32);
+		anadirPregunta_enunciado_info_panel.add(anadirPregunta_enunciado_info_text);
+		// --
+		anadirPregunta_respuestaA_panel = new JPanel();
+		anadirPregunta_respuestaA_panel.setBounds(10, 136, 517, 96);
+		display_anadirPregunta.add(anadirPregunta_respuestaA_panel);
+		anadirPregunta_respuestaA_panel.setOpaque(false);
+		anadirPregunta_respuestaA_panel.setLayout(null);
+
+		anadirPregunta_respuestaA_separator = new JSeparator();
+		anadirPregunta_respuestaA_separator.setBounds(52, 37, 450, 6);
+		anadirPregunta_respuestaA_panel.add(anadirPregunta_respuestaA_separator);
+
+		anadirPregunta_respuestaA_icon = new JLabel("");
+		anadirPregunta_respuestaA_icon.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/a_32px.png")));
+		anadirPregunta_respuestaA_icon.setBounds(10, 11, 32, 32);
+		anadirPregunta_respuestaA_panel.add(anadirPregunta_respuestaA_icon);
+
+		anadirPregunta_respuestaA_textF = new JTextField("Respuesta A");
+		anadirPregunta_respuestaA_textF.setHorizontalAlignment(SwingConstants.LEFT);
+		anadirPregunta_respuestaA_textF.setFont(new Font("Tahoma", Font.BOLD, 20));
+		anadirPregunta_respuestaA_textF.setForeground(Color.WHITE);
+		anadirPregunta_respuestaA_textF.setBounds(52, 11, 450, 25);
+		anadirPregunta_respuestaA_panel.add(anadirPregunta_respuestaA_textF);
+		anadirPregunta_respuestaA_textF.setColumns(10);
+		anadirPregunta_respuestaA_textF.setBackground(COLOR_SELECTED);
+		anadirPregunta_respuestaA_textF.setBorder(null);
+
+		anadirPregunta_respuestaA_info_panel = new JPanel();
+		anadirPregunta_respuestaA_info_panel.setBounds(10, 50, 492, 32);
+		anadirPregunta_respuestaA_panel.add(anadirPregunta_respuestaA_info_panel);
+		anadirPregunta_respuestaA_info_panel.setBackground(COLOR_ERROR);
+		anadirPregunta_respuestaA_info_panel.setLayout(null);
+		anadirPregunta_respuestaA_info_panel.setVisible(false);
+
+		anadirPregunta_respuestaA_info_ico = new JLabel("");
+		anadirPregunta_respuestaA_info_ico.setBounds(0, 0, 32, 32);
+		anadirPregunta_respuestaA_info_panel.add(anadirPregunta_respuestaA_info_ico);
+		anadirPregunta_respuestaA_info_ico
+				.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/error_black_32px.png")));
+
+		anadirPregunta_respuestaA_info_text = new JLabel("Error");
+		anadirPregunta_respuestaA_info_text.setFont(new Font("Tahoma", Font.BOLD, 20));
+		anadirPregunta_respuestaA_info_text.setBounds(42, 0, 440, 32);
+		anadirPregunta_respuestaA_info_panel.add(anadirPregunta_respuestaA_info_text);
+		// --
+		anadirPregunta_respuestaB_panel = new JPanel();
+		anadirPregunta_respuestaB_panel.setBounds(10, 243, 517, 96);
+		display_anadirPregunta.add(anadirPregunta_respuestaB_panel);
+		anadirPregunta_respuestaB_panel.setOpaque(false);
+		anadirPregunta_respuestaB_panel.setLayout(null);
+
+		anadirPregunta_respuestaB_separator = new JSeparator();
+		anadirPregunta_respuestaB_separator.setBounds(52, 37, 450, 6);
+		anadirPregunta_respuestaB_panel.add(anadirPregunta_respuestaB_separator);
+
+		anadirPregunta_respuestaB_icon = new JLabel("");
+		anadirPregunta_respuestaB_icon.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/b_32px.png")));
+		anadirPregunta_respuestaB_icon.setBounds(10, 11, 32, 32);
+		anadirPregunta_respuestaB_panel.add(anadirPregunta_respuestaB_icon);
+
+		anadirPregunta_respuestaB_textF = new JTextField("Respuesta B");
+		anadirPregunta_respuestaB_textF.setHorizontalAlignment(SwingConstants.LEFT);
+		anadirPregunta_respuestaB_textF.setFont(new Font("Tahoma", Font.BOLD, 20));
+		anadirPregunta_respuestaB_textF.setForeground(Color.WHITE);
+		anadirPregunta_respuestaB_textF.setBounds(52, 11, 450, 25);
+		anadirPregunta_respuestaB_panel.add(anadirPregunta_respuestaB_textF);
+		anadirPregunta_respuestaB_textF.setColumns(10);
+		anadirPregunta_respuestaB_textF.setBackground(COLOR_SELECTED);
+		anadirPregunta_respuestaB_textF.setBorder(null);
+
+		anadirPregunta_respuestaB_info_panel = new JPanel();
+		anadirPregunta_respuestaB_info_panel.setBounds(10, 50, 492, 32);
+		anadirPregunta_respuestaB_panel.add(anadirPregunta_respuestaB_info_panel);
+		anadirPregunta_respuestaB_info_panel.setBackground(COLOR_ERROR);
+		anadirPregunta_respuestaB_info_panel.setLayout(null);
+		anadirPregunta_respuestaB_info_panel.setVisible(false);
+
+		anadirPregunta_respuestaB_info_ico = new JLabel("");
+		anadirPregunta_respuestaB_info_ico.setBounds(0, 0, 32, 32);
+		anadirPregunta_respuestaB_info_panel.add(anadirPregunta_respuestaB_info_ico);
+		anadirPregunta_respuestaB_info_ico
+				.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/error_black_32px.png")));
+
+		anadirPregunta_respuestaB_info_text = new JLabel("Error");
+		anadirPregunta_respuestaB_info_text.setFont(new Font("Tahoma", Font.BOLD, 20));
+		anadirPregunta_respuestaB_info_text.setBounds(42, 0, 440, 32);
+		anadirPregunta_respuestaB_info_panel.add(anadirPregunta_respuestaB_info_text);
+		// -
+		anadirPregunta_respuestaC_panel = new JPanel();
+		anadirPregunta_respuestaC_panel.setBounds(10, 350, 517, 96);
+		display_anadirPregunta.add(anadirPregunta_respuestaC_panel);
+		anadirPregunta_respuestaC_panel.setOpaque(false);
+		anadirPregunta_respuestaC_panel.setLayout(null);
+
+		anadirPregunta_respuestaC_separator = new JSeparator();
+		anadirPregunta_respuestaC_separator.setBounds(52, 37, 450, 6);
+		anadirPregunta_respuestaC_panel.add(anadirPregunta_respuestaC_separator);
+
+		anadirPregunta_respuestaC_icon = new JLabel("");
+		anadirPregunta_respuestaC_icon.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/c_32px.png")));
+		anadirPregunta_respuestaC_icon.setBounds(10, 11, 32, 32);
+		anadirPregunta_respuestaC_panel.add(anadirPregunta_respuestaC_icon);
+
+		anadirPregunta_respuestaC_textF = new JTextField("Respuesta C");
+		anadirPregunta_respuestaC_textF.setHorizontalAlignment(SwingConstants.LEFT);
+		anadirPregunta_respuestaC_textF.setFont(new Font("Tahoma", Font.BOLD, 20));
+		anadirPregunta_respuestaC_textF.setForeground(Color.WHITE);
+		anadirPregunta_respuestaC_textF.setBounds(52, 11, 450, 25);
+		anadirPregunta_respuestaC_panel.add(anadirPregunta_respuestaC_textF);
+		anadirPregunta_respuestaC_textF.setColumns(10);
+		anadirPregunta_respuestaC_textF.setBackground(COLOR_SELECTED);
+		anadirPregunta_respuestaC_textF.setBorder(null);
+
+		anadirPregunta_respuestaC_info_panel = new JPanel();
+		anadirPregunta_respuestaC_info_panel.setBounds(10, 50, 492, 32);
+		anadirPregunta_respuestaC_panel.add(anadirPregunta_respuestaC_info_panel);
+		anadirPregunta_respuestaC_info_panel.setBackground(COLOR_ERROR);
+		anadirPregunta_respuestaC_info_panel.setLayout(null);
+		anadirPregunta_respuestaC_info_panel.setVisible(false);
+
+		anadirPregunta_respuestaC_info_ico = new JLabel("");
+		anadirPregunta_respuestaC_info_ico.setBounds(0, 0, 32, 32);
+		anadirPregunta_respuestaC_info_panel.add(anadirPregunta_respuestaC_info_ico);
+		anadirPregunta_respuestaC_info_ico
+				.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/error_black_32px.png")));
+
+		anadirPregunta_respuestaC_info_text = new JLabel("Error");
+		anadirPregunta_respuestaC_info_text.setFont(new Font("Tahoma", Font.BOLD, 20));
+		anadirPregunta_respuestaC_info_text.setBounds(42, 0, 440, 32);
+		anadirPregunta_respuestaC_info_panel.add(anadirPregunta_respuestaC_info_text);
+
+		anadirPregunta_respuestaA_radioBtn = new JRadioButton("Opcion correcta");
+		anadirPregunta_respuestaA_radioBtn.setSelected(true);
+		anadirPregunta_respuestaA_radioBtn.setFont(new Font("Tahoma", Font.BOLD, 20));
+		anadirPregunta_respuestaA_radioBtn.setForeground(Color.WHITE);
+		anadirPregunta_respuestaA_radioBtn.setOpaque(false);
+		anadirPregunta_respuestaA_radioBtn.setBounds(533, 159, 254, 50);
+		display_anadirPregunta.add(anadirPregunta_respuestaA_radioBtn);
+
+		anadirPregunta_respuestaB_radioBtn = new JRadioButton("Opcion correcta");
+		anadirPregunta_respuestaB_radioBtn.setOpaque(false);
+		anadirPregunta_respuestaB_radioBtn.setForeground(Color.WHITE);
+		anadirPregunta_respuestaB_radioBtn.setFont(new Font("Tahoma", Font.BOLD, 20));
+		anadirPregunta_respuestaB_radioBtn.setBounds(536, 259, 254, 50);
+		display_anadirPregunta.add(anadirPregunta_respuestaB_radioBtn);
+
+		anadirPregunta_respuestaC_radioBtn = new JRadioButton("Opcion correcta");
+		anadirPregunta_respuestaC_radioBtn.setOpaque(false);
+		anadirPregunta_respuestaC_radioBtn.setForeground(Color.WHITE);
+		anadirPregunta_respuestaC_radioBtn.setFont(new Font("Tahoma", Font.BOLD, 20));
+		anadirPregunta_respuestaC_radioBtn.setBounds(536, 370, 254, 50);
+		display_anadirPregunta.add(anadirPregunta_respuestaC_radioBtn);
+
+		anadirPregunta_FormBtn = new JFormBtn("pregunta", anadirPregunta_grupo_logico);
+		anadirPregunta_FormBtn.setBackground(COLOR_CHECK);
+		anadirPregunta_FormBtn.setBounds(280, 457, 258, 62);
+		display_anadirPregunta.add(anadirPregunta_FormBtn);
+		anadirPregunta_FormBtn.setLayout(null);
+		anadirPregunta_FormBtn.addMouseListener(new FormBtnListener(anadirPregunta_FormBtn, this));
+
+		anadirPregunta_FormBtn_text = new JLabel("Añadir");
+		anadirPregunta_FormBtn_text.setBounds(10, 0, 238, 62);
+		anadirPregunta_FormBtn.add(anadirPregunta_FormBtn_text);
+		anadirPregunta_FormBtn_text.setForeground(Color.WHITE);
+		anadirPregunta_FormBtn_text.setFont(new Font("Tahoma", Font.BOLD, 25));
+		anadirPregunta_FormBtn_text.setHorizontalAlignment(SwingConstants.CENTER);
+		// --
+
+		anadirPregunta_enunciado_tfg = new TextFieldGroup(anadirPregunta_enunciado_panel,
+				anadirPregunta_enunciado_info_panel, anadirPregunta_enunciado_icon, anadirPregunta_enunciado_info_ico,
+				anadirPregunta_enunciado_info_text, anadirPregunta_enunciado_textF, anadirPregunta_enunciado_separator,
+				"enunciado", anadirPregunta_grupo_logico);
+		anadirPregunta_respuestaA_tfg = new TextFieldGroup(anadirPregunta_respuestaA_panel,
+				anadirPregunta_respuestaA_info_panel, anadirPregunta_respuestaA_icon,
+				anadirPregunta_respuestaA_info_ico, anadirPregunta_respuestaA_info_text,
+				anadirPregunta_respuestaA_textF, anadirPregunta_respuestaA_separator, "respuesta",
+				anadirPregunta_grupo_logico);
+		anadirPregunta_respuestaB_tfg = new TextFieldGroup(anadirPregunta_respuestaB_panel,
+				anadirPregunta_respuestaB_info_panel, anadirPregunta_respuestaB_icon,
+				anadirPregunta_respuestaB_info_ico, anadirPregunta_respuestaB_info_text,
+				anadirPregunta_respuestaB_textF, anadirPregunta_respuestaB_separator, "respuesta",
+				anadirPregunta_grupo_logico);
+		anadirPregunta_respuestaC_tfg = new TextFieldGroup(anadirPregunta_respuestaC_panel,
+				anadirPregunta_respuestaC_info_panel, anadirPregunta_respuestaC_icon,
+				anadirPregunta_respuestaC_info_ico, anadirPregunta_respuestaC_info_text,
+				anadirPregunta_respuestaC_textF, anadirPregunta_respuestaC_separator, "respuesta",
+				anadirPregunta_grupo_logico);
+
+		anadirPregunta_enunciado_textF.addKeyListener(new TextFieldKeyListener(anadirPregunta_enunciado_tfg, checker));
+		anadirPregunta_enunciado_textF.addFocusListener(new TextFocusListener(anadirPregunta_enunciado_tfg, checker));
+		anadirPregunta_respuestaA_textF
+				.addKeyListener(new TextFieldKeyListener(anadirPregunta_respuestaA_tfg, checker));
+		anadirPregunta_respuestaA_textF.addFocusListener(new TextFocusListener(anadirPregunta_respuestaA_tfg, checker));
+		anadirPregunta_respuestaB_textF
+				.addKeyListener(new TextFieldKeyListener(anadirPregunta_respuestaB_tfg, checker));
+		anadirPregunta_respuestaB_textF.addFocusListener(new TextFocusListener(anadirPregunta_respuestaB_tfg, checker));
+		anadirPregunta_respuestaC_textF
+				.addKeyListener(new TextFieldKeyListener(anadirPregunta_respuestaC_tfg, checker));
+		anadirPregunta_respuestaC_textF.addFocusListener(new TextFocusListener(anadirPregunta_respuestaC_tfg, checker));
+
+		anadirPregunta_respuestaA_radioBtn.addActionListener(new RadioButtonListener(anadirPregunta_respuestaA_radioBtn,
+				anadirPregunta_respuestaB_radioBtn, anadirPregunta_respuestaC_radioBtn));
+		anadirPregunta_respuestaB_radioBtn.addActionListener(new RadioButtonListener(anadirPregunta_respuestaB_radioBtn,
+				anadirPregunta_respuestaC_radioBtn, anadirPregunta_respuestaA_radioBtn));
+		anadirPregunta_respuestaC_radioBtn.addActionListener(new RadioButtonListener(anadirPregunta_respuestaC_radioBtn,
+				anadirPregunta_respuestaA_radioBtn, anadirPregunta_respuestaB_radioBtn));
+
+	}
+
 	private void cargarDisplayMostrarConsulta() {
 		display_mostrarConsulta = new JDisplay("Mostrar Consulta", "/imagenes/login_96px.png", displays);
 		display_mostrarConsulta.setBounds(0, 0, 800, 552);
@@ -1802,7 +2108,7 @@ public class Ventana {
 		display_mostrarConsulta.setLayout(null);
 		display_mostrarConsulta.setOpaque(false);
 		display_mostrarConsulta.setVisible(false);
-		
+
 		asunto_panel_mostrarConsulta = new JPanel();
 		asunto_panel_mostrarConsulta.setLayout(null);
 		asunto_panel_mostrarConsulta.setOpaque(false);
@@ -1823,49 +2129,50 @@ public class Ventana {
 		asunto_text_mostrarConsulta.setFont(new Font("Tahoma", Font.BOLD, 20));
 		asunto_text_mostrarConsulta.setBounds(52, 11, 721, 30);
 		asunto_panel_mostrarConsulta.add(asunto_text_mostrarConsulta);
-		
-		descripcion_mostrarConsulta = new JLabel("<html><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec.</p></html>");
+
+		descripcion_mostrarConsulta = new JLabel(
+				"<html><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec.</p></html>");
 		descripcion_mostrarConsulta.setForeground(Color.WHITE);
 		descripcion_mostrarConsulta.setFont(new Font("Tahoma", Font.BOLD, 20));
 		descripcion_mostrarConsulta.setBounds(20, 74, 759, 307);
 		display_mostrarConsulta.add(descripcion_mostrarConsulta);
-		
+
 		nick_panel_mostrarConsulta = new JPanel();
 		nick_panel_mostrarConsulta.setLayout(null);
 		nick_panel_mostrarConsulta.setOpaque(false);
 		nick_panel_mostrarConsulta.setBounds(10, 392, 360, 52);
 		display_mostrarConsulta.add(nick_panel_mostrarConsulta);
-		
+
 		nick_separator_mostrarConsulta = new JSeparator();
 		nick_separator_mostrarConsulta.setBounds(52, 41, 300, 2);
 		nick_panel_mostrarConsulta.add(nick_separator_mostrarConsulta);
-		
+
 		nick_ico_mostrarConsulta = new JLabel("");
 		nick_ico_mostrarConsulta.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/user_text_32px.png")));
 		nick_ico_mostrarConsulta.setBounds(10, 11, 32, 32);
 		nick_panel_mostrarConsulta.add(nick_ico_mostrarConsulta);
-		
+
 		nick_text_mostrarConsulta = new JLabel("Nick");
 		nick_text_mostrarConsulta.setForeground(Color.WHITE);
 		nick_text_mostrarConsulta.setFont(new Font("Tahoma", Font.BOLD, 20));
 		nick_text_mostrarConsulta.setBounds(52, 11, 300, 30);
 		nick_panel_mostrarConsulta.add(nick_text_mostrarConsulta);
-		
+
 		fecha_panel_mostrarConsulta = new JPanel();
 		fecha_panel_mostrarConsulta.setLayout(null);
 		fecha_panel_mostrarConsulta.setOpaque(false);
 		fecha_panel_mostrarConsulta.setBounds(430, 392, 360, 52);
 		display_mostrarConsulta.add(fecha_panel_mostrarConsulta);
-		
+
 		fecha_separator_mostrarConsulta = new JSeparator();
 		fecha_separator_mostrarConsulta.setBounds(52, 41, 300, 2);
 		fecha_panel_mostrarConsulta.add(fecha_separator_mostrarConsulta);
-		
+
 		fecha_ico_mostrarConsulta = new JLabel("");
 		fecha_ico_mostrarConsulta.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/fecha_32px.png")));
 		fecha_ico_mostrarConsulta.setBounds(10, 11, 32, 32);
 		fecha_panel_mostrarConsulta.add(fecha_ico_mostrarConsulta);
-		
+
 		fecha_text_mostrarConsulta = new JLabel("Fecha");
 		fecha_text_mostrarConsulta.setForeground(Color.WHITE);
 		fecha_text_mostrarConsulta.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -2312,7 +2619,7 @@ public class Ventana {
 		opt_entrarComo_desarrollador.add(opt_entrarComo_desarrollador_text);
 
 		// option añadir pregunta
-		opt_anadirPregunta = new JOption(display_info, "Añadir pregunta", "/imagenes/pregunta_32px.png",
+		opt_anadirPregunta = new JOption(display_anadirPregunta, "Añadir pregunta", "/imagenes/pregunta_32px.png",
 				opciones_desarrollador);
 		opt_anadirPregunta.setLayout(null);
 		opt_anadirPregunta.setBackground(new Color(54, 33, 89));
@@ -2415,9 +2722,17 @@ public class Ventana {
 		case "nuevaconsulta":
 
 			popUp_panel.infoStyle();
-			popUp_panel.showPanel("<HTML>Gracias por notificar tu incidencia, un desarrollador revisara la consulta en cuanto sea posible</HTML>", "/imagenes/asunto_96px.png");
-			break;	
+			popUp_panel.showPanel(
+					"<HTML>Gracias por notificar tu incidencia, un desarrollador revisara la consulta en cuanto sea posible</HTML>",
+					"/imagenes/asunto_96px.png");
+			break;
+		case "addpregunta":
+
+			popUp_panel.infoStyle();
+			popUp_panel.showPanel("<HTML>Pregunta añadida con exito.</HTML>", "/imagenes/asunto_96px.png");
+			break;
 		}
+
 		// solucion al bug de solapamiento
 		popUp_panel.setVisible(false);
 		popUp_panel.setVisible(true);
@@ -2656,9 +2971,13 @@ public class Ventana {
 	public GestorSesiones getGestorSesiones() {
 		return gestorSesiones;
 	}
-	
+
 	public GestorConsultas getGestorConsultas() {
 		return gestorConsultas;
+	}
+
+	public GestorTest getGestorTest() {
+		return gestorTest;
 	}
 
 	/*
@@ -2673,14 +2992,14 @@ public class Ventana {
 				listaUsers.add(new Usuario(rs));
 			}
 		} catch (SQLException e) {
-		
+
 			e.printStackTrace();
 		}
 		listUpdater_verUsuarios.limpiarLista();
 		listUpdater_verUsuarios.setLista(listaUsers);
 		listUpdater_verUsuarios.cargarLista();
 	}
-	
+
 	public void actualizarListaConsultas(ResultSet rs) {
 		ArrayList<Consulta> listaConsultas = new ArrayList<Consulta>();
 		try {
@@ -2688,7 +3007,7 @@ public class Ventana {
 				listaConsultas.add(new Consulta(rs));
 			}
 		} catch (SQLException e) {
-		
+
 			e.printStackTrace();
 		}
 		listUpdater_verConsultas.limpiarLista();
@@ -2755,17 +3074,16 @@ public class Ventana {
 		displays.mostarDisplay(display_mostrarUsuario);
 
 	}
-	
+
 	public void actualizarMostrarConsulta(Consulta consulta) {
-		
+
 		asunto_text_mostrarConsulta.setText(consulta.getAsunto());
-		descripcion_mostrarConsulta.setText("<html><p>"+consulta.getDescripcion()+"</p></html>");
+		descripcion_mostrarConsulta.setText("<html><p>" + consulta.getDescripcion() + "</p></html>");
 		nick_text_mostrarConsulta.setText(consulta.getUsuario().getNick());
 		fecha_text_mostrarConsulta.setText(consulta.getFecha().toString());
-		
+
 		displays.mostarDisplay(display_mostrarConsulta);
 	}
-	
 
 	public void reniciarFormularioSoporte() {
 		soporte_asunto_textF.setText(soporte_asunto_tfg.getDefaultText());
@@ -2773,4 +3091,38 @@ public class Ventana {
 		soporte_textArea.setText("Describre detalladamente la incidencia.");
 	}
 
+	public Pregunta getPreguntaData() {
+		Pregunta pregunta = null;
+		Respuesta ra, rb, rc;
+		ra = new Respuesta(anadirPregunta_respuestaA_textF.getText(), 'a');
+		rb = new Respuesta(anadirPregunta_respuestaB_textF.getText(), 'b');
+		rc = new Respuesta(anadirPregunta_respuestaC_textF.getText(), 'c');
+		Respuesta[] respuestas = { ra, rb, rc };
+		char indiceCorrecto = 'a';
+		if (anadirPregunta_respuestaB_radioBtn.isSelected()) {
+			indiceCorrecto = 'b';
+		} else {
+			if (anadirPregunta_respuestaC_radioBtn.isSelected()) {
+				indiceCorrecto = 'c';
+			}
+		}
+		pregunta = new Pregunta(anadirPregunta_enunciado_textF.getText(), indiceCorrecto, respuestas);
+		return pregunta;
+
+	}
+
+	public void reniciarFormularioPregunta() {
+		anadirPregunta_respuestaA_textF.setText(anadirPregunta_respuestaA_tfg.getDefaultText());
+		anadirPregunta_respuestaB_textF.setText(anadirPregunta_respuestaB_tfg.getDefaultText());
+		anadirPregunta_respuestaC_textF.setText(anadirPregunta_respuestaC_tfg.getDefaultText());
+		anadirPregunta_enunciado_textF.setText(anadirPregunta_enunciado_tfg.getDefaultText());
+		anadirPregunta_respuestaA_tfg.setCheck(false);
+		anadirPregunta_respuestaB_tfg.setCheck(false);
+		anadirPregunta_respuestaC_tfg.setCheck(false);
+		anadirPregunta_enunciado_tfg.setCheck(false);
+		anadirPregunta_respuestaA_radioBtn.setSelected(true);
+		anadirPregunta_respuestaB_radioBtn.setSelected(false);
+		anadirPregunta_respuestaC_radioBtn.setSelected(false);
+
+	}
 }
