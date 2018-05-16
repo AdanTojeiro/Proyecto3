@@ -26,6 +26,7 @@ public class JRowBtnListener implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
+		ventana.getFocusFixer().requestFocus();
 		switch(btn.getTipo()) {
 		case "usuario":
 			ResultSet rsu = ventana.getGestorUsuarios().getUsuario("pk_usuario", ""+btn.getPk());

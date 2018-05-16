@@ -449,8 +449,9 @@ public class Ventana {
 		gestorConsultas = new GestorConsultas(mysqlc);
 		gestorTest = new GestorTest(mysqlc);
 		checker = new Checker(gestorUsuarios, gestorConsultas);
-		initialize();
 		mysqlc.conectar();
+		initialize();
+		
 	}
 
 	/**
