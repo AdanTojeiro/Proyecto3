@@ -1,5 +1,8 @@
 package clases;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Respuesta {
 	
 	int pk_respuesta, fk_pregunta;
@@ -10,6 +13,18 @@ public class Respuesta {
 		super();
 		this.texto = texto;
 		this.indice = indice;
+	}
+
+	public Respuesta(ResultSet rs) {
+		try {
+			pk_respuesta = rs.getInt("pk_respuesta");
+			fk_pregunta = rs.getInt("fk_pregunta");
+			texto= rs.getString("texto");
+			indice= rs.getString("indice").charAt(0);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public int getPk_respuesta() {

@@ -45,7 +45,7 @@ public class FormBtnListener implements MouseListener {
 							String where = "pk_usuario=" + pk_usuario;
 							ventana.getGestorUsuarios().actualizarEstadoUsuario("online", where);
 							ventana.iniciarSesion(ventana.getGestorSesiones().abrirSesion(rs));
-		
+							
 							switch (ventana.getSesionActual().getUsuario().getAcceso()) {
 							case "alumno":
 								//sesion alumno

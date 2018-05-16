@@ -16,14 +16,17 @@ import clases.Consulta;
 import clases.Pregunta;
 import clases.Respuesta;
 import clases.Sesion;
+import clases.Test;
 import clases.Usuario;
 import controladores.FormBtnListener;
 import controladores.FrameDrager;
 import controladores.NavRegListener;
 import controladores.OptionListener;
 import controladores.RadioButtonListener;
+import controladores.RespuestaBtnListener;
 import controladores.SesionBtnListener;
 import controladores.SoporteBtnListener;
+import controladores.TestBtnListener;
 import controladores.TextAreaListener;
 import controladores.TextFieldKeyListener;
 import controladores.TextFocusListener;
@@ -33,6 +36,7 @@ import interfaz.componentes.JFormDisplay;
 import interfaz.componentes.JControlLabel;
 import interfaz.componentes.JOption;
 import interfaz.componentes.JPopUp;
+import interfaz.componentes.JRespuestaBtn;
 import interfaz.componentes.JNavLabel;
 import interfaz.grupos.DisplayGroup;
 import interfaz.grupos.OptionGroup;
@@ -65,6 +69,8 @@ public class Ventana {
 
 	// DATOS DE SESION
 	private Sesion sesionActual;
+	private Test testActual;
+	private Pregunta preguntaActual;
 
 	// DATA
 	private Usuario RegData = new Usuario();
@@ -411,6 +417,25 @@ public class Ventana {
 	private TextFieldGroup anadirPregunta_respuestaB_tfg;
 	private TextFieldGroup anadirPregunta_respuestaC_tfg;
 	private ArrayList<TextFieldGroup> anadirPregunta_grupo_logico = new ArrayList<TextFieldGroup>();
+	//----------------------------------------------
+	private JDisplay display_iniciarTest;
+	private JLabel iniciarTest_respuestaA_ico;
+	private JLabel iniciarTest_respuestaA_text;
+	private JRespuestaBtn iniciarTest_respuestaB_panel;
+	private JLabel iniciarTest_respuestaB_ico;
+	private JLabel iniciarTest_respuestaB_text;
+	private JRespuestaBtn  iniciarTest_respuestaC_panel;
+	private JLabel iniciarTest_respuestaC_ico;
+	private JLabel iniciarTest_respuestaC_text;
+	private JPanel iniciarTest_pregunta_panel;
+	private JLabel iniciarTest_pregunta_enunciado;
+	private JSeparator iniciarTest_pregunta_separator;
+	private JLabel iniciarTest_pregunta_contadorPregunta;
+	private JRespuestaBtn  iniciarTest_respuestaA_panel;
+	private JPanel iniciarTest_index_panel;
+	private JPanel iniciarTest_index_btn_panel;
+	private JLabel iniciarTest_index_btn_text;
+	
 
 	/*
 	 * |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -425,6 +450,7 @@ public class Ventana {
 		gestorTest = new GestorTest(mysqlc);
 		checker = new Checker(gestorUsuarios, gestorConsultas);
 		initialize();
+		mysqlc.conectar();
 	}
 
 	/**
@@ -460,7 +486,7 @@ public class Ventana {
 
 		// Comprobar driver
 
-		if (mysqlc.testConnection()) {
+		if (mysqlc.isConectada()) {
 
 		} else {
 			this.showPopUp("mysqlerror");
@@ -469,6 +495,14 @@ public class Ventana {
 	}
 
 	// Estructura
+
+	public void setTestActual(Test testActual) {
+		this.testActual = testActual;
+	}
+
+	public Test getTestActual() {
+		return testActual;
+	}
 
 	private void cargarEstructura() {
 		// Background Panel
@@ -625,7 +659,7 @@ public class Ventana {
 	// DISPLAYS
 
 	private void cargarDisplays() {
-
+		
 		cargarDisplayIndex();
 		cargarDisplayLogin();
 		cargarDisplayReg();
@@ -638,6 +672,7 @@ public class Ventana {
 		cargarDisplayVerConsultas();
 		cargarDisplayMostrarConsulta();
 		cargarDisplayAñadirPregunta();
+		cargarDisplayIniciarTest();
 
 	}
 
@@ -2179,6 +2214,124 @@ public class Ventana {
 		fecha_text_mostrarConsulta.setBounds(52, 11, 300, 30);
 		fecha_panel_mostrarConsulta.add(fecha_text_mostrarConsulta);
 	}
+	
+	private void cargarDisplayIniciarTest() {
+
+		display_iniciarTest = new JDisplay("Iniciar test", "/imagenes/pregunta_96px.png", displays);
+		display_iniciarTest.setBounds(0, 0, 790, 552);
+		display_panel.add(display_iniciarTest);
+		display_iniciarTest.setLayout(null);
+		display_iniciarTest.setOpaque(false);
+		display_iniciarTest.setVisible(false);
+		
+		iniciarTest_index_panel = new JPanel();
+		iniciarTest_index_panel.setOpaque(false);
+		iniciarTest_index_panel.setBounds(10, 11, 780, 530);
+		display_iniciarTest.add(iniciarTest_index_panel);
+		iniciarTest_index_panel.setLayout(null);
+		iniciarTest_index_panel.setVisible(true);
+		
+		iniciarTest_index_btn_panel = new JPanel();
+		iniciarTest_index_btn_panel.setBackground(COLOR_BACKGROUND);
+		iniciarTest_index_btn_panel.setBounds(228, 200, 356, 150);
+		iniciarTest_index_panel.add(iniciarTest_index_btn_panel);
+		iniciarTest_index_btn_panel.setLayout(null);
+		iniciarTest_index_btn_panel.addMouseListener(new TestBtnListener(this));
+
+		iniciarTest_index_btn_text = new JLabel("Iniciar test");
+		iniciarTest_index_btn_text.setHorizontalAlignment(SwingConstants.CENTER);
+		iniciarTest_index_btn_text.setFont(new Font("Tahoma", Font.BOLD, 34));
+		iniciarTest_index_btn_text.setForeground(Color.WHITE);
+		iniciarTest_index_btn_text.setBounds(10, 44, 336, 60);
+		iniciarTest_index_btn_panel.add(iniciarTest_index_btn_text);
+		
+		
+		//--
+		
+		iniciarTest_pregunta_panel = new JPanel();
+		iniciarTest_pregunta_panel.setOpaque(false);
+		iniciarTest_pregunta_panel.setBounds(10, 11, 780, 530);
+		display_iniciarTest.add(iniciarTest_pregunta_panel);
+		iniciarTest_pregunta_panel.setLayout(null);
+		iniciarTest_pregunta_panel.setVisible(false);
+		
+		iniciarTest_pregunta_enunciado = new JLabel("Enunciado");
+		iniciarTest_pregunta_enunciado.setHorizontalAlignment(SwingConstants.CENTER);
+		iniciarTest_pregunta_enunciado.setFont(new Font("Tahoma", Font.BOLD, 18));
+		iniciarTest_pregunta_enunciado.setForeground(Color.WHITE);
+		iniciarTest_pregunta_enunciado.setBounds(10, 43, 760, 100);
+		iniciarTest_pregunta_panel.add(iniciarTest_pregunta_enunciado);
+		
+		iniciarTest_pregunta_separator = new JSeparator();
+		iniciarTest_pregunta_separator.setBounds(10, 157, 760, 2);
+		iniciarTest_pregunta_panel.add(iniciarTest_pregunta_separator);
+		
+		iniciarTest_pregunta_contadorPregunta = new JLabel("Pregunta n\u00BA: 0/30");
+		iniciarTest_pregunta_contadorPregunta.setFont(new Font("Tahoma", Font.BOLD, 22));
+		iniciarTest_pregunta_contadorPregunta.setForeground(Color.WHITE);
+		iniciarTest_pregunta_contadorPregunta.setBounds(10, 0, 274, 32);
+		iniciarTest_pregunta_panel.add(iniciarTest_pregunta_contadorPregunta);
+		
+		iniciarTest_respuestaA_panel = new JRespuestaBtn ('a');
+		iniciarTest_respuestaA_panel.setBackground(COLOR_BACKGROUND);
+		iniciarTest_respuestaA_panel.setBounds(10, 170, 760, 109);
+		iniciarTest_pregunta_panel.add(iniciarTest_respuestaA_panel);
+		iniciarTest_respuestaA_panel.setLayout(null);
+		
+		iniciarTest_respuestaA_ico = new JLabel("");
+		iniciarTest_respuestaA_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/a_64px.png")));
+		iniciarTest_respuestaA_ico.setBounds(0, 22, 64, 64);
+		iniciarTest_respuestaA_panel.add(iniciarTest_respuestaA_ico);
+		
+		iniciarTest_respuestaA_text = new JLabel("Respuesta A");
+		iniciarTest_respuestaA_text.setHorizontalAlignment(SwingConstants.CENTER);
+		iniciarTest_respuestaA_text.setForeground(Color.WHITE);
+		iniciarTest_respuestaA_text.setFont(new Font("Tahoma", Font.BOLD, 18));
+		iniciarTest_respuestaA_text.setBounds(74, 11, 676, 87);
+		iniciarTest_respuestaA_panel.add(iniciarTest_respuestaA_text);
+		
+		iniciarTest_respuestaB_panel = new JRespuestaBtn ('b');
+		iniciarTest_respuestaB_panel.setLayout(null);
+		iniciarTest_respuestaB_panel.setBackground(new Color(54, 33, 89));
+		iniciarTest_respuestaB_panel.setBounds(10, 290, 760, 109);
+		iniciarTest_pregunta_panel.add(iniciarTest_respuestaB_panel);
+		
+		iniciarTest_respuestaB_ico = new JLabel("");
+		iniciarTest_respuestaB_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/b_64px.png")));
+		iniciarTest_respuestaB_ico.setBounds(0, 22, 64, 64);
+		iniciarTest_respuestaB_panel.add(iniciarTest_respuestaB_ico);
+		
+		iniciarTest_respuestaB_text = new JLabel("Respuesta B");
+		iniciarTest_respuestaB_text.setHorizontalAlignment(SwingConstants.CENTER);
+		iniciarTest_respuestaB_text.setForeground(Color.WHITE);
+		iniciarTest_respuestaB_text.setFont(new Font("Tahoma", Font.BOLD, 18));
+		iniciarTest_respuestaB_text.setBounds(74, 11, 676, 87);
+		iniciarTest_respuestaB_panel.add(iniciarTest_respuestaB_text);
+		
+		iniciarTest_respuestaC_panel = new JRespuestaBtn ('c');
+		iniciarTest_respuestaC_panel.setLayout(null);
+		iniciarTest_respuestaC_panel.setBackground(new Color(54, 33, 89));
+		iniciarTest_respuestaC_panel.setBounds(10, 410, 760, 109);
+		iniciarTest_pregunta_panel.add(iniciarTest_respuestaC_panel);
+		
+		iniciarTest_respuestaC_ico = new JLabel("");
+		iniciarTest_respuestaC_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/c_64px.png")));
+		iniciarTest_respuestaC_ico.setBounds(0, 22, 64, 64);
+		iniciarTest_respuestaC_panel.add(iniciarTest_respuestaC_ico);
+		
+		iniciarTest_respuestaC_text = new JLabel("Respuesta C");
+		iniciarTest_respuestaC_text.setHorizontalAlignment(SwingConstants.CENTER);
+		iniciarTest_respuestaC_text.setForeground(Color.WHITE);
+		iniciarTest_respuestaC_text.setFont(new Font("Tahoma", Font.BOLD, 18));
+		iniciarTest_respuestaC_text.setBounds(74, 11, 676, 87);
+		iniciarTest_respuestaC_panel.add(iniciarTest_respuestaC_text);
+		
+		
+		iniciarTest_respuestaA_panel.addMouseListener(new RespuestaBtnListener(this, iniciarTest_respuestaA_panel));
+		iniciarTest_respuestaB_panel.addMouseListener(new RespuestaBtnListener(this, iniciarTest_respuestaB_panel));
+		iniciarTest_respuestaC_panel.addMouseListener(new RespuestaBtnListener(this, iniciarTest_respuestaC_panel));
+		
+	}
 	// NavPanel inivitado
 
 	private void cargarNavPanelInvitado() {
@@ -2285,7 +2438,7 @@ public class Ventana {
 		// Nav options
 
 		// option iniciar test
-		opt_iniciarTest = new JOption(display_login, "Iniciar test", "/imagenes/test_32px.png", opciones_alumno);
+		opt_iniciarTest = new JOption(display_iniciarTest, "Iniciar test", "/imagenes/test_32px.png", opciones_alumno);
 		opt_iniciarTest.setBounds(0, 11, 300, 48);
 		navPanel_alumno.add(opt_iniciarTest);
 		opt_iniciarTest.setBackground(COLOR_BACKGROUND);
@@ -3124,5 +3277,43 @@ public class Ventana {
 		anadirPregunta_respuestaB_radioBtn.setSelected(false);
 		anadirPregunta_respuestaC_radioBtn.setSelected(false);
 
+	}
+	
+	public void actualizarPregunta(Pregunta pregunta) {
+		
+		preguntaActual = pregunta;
+		Respuesta[] respuestas =  pregunta.getRespuestas();
+		for(int i = 0; i < respuestas.length; i++) {
+			switch(respuestas[i].getIndice()) {
+			case 'a':
+				iniciarTest_respuestaA_text.setText("<html><p>"+respuestas[i].getTexto()+"</p></html>");
+				break;
+			case 'b':
+				iniciarTest_respuestaB_text.setText("<html><p>"+respuestas[i].getTexto()+"</p></html>");
+				break;
+			case 'c':
+				iniciarTest_respuestaC_text.setText("<html><p>"+respuestas[i].getTexto()+"</p></html>");
+				break;	
+			}
+			
+		}
+		iniciarTest_pregunta_enunciado.setText("<html><p>"+pregunta.getEnunciado()+"</p></html>");
+		iniciarTest_pregunta_contadorPregunta.setText("Pregunta n\u00BA: "+(testActual.getEnunciadas().size()+1)+"/30");
+		iniciarTest_index_panel.setVisible(false);
+		iniciarTest_pregunta_panel.setVisible(true);
+		
+	}
+
+	public Pregunta getPreguntaActual() {
+		return preguntaActual;
+	}
+
+	public void completarTest() {
+		iniciarTest_index_panel.setVisible(true);
+		iniciarTest_pregunta_panel.setVisible(false);
+	}
+	
+	public void cerrarConexion() {
+		mysqlc.desconectar();
 	}
 }

@@ -18,11 +18,10 @@ public class GestorSesiones {
 
 	public ResultSet getAllSesions() {
 		ResultSet rs = null;
-		if (mysqlc.conectar()) {
+		if (mysqlc.isConectada()) {
 			// Cumple formato
 			rs = mysqlc.selectFrom("sesion");
 		}
-		mysqlc.desconectar();
 		return rs;
 
 	}
@@ -31,21 +30,19 @@ public class GestorSesiones {
 		Sesion sesion = null;
 
 		sesion = new Sesion(rs, generarCodigo(getAllSesions()));
-		if (mysqlc.conectar()) {
+		if (mysqlc.isConectada()) {
 			mysqlc.insertInto("sesion", "codigo, tiempo_inicio, fk_usuario",
 					"'" + sesion.getCodigo() + "', CURRENT_TIMESTAMP() , " + sesion.getUsuario().getPk_usuario());
 		}
-		mysqlc.desconectar();
 		return sesion;
 	}
 	
 	public void cerrarSesion(Sesion sesion) {
-		if (mysqlc.conectar()) {
+		if (mysqlc.isConectada()) {
 			mysqlc.Update("sesion", "tiempo_inicio = tiempo_inicio, tiempo_final= CURRENT_TIMESTAMP()", "codigo='"+sesion.getCodigo()+"'");
 			String where = "nick='"+sesion.getUsuario().getNick()+"'";
 			gestorUsuarios.actualizarEstadoUsuario("offline", where);
 		}
-		mysqlc.desconectar();
 	}
 
 	public String generarCodigo(ResultSet rs) {

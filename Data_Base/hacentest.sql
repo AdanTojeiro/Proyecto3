@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-05-2018 a las 05:32:08
+-- Tiempo de generación: 16-05-2018 a las 03:08:19
 -- Versión del servidor: 10.1.31-MariaDB
 -- Versión de PHP: 7.2.3
 
@@ -44,7 +44,7 @@ INSERT INTO `consulta` (`pk_consulta`, `fecha`, `asunto`, `descripcion`, `fk_usu
 (1, '2018-05-11 03:12:49', 'Consulta 1', 'Esta es una consulta de prueba desde una sesion de invitado', 1),
 (2, '2018-05-11 03:16:51', 'Consulta 2', 'Esta es una consulta de prueba desde una sesion de administrador', 16),
 (3, '2018-05-11 03:18:09', 'Consulta 3', 'Esta es una consulta de prueba desde una sesion de invitado tras cerrar una sesion anterior', 1),
-(4, '2018-05-11 03:25:02', 'Consulta 4', 'Consulta realizada desde una sesion de administrador', 16),
+(4, '2018-05-13 03:44:11', 'Consulta 4 eqweqweqw eqwere rtewtwret ytytyd asda', 'Consulta realizada desde una sesion de administrador', 16),
 (5, '2018-05-11 03:25:45', 'Consulta 5', 'Consulta de prueda en una sesion de invitado tras cerrar otra sesion ', 1);
 
 -- --------------------------------------------------------
@@ -57,7 +57,7 @@ CREATE TABLE `enuncian` (
   `fk_test` int(11) NOT NULL,
   `fk_pregunta` int(11) NOT NULL,
   `respuesta` char(1) COLLATE latin1_spanish_ci NOT NULL,
-  `resultado` varchar(20) COLLATE latin1_spanish_ci NOT NULL
+  `correcto` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 -- --------------------------------------------------------
@@ -69,8 +69,45 @@ CREATE TABLE `enuncian` (
 CREATE TABLE `pregunta` (
   `pk_pregunta` int(11) NOT NULL,
   `enunciado` varchar(500) COLLATE latin1_spanish_ci NOT NULL,
-  `indice_correcto` char(1) COLLATE latin1_spanish_ci NOT NULL
+  `indice_correcto` char(1) COLLATE latin1_spanish_ci NOT NULL,
+  `codigo_pregunta` varchar(15) COLLATE latin1_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `pregunta`
+--
+
+INSERT INTO `pregunta` (`pk_pregunta`, `enunciado`, `indice_correcto`, `codigo_pregunta`) VALUES
+(8, 'El chaleco reflectante. ¿Cuándo es obligatorio ponérselo?', 'c', '#y9u3s8x5m7z5d7'),
+(9, 'Los Agentes de la autoridad y el personal de obras, ¿están obligados a utilizar dispositivos retrorreflectantes que permitan distinguirlos a una distancia mínima de 150 metros?', 'a', '#f9s6m1z7u4w1y9'),
+(10, 'Cuando un carril está delimitado a ambos lados por doble línea discontinua, ¿qué deben hacer los conductores?', 'c', '#d8s8u6p9r1n8n9'),
+(11, 'Ciclo es el vehículo de...', 'c', '#k3s7c4z2z7t5x7'),
+(12, '¿Qué pasa cuando se deja el chaleco reflectante expuesto a la luz?', 'b', '#k2c6r4a1c7o1s4'),
+(13, 'Al realizar una maniobra que requiere un desplazamiento lateral, ¿cómo debe señalizarse?', 'c', '#f2r9o6s6u5v6z4'),
+(14, 'En una parada de autobús señalizada, ¿qué está prohibido?', 'c', '#o4f4a3y1l3i9s7'),
+(15, 'Un menor de más de 14 años que circula conduciendo una bicicleta, ¿puede hacerlo por una autovía?', 'c', '#v9k2z5o9s4g6n9'),
+(16, '¿Se considera adelantamiento si los vehículos de un carril circulan más rápido que los del otro?', 'c', '#f1l2r1x5h7i3d3'),
+(17, 'Si el sistema de navegación del GPS es portátil, ¿qué es recomendable?', 'b', '#d1m9v8f2k1x8l2'),
+(18, '¿Está permitido colocar los triángulos de preseñalización de peligro a menos de 50 metros del vehículo averiado?', 'a', '#h8k3s7s5w5s7y8'),
+(19, 'En una autovía hay una persona haciendo autostop. ¿Está permitido recogerla?', 'a', '#f7g8c6p4s2l3p6'),
+(20, 'El conductor de un vehículo inmovilizado en la calzada o arcén de una vía, entre la puesta y la salida del sol, está obligado a...', 'c', '#c6f4p4i7o5c9f6'),
+(21, 'El automóvil destinado al transporte de mercancías cuya cabina está integrada en el resto de la carrocería, con masa máxima autorizada igual o inferior a 3.500 kg., es...', 'a', '#l1x2i5b8p1e4x2'),
+(22, 'El conductor de una motocicleta, ¿tiene permitido realizar una parada en un carril reservado para autobuses?', 'b', '#o8g5h2x1s5l6t3'),
+(23, 'Si queda detenido en el interior de un túnel más de dos minutos...', 'c', '#b3r4b1b7n8x8d5'),
+(24, '¿Puede adelantar por la derecha en una autopista?', 'b', '#z6h1t7x6w6g9v3'),
+(25, 'Excepcionalmente, y en condiciones de seguridad, en vías que no sean autopistas o autovías, ¿se permite el arrastre de un vehículo por otro no destinado a este fin?', 'b', '#g1t1g2g3u5t5p1'),
+(26, 'Al incorporarse a la autopista por el carril de aceleración, debe...', 'b', '#u6o3h4n9w5g2z5'),
+(27, '¿Qué peligro es el más frecuente al usar el teléfono móvil durante la conducción?', 'a', '#i7y6k8i8b2w9t3'),
+(28, 'Las señales acústicas deben ser...', 'b', '#k6o5v8p6i9d1y4'),
+(29, 'Los conductores de turismos deben utilizar el chaleco reflectante de alta visibilidad...', 'b', '#w6o7u8h9h6s3a9'),
+(30, '¿Los ciclomotores pueden circular en columna de a dos?', 'a', '#f5g3d8f7o6c7d2'),
+(31, 'Se considera que una parada o estacionamiento obstaculiza gravemente la circulación cuando...', 'b', '#h6x6d2m8o2e7d3'),
+(32, '¿Cómo debe realizarse un cambio de carril en una vía saturada?', 'c', '#r8y4p1r2o5u1d2'),
+(33, 'En vías de tres calzadas, se utilizará la calzada central...', 'b', '#s2x9b4g5f6v3u7'),
+(34, 'Queda prohibido parar en...', 'b', '#w5m3n4n9d2p1k9'),
+(35, 'Está prohibido adelantar en...', 'a', '#m2a6r4s9d6p2b3'),
+(36, '¿Es obligatorio llevar en un turismo un chaleco reflectante para el acompañante?', 'a', '#m4o6r3h6w5t5a6'),
+(37, 'Está prohibido adelantar en...', 'a', '#i5d5l8b8k5c9s2');
 
 -- --------------------------------------------------------
 
@@ -84,6 +121,102 @@ CREATE TABLE `respuesta` (
   `indice` char(1) COLLATE latin1_spanish_ci NOT NULL,
   `fk_pregunta` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `respuesta`
+--
+
+INSERT INTO `respuesta` (`pk_respuesta`, `texto`, `indice`, `fk_pregunta`) VALUES
+(16, 'Cuando salgo del vehículo en vías urbanas.', 'a', 8),
+(17, 'Cuando salgo del vehículo en autopistas y autovías solamente.', 'b', 8),
+(18, 'Cuando salgo del vehículo en vías interurbanas.', 'c', 8),
+(19, 'Sí, siempre.', 'a', 9),
+(20, 'Sí, pero sólo de noche.', 'b', 9),
+(21, 'No.', 'c', 9),
+(22, 'Utilizarlo sólo para adelantar a una velocidad máxima de 80 kilómetros por hora.', 'a', 10),
+(23, 'No circular por él porque la circulación está prohibida.', 'b', 10),
+(24, 'Entre otras normas, si la circulación está regulada por semáforos de carril, obedecer sus indicaciones.', 'c', 10),
+(25, 'dos ruedas accionado con un motor.', 'a', 11),
+(26, 'dos o más ruedas accionado con un motor o con pedales.', 'b', 11),
+(27, 'dos ruedas por lo menos, accionado por su conductor mediante pedales o manivelas.', 'c', 11),
+(28, 'Nada, la luz no daña el material.', 'a', 12),
+(29, 'Que pierde sus propiedades reflectantes.', 'b', 12),
+(30, 'Que cambia de color, aunque mantiene sus propiedades reflectantes.', 'c', 12),
+(31, 'Únicamente con las luces intermitentes.', 'a', 13),
+(32, 'Únicamente con el brazo.', 'b', 13),
+(33, 'Con las luces intermitentes hasta adoptar la nueva trayectoria o con el brazo.', 'c', 13),
+(34, 'Adelantar cerca de ella.', 'a', 14),
+(35, 'Circular sobre ella.', 'b', 14),
+(36, 'Estacionar.', 'c', 14),
+(37, 'No, está prohibido.', 'a', 15),
+(38, 'Sí, y también pueden circular por las autopistas.', 'b', 15),
+(39, 'Sí, excepto que por seguridad, esté prohibido mediante señal.', 'c', 15),
+(40, 'Sí.', 'a', 16),
+(41, 'Sí, si los vehículos cambian de carril.', 'b', 16),
+(42, 'No.', 'c', 16),
+(43, 'Intentar colocarlo cerca de un airbag.', 'a', 17),
+(44, 'Distribuir los cables de manera que no entorpezcan la conducción.', 'b', 17),
+(45, 'Seguir siempre las instrucciones del dispositivo, frente al juicio del conductor.', 'c', 17),
+(46, 'No.', 'a', 18),
+(47, 'No, deben estar al menos a 100 metros.', 'b', 18),
+(48, 'Sí, a esa distancia ya son visibles.', 'c', 18),
+(49, 'No.', 'a', 19),
+(50, 'Sí.', 'b', 19),
+(51, 'Sí, si está transitando por el arcén de la derecha.', 'c', 19),
+(52, 'apagar el alumbrado para evitar el desgaste de la batería.', 'a', 20),
+(53, 'mantener encendidas siempre las luces de emergencia.', 'b', 20),
+(54, 'mantener encendidas las luces de posición.', 'c', 20),
+(55, 'una furgoneta.', 'a', 21),
+(56, 'un camión.', 'b', 21),
+(57, 'un tractocamión.', 'c', 21),
+(58, 'Parar sí, estacionar no.', 'a', 22),
+(59, 'No, está prohibido', 'b', 22),
+(60, 'Sí, si no obstaculiza la circulación de autobuses y taxis.', 'c', 22),
+(61, 'debe encender las luces de emergencia.', 'a', 23),
+(62, 'debe apagar el motor y las luces.', 'b', 23),
+(63, 'debe apagar el motor y dejar el alumbrado de posición encendido.', 'c', 23),
+(64, 'Sí, a un vehículo que circula a una velocidad reducida.', 'a', 24),
+(65, 'No.', 'b', 24),
+(66, 'Sí, si no se supera la velocidad máxima permitida.', 'c', 24),
+(67, 'No', 'a', 25),
+(68, 'Sí, pero sólo hasta el lugar más próximo donde pueda quedar convenientemente inmovilizado.', 'b', 25),
+(69, 'Sí, siempre que no se recorran más de 10 kilómetros.', 'c', 25),
+(70, 'disminuir la velocidad y detenerse al final del carril, obligatoriamente.', 'a', 26),
+(71, 'acelerar hasta alcanzar la velocidad adecuada al final del carril.', 'b', 26),
+(72, 'acelerar hasta alcanzar obligatoriamente 120 km/h al final del carril.', 'c', 26),
+(73, 'El desvío de la trayectoria del vehículo.', 'a', 27),
+(74, 'Saltarse una salida.', 'b', 27),
+(75, 'Equivocarse en el cambio de marchas.', 'c', 27),
+(76, 'de sonido muy agudo.', 'a', 28),
+(77, 'de sonido no estridente.', 'b', 28),
+(78, 'de sonido grave y con la suficiente intensidad para ser escuchadas por todos los usuarios de la vía.', 'c', 28),
+(79, 'siempre que salgan del vehículo.', 'a', 29),
+(80, 'cuando salgan del vehículo y ocupen la calzada o el arcén de una vía interurbana.', 'b', 29),
+(81, 'cuando salgan del vehículo y ocupen la calzada o el arcén en cualquier vía.', 'c', 29),
+(82, 'Sí, excepcionalmente, cuando el arcén sea transitable y suficiente.', 'a', 30),
+(83, 'No, nunca.', 'b', 30),
+(84, 'Sí, siempre.', 'c', 30),
+(85, 'se realiza en una vía pública calificada de atención preferente.', 'a', 31),
+(86, 'se obstaculiza la utilización normal de los pasos rebajados para disminuidos físicos.', 'b', 31),
+(87, 'se efectúa en doble fila.', 'c', 31),
+(88, 'Utilizando el arcén.', 'a', 32),
+(89, 'Realizando la maniobra rápidamente para no estorbar.', 'b', 32),
+(90, 'Advirtiéndolo con suficiente antelación.', 'c', 32),
+(91, 'en un único sentido, solamente', 'a', 33),
+(92, 'en uno o dos sentidos, según la situación.', 'b', 33),
+(93, 'para realizar los adelantamientos precisos.', 'c', 33),
+(94, 'las curvas y cambios de rasante.', 'a', 34),
+(95, 'los tramos de vías afectados por la señal túnel.', 'b', 34),
+(96, 'todas las vías interurbanas.', 'c', 34),
+(97, 'todo lugar en que la visibilidad no sea suficiente.', 'a', 35),
+(98, 'todas las curvas y cambios de rasante.', 'b', 35),
+(99, 'todas las intersecciones.', 'c', 35),
+(100, 'No.', 'a', 36),
+(101, 'No, el chaleco reflectante no es obligatorio para los turismos.', 'b', 36),
+(102, 'Sí, ya que deberá ponérselo si sale del vehículo y ocupa la calzada en una vía interurbana.', 'c', 36),
+(103, 'las intersecciones con vías para ciclistas.', 'a', 37),
+(104, 'las glorietas.', 'b', 37),
+(105, 'todas las intersecciones aunque la señalización lo permita.', 'c', 37);
 
 -- --------------------------------------------------------
 
@@ -183,7 +316,60 @@ INSERT INTO `sesion` (`pk_sesion`, `codigo`, `tiempo_inicio`, `tiempo_final`, `f
 (77, '@f9g9y5s2r3b9v9', '2018-05-10 01:01:27', '2018-05-10 01:03:04', 19),
 (78, '@s9t3u5n1s4a2y3', '2018-05-11 03:14:12', '2018-05-11 03:14:16', 16),
 (79, '@g3g1y1u9p7d9n3', '2018-05-11 03:15:57', '2018-05-11 03:17:35', 16),
-(80, '@n3w1l5y3p9o3x5', '2018-05-11 03:24:19', '2018-05-11 03:25:07', 16);
+(80, '@n3w1l5y3p9o3x5', '2018-05-11 03:24:19', '2018-05-11 03:25:07', 16),
+(81, '@u3d6l9h2t1p8t7', '2018-05-13 03:00:25', '2018-05-13 03:02:45', 19),
+(82, '@k5w8i9r2u8z5t8', '2018-05-13 03:02:57', '0000-00-00 00:00:00', 19),
+(83, '@i6h2b7x4m7x3p4', '2018-05-13 03:10:57', '2018-05-13 03:11:56', 19),
+(84, '@c6m2w8r5h2s8u4', '2018-05-13 03:13:00', '0000-00-00 00:00:00', 19),
+(85, '@t9g4r8h6f6k8c7', '2018-05-13 03:19:15', '2018-05-13 03:20:33', 19),
+(86, '@o2c8k6u5c4s3y7', '2018-05-13 03:27:33', '2018-05-13 03:27:54', 19),
+(87, '@c1a6s6g2e1m9o3', '2018-05-13 03:29:31', '2018-05-13 03:30:04', 19),
+(88, '@n1x7c4m2k8f8p5', '2018-05-13 03:32:55', '2018-05-13 03:33:26', 19),
+(89, '@x3o9d1x3k6r8u3', '2018-05-13 03:34:17', '2018-05-13 03:35:31', 19),
+(90, '@i3v1g7e2f6m4m9', '2018-05-13 03:35:43', '2018-05-13 03:36:16', 19),
+(91, '@t6m4k7o8e1a1i8', '2018-05-13 03:36:50', '2018-05-13 03:37:33', 19),
+(92, '@i9p4y3v6k9y4s5', '2018-05-13 03:38:23', '2018-05-13 03:39:52', 19),
+(93, '@t4x3t8d6o9i2c7', '2018-05-13 03:40:03', '2018-05-13 03:42:13', 19),
+(94, '@e9d5i1v8c1g1r5', '2018-05-13 03:42:32', '2018-05-13 03:42:47', 19),
+(95, '@m2d7p9y6k1p7a9', '2018-05-13 03:43:07', '2018-05-13 03:46:02', 19),
+(96, '@t2z3k9i8a7m9w4', '2018-05-13 03:48:06', '2018-05-13 03:48:56', 19),
+(97, '@y3n1z3m2d8i8v2', '2018-05-13 18:19:32', '2018-05-13 18:21:08', 19),
+(98, '@y2g6k4b6a8w2n8', '2018-05-13 18:21:18', '2018-05-13 18:38:27', 19),
+(99, '@z4k9l3d6r5u8w5', '2018-05-15 03:10:38', '2018-05-15 03:15:53', 19),
+(100, '@v2k8k3i2m9n8k1', '2018-05-15 03:16:09', '2018-05-15 03:16:45', 19),
+(101, '@t3p1k4s5l2l6k8', '2018-05-15 03:17:47', '2018-05-15 03:18:42', 19),
+(102, '@o6x6v8s7l5c5t2', '2018-05-15 03:20:01', '2018-05-15 03:33:27', 19),
+(103, '@a4r1c4g2o1g4v2', '2018-05-15 03:33:40', '2018-05-15 03:34:08', 19),
+(104, '@p3e9i4i3o1k9p4', '2018-05-15 03:34:33', '2018-05-15 03:34:59', 19),
+(105, '@s7m9u9e2p2t5c3', '2018-05-15 15:08:25', '2018-05-15 15:24:30', 19),
+(106, '@x5n4l5i2c9h2d8', '2018-05-15 15:25:35', '2018-05-15 15:27:10', 19),
+(107, '@i8x7z2z4n7v1b8', '2018-05-15 15:32:31', '2018-05-15 15:36:46', 19),
+(108, '@n1s9g8b2m4m5r1', '2018-05-15 15:37:05', '2018-05-15 15:39:20', 19),
+(109, '@w8s4k8m2k8o5p7', '2018-05-15 15:39:32', '0000-00-00 00:00:00', 19),
+(110, '@s3o7a1h7k1a8t6', '2018-05-15 15:42:31', '2018-05-15 16:41:02', 19),
+(111, '@z3z5g1n7l7i3h2', '2018-05-15 21:45:07', '2018-05-15 21:45:25', 19),
+(112, '@c4c5o6k4s3x3s2', '2018-05-15 21:46:32', '2018-05-15 21:46:40', 19),
+(113, '@o6u2z5u5h9n5v8', '2018-05-15 21:48:18', '2018-05-15 21:49:33', 19),
+(114, '@b8a8n8s5f8p8v1', '2018-05-15 21:49:45', '0000-00-00 00:00:00', 19),
+(115, '@l9l4e1s2d6i1k5', '2018-05-15 21:51:37', '2018-05-15 21:55:32', 19),
+(116, '@d9t4v9b8w5m3b5', '2018-05-15 21:55:51', '2018-05-15 21:56:59', 19),
+(117, '@y4o8d6x7k5s7g9', '2018-05-15 21:57:15', '2018-05-15 21:59:01', 19),
+(118, '@x1p3f8b3s8v9u8', '2018-05-15 22:00:36', '2018-05-15 22:08:09', 19),
+(119, '@c7z7g9c5z1y8z4', '2018-05-15 22:15:34', '2018-05-15 22:16:40', 19),
+(120, '@s5a5k6n9b2b1v7', '2018-05-15 22:50:58', '2018-05-15 22:55:32', 19),
+(121, '@o4z1x8k3i2p6s4', '2018-05-15 22:55:48', '2018-05-15 22:56:36', 19),
+(122, '@w5y7k3r9t2m7w7', '2018-05-15 23:27:56', '2018-05-15 23:30:20', 19),
+(123, '@f4d4y7r2n3p2g1', '2018-05-15 23:31:10', '2018-05-15 23:31:56', 19),
+(124, '@w6g7g2w5v8k2d8', '2018-05-15 23:32:28', '2018-05-15 23:33:12', 19),
+(125, '@l2x9b7n9w2o1h3', '2018-05-15 23:33:52', '2018-05-15 23:35:26', 19),
+(126, '@e6y5m8d8y2k1e8', '2018-05-15 23:38:16', '2018-05-15 23:39:40', 19),
+(127, '@z7h4m5t1k2a3p6', '2018-05-15 23:42:55', '2018-05-16 00:03:15', 19),
+(128, '@a3s5h3k2y4e6u8', '2018-05-16 00:05:17', '0000-00-00 00:00:00', 19),
+(129, '@b5d1k7v7d7m4o4', '2018-05-16 00:13:07', '0000-00-00 00:00:00', 19),
+(130, '@u9m8z2x9n7k9a7', '2018-05-16 00:27:11', '0000-00-00 00:00:00', 19),
+(131, '@n4v4k9k4s3t1e9', '2018-05-16 00:47:07', '2018-05-16 00:48:31', 19),
+(132, '@k7e1m1e3v7a2z7', '2018-05-16 00:48:25', '2018-05-16 00:48:29', 16),
+(133, '@k8b2h3k9t9h7n3', '2018-05-16 00:57:46', '0000-00-00 00:00:00', 19);
 
 -- --------------------------------------------------------
 
@@ -193,9 +379,10 @@ INSERT INTO `sesion` (`pk_sesion`, `codigo`, `tiempo_inicio`, `tiempo_final`, `f
 
 CREATE TABLE `test` (
   `pk_test` int(11) NOT NULL,
-  `tiempo_inicio` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `tiempo_final` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `fk_usuario` int(11) NOT NULL
+  `tiempo_inicio` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `tiempo_final` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fk_usuario` int(11) NOT NULL,
+  `codigo_test` varchar(15) COLLATE latin1_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 -- --------------------------------------------------------
@@ -226,7 +413,7 @@ INSERT INTO `usuario` (`pk_usuario`, `nick`, `pass`, `acceso`, `nombre`, `apelli
 (16, 'Adan77', '3488e28acfe4abe097e1f4d501d4b49a', 'administrador', 'Adan', 'Jarillo Merida', '51512452l', 'adan@adan.com', '2018-04-20', 'offline'),
 (17, 'Joselito', '3488e28acfe4abe097e1f4d501d4b49a', 'alumno', 'Adan', 'Jarillo Merida', '00000001r', 'fuck@gmail.com', '2018-04-24', 'offline'),
 (18, 'Test', '3488e28acfe4abe097e1f4d501d4b49a', 'profesor', 'Adan', 'Jarillo Merida', '54341263Z', 'fuck@fuck.lol', '2018-04-25', 'offline'),
-(19, 'Dev1', '3488e28acfe4abe097e1f4d501d4b49a', 'desarrollador', 'Adan', 'Tojeiro Jarillo', '99999999r', 'dev@dev.dev', '2018-04-29', 'offline');
+(19, 'Dev1', '3488e28acfe4abe097e1f4d501d4b49a', 'desarrollador', 'Adan', 'Tojeiro Jarillo', '99999999r', 'dev@dev.dev', '2018-04-29', 'online');
 
 --
 -- Índices para tablas volcadas
@@ -293,31 +480,31 @@ ALTER TABLE `consulta`
 -- AUTO_INCREMENT de la tabla `pregunta`
 --
 ALTER TABLE `pregunta`
-  MODIFY `pk_pregunta` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `pk_pregunta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT de la tabla `respuesta`
 --
 ALTER TABLE `respuesta`
-  MODIFY `pk_respuesta` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `pk_respuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
 
 --
 -- AUTO_INCREMENT de la tabla `sesion`
 --
 ALTER TABLE `sesion`
-  MODIFY `pk_sesion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `pk_sesion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=134;
 
 --
 -- AUTO_INCREMENT de la tabla `test`
 --
 ALTER TABLE `test`
-  MODIFY `pk_test` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `pk_test` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `pk_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `pk_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- Restricciones para tablas volcadas

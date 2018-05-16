@@ -17,6 +17,10 @@ public class MysqlC {
 	
 	
 	
+	public boolean isConectada() {
+		return conectada;
+	}
+	
 	public boolean conectar() {
 		try {
 			Class.forName(DRIVER);
@@ -31,30 +35,25 @@ public class MysqlC {
 		return conectada;
 	}
 	
-	public void desconectar() {
-		con = null;
-		if(con == null) {
-			System.out.println("MYSQL: Fin de la conexion.");
-			conectada = false;
+	public void desconectar(){
+		try {
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
+		try {
+			if(con.isClosed()) {
+				System.out.println("MYSQL: Fin de la conexion.");
+				conectada = false;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
-	public boolean testConnection() {
-		boolean control = false;
-		if(conectar()) {
-			control = true;
-			desconectar();
-		}
-		return control;
-	}
 	
-	public Connection getCon() {
-		return con;
-	}
-
-	public boolean isConectada() {
-		return conectada;
-	}
 	//SQL STATEMENTS
 	public boolean insertInto(String nombreTabla, String campos, String value) {
 		boolean control = false;
@@ -114,6 +113,17 @@ public class MysqlC {
 			System.err.println("MYSQL: "+e);
 		}
 		return rs;
+	}
+	
+	public void cerrarConexion() {
+		try {
+			if(con != null){
+				con.close();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 

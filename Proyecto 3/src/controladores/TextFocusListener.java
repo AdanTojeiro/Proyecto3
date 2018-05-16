@@ -28,7 +28,7 @@ public class TextFocusListener implements FocusListener {
 		if (tFGroup.getTextF().getText().equals(tFGroup.getDefaultText())) {
 			tFGroup.getTextF().setText("");
 		}
-		if(mysqlc.testConnection()) {
+		if(mysqlc.isConectada()) {
 			tFGroup.setConnected(true);
 		} else {
 			tFGroup.setConnected(false);

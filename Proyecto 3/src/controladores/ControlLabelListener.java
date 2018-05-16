@@ -32,6 +32,12 @@ public class ControlLabelListener  implements MouseListener {
 			if(ventana.getSesionActual() != null) {
 				ventana.getGestorSesiones().cerrarSesion(ventana.getSesionActual());
 			}
+			try {
+				ventana.cerrarConexion();
+			}catch(NullPointerException err) {
+				
+			}
+			
 			System.exit(0);
 			break;
 		case 1:

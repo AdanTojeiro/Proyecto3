@@ -97,11 +97,11 @@ public class TextFieldKeyListener implements KeyListener {
 			tFGroup.showInfo(info);
 			break;
 		case "enunciado":
-			info = checker.checkFreeString(tFGroup.getTextF().getText(), 120);
+			info = checker.checkFreeString(tFGroup.getTextF().getText(), 300);
 			tFGroup.showInfo(info);
 			break;
 		case "respuesta":
-			info = checker.checkFreeString(tFGroup.getTextF().getText(), 60);
+			info = checker.checkFreeString(tFGroup.getTextF().getText(), 120);
 			tFGroup.showInfo(info);
 			break;	
 		}

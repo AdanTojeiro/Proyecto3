@@ -26,7 +26,6 @@ public class DisplayGroup {
 	}
 
 	public void mostarDisplay(JDisplay display) {
-		
 		Iterator<JDisplay> it = grupo.iterator();
 		while (it.hasNext()) {
 			JDisplay d = it.next();
