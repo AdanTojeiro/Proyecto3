@@ -65,6 +65,12 @@ public class FormBtnListener implements MouseListener {
 								break;
 
 							}
+							
+							int numeroTest = ventana.getGestorTest().getNumeroTest(ventana.getSesionActual().getUsuario());
+							int numeroAprobados = ventana.getGestorTest().getNumeroAprobados(ventana.getSesionActual().getUsuario());
+							float mediaFallos = ventana.getGestorTest().getMediaFallos(ventana.getSesionActual().getUsuario());
+							ventana.actualizarMostrarEstadisticas(numeroTest, numeroAprobados, mediaFallos);
+							
 							ventana.actualizarListaUsuarios(ventana.getGestorUsuarios().getAllUsuarios());
 							ventana.actualizarListaConsultas(ventana.getGestorConsultas().getAllConsultas());
 							ventana.getSesionActual().getUsuario().setEstado("online");

@@ -2,6 +2,8 @@ package acceso_a_datos;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 import clases.Pregunta;
@@ -91,7 +93,7 @@ public class GestorTest {
 		return rs;
 
 	}
-	
+
 	public ResultSet getAllTest() {
 		ResultSet rs = null;
 		if (mysqlc.isConectada()) {
@@ -125,7 +127,7 @@ public class GestorTest {
 
 	private String randomCodigo(char identificador) {
 		Random rng = new Random();
-		String codigo = ""+identificador;
+		String codigo = "" + identificador;
 		int[] numeros = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 		char[] letras = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k', 'l', 'm', 'n', 'o', 'p', 'k', 'r', 's', 't',
 				'u', 'v', 'w', 'x', 'y', 'z' };
@@ -138,9 +140,7 @@ public class GestorTest {
 		}
 		return codigo;
 	}
-	
-	
-	
+
 	public ResultSet getTest(String campo, String value) {
 		ResultSet rs = null;
 		if (mysqlc.isConectada()) {
@@ -150,7 +150,7 @@ public class GestorTest {
 		return rs;
 
 	}
-	
+
 	public ResultSet getEnunciada(String campo, String value) {
 		ResultSet rs = null;
 		if (mysqlc.isConectada()) {
@@ -160,7 +160,7 @@ public class GestorTest {
 		return rs;
 
 	}
-	
+
 	public ResultSet getRespuesta(String where) {
 		ResultSet rs = null;
 		if (mysqlc.isConectada()) {
@@ -170,7 +170,7 @@ public class GestorTest {
 		return rs;
 
 	}
-	
+
 	public ResultSet getTest(String where) {
 		ResultSet rs = null;
 		if (mysqlc.isConectada()) {
@@ -180,45 +180,45 @@ public class GestorTest {
 		return rs;
 
 	}
-	
+
 	public ResultSet getPregunta(String campo, String value, String modificador) {
 		ResultSet rs = null;
 		if (mysqlc.isConectada()) {
 			// Cumple formato
-			rs = mysqlc.selectFrom("pregunta", " " + campo + " " + modificador +" "+ value);
+			rs = mysqlc.selectFrom("pregunta", " " + campo + " " + modificador + " " + value);
 		}
 		return rs;
 
 	}
-	
-	
+
 	public Pregunta getPreguntaDisponible(Test test) {
 		Pregunta pregunta = null;
-		ResultSet rs = getPregunta("pk_pregunta", "(SELECT enuncian.fk_pregunta FROM enuncian WHERE fk_test="+test.getPk_test()+")", "NOT IN");
+		ResultSet rs = getPregunta("pk_pregunta",
+				"(SELECT enuncian.fk_pregunta FROM enuncian WHERE fk_test=" + test.getPk_test() + ")", "NOT IN");
 		try {
-			if(rs.next()) {
+			if (rs.next()) {
 				Random rng = new Random();
 				int nIteraciones = rng.nextInt(100);
 				int contador = 0;
-				
-				while(contador < nIteraciones) {
-					if(rs.next()) {
+
+				while (contador < nIteraciones) {
+					if (rs.next()) {
 						contador++;
-					}else {
+					} else {
 						rs.beforeFirst();
-						if(rs.next()) {
+						if (rs.next()) {
 							contador++;
 						}
 					}
-					
+
 				}
 				pregunta = new Pregunta(rs);
 				Respuesta ra = null;
 				Respuesta rb = null;
 				Respuesta rc = null;
-				ResultSet rsa = getRespuesta("fk_pregunta="+pregunta.getPk_pregunta()+" AND indice ='a'");
-				ResultSet rsb = getRespuesta("fk_pregunta="+pregunta.getPk_pregunta()+" AND indice ='b'");
-				ResultSet rsc = getRespuesta("fk_pregunta="+pregunta.getPk_pregunta()+" AND indice ='c'");
+				ResultSet rsa = getRespuesta("fk_pregunta=" + pregunta.getPk_pregunta() + " AND indice ='a'");
+				ResultSet rsb = getRespuesta("fk_pregunta=" + pregunta.getPk_pregunta() + " AND indice ='b'");
+				ResultSet rsc = getRespuesta("fk_pregunta=" + pregunta.getPk_pregunta() + " AND indice ='c'");
 				if (rsa.next()) {
 					ra = new Respuesta(rsa);
 				}
@@ -228,54 +228,146 @@ public class GestorTest {
 				if (rsc.next()) {
 					rc = new Respuesta(rsc);
 				}
-				Respuesta[] respuestas = {ra, rb, rc};
+				Respuesta[] respuestas = { ra, rb, rc };
 				pregunta.setRespuestas(respuestas);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 		return pregunta;
 	}
-	
+
 	public Test empezarTest(Usuario usuario) {
 		Test test = null;
-		String codigo_test = generarCodigo(getAllTest(),'$', "codigo_test");
-		
-		if(mysqlc.isConectada()) {
+		String codigo_test = generarCodigo(getAllTest(), '$', "codigo_test");
+
+		if (mysqlc.isConectada()) {
 			String nombreTabla = "test";
 			String campos = "fk_usuario, codigo_test";
-			String value = usuario.getPk_usuario()+", '"+codigo_test+"'";;
+			String value = usuario.getPk_usuario() + ", '" + codigo_test + "'";
+			;
 			mysqlc.insertInto(nombreTabla, campos, value);
-					
+
 		}
-			
-		
-		ResultSet rs = getTest("codigo_test='"+codigo_test+"'");
+
+		ResultSet rs = getTest("codigo_test='" + codigo_test + "'");
 		try {
-			if(rs.next()) {
+			if (rs.next()) {
 				test = new Test(rs);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return test;
 	}
-	
+
 	public void añadirEnunciada(Test test, Pregunta pregunta, char indice, boolean correcto) {
-		
-		if(mysqlc.isConectada()) {
+
+		if (mysqlc.isConectada()) {
 			String nombreTabla = "enuncian";
 			String campos = "fk_test, fk_pregunta, respuesta, correcto";
-			String value = test.getPk_test()+","+pregunta.getPk_pregunta()+", '"+indice+"', "+correcto;
+			String value = test.getPk_test() + "," + pregunta.getPk_pregunta() + ", '" + indice + "', " + correcto;
 			mysqlc.insertInto(nombreTabla, campos, value);
-				
+
 		}
-		
+
 	}
+
+	public int getNumeroAciertos(Test test) {
+		int aciertos = 0;
+		String nombreTabla = "enuncian";
+		String where = "fk_test=" + test.getPk_test() + " AND correcto=1";
+		if (mysqlc.isConectada()) {
+			ResultSet rs = mysqlc.selectFrom(nombreTabla, where);
+			try {
+				while (rs.next()) {
+					aciertos++;
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return aciertos;
+	}
+
+	public int getNumeroTest(Usuario usuario) {
+		int numeroTest = 0;
+		String nombreTabla = "test";
+		String where = "fk_usuario=" + usuario.getPk_usuario();
+		if (mysqlc.isConectada()) {
+			ResultSet rs = mysqlc.selectFrom(nombreTabla, where);
+			try {
+				while (rs.next()) {
+					numeroTest++;
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		return numeroTest;
+	}
+	
+	public int getNumeroAprobados(Usuario usuario) {
+		int numeroAprobados = 0;
+		String nombreTabla = "test";
+		String where = "fk_usuario=" + usuario.getPk_usuario();
+		if (mysqlc.isConectada()) {
+			ResultSet rs = mysqlc.selectFrom(nombreTabla, where);
+			try {
+				while (rs.next()) {
+					if(getNumeroAciertos(new Test(rs)) > 25) {
+						numeroAprobados++;
+					}
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		return numeroAprobados;
+	}
+	
+	public float getMediaFallos(Usuario usuario) {
+		int sumaFallos = 0;
+		float mediaFallos = 0;
+		ArrayList<Integer> fallos = new ArrayList<Integer>();
+		String nombreTabla = "test";
+		String where = "fk_usuario=" + usuario.getPk_usuario();
+		if (mysqlc.isConectada()) {
+			ResultSet rs = mysqlc.selectFrom(nombreTabla, where);
+			try {
+				while (rs.next()) {
+					int nAciertos = getNumeroAciertos(new Test(rs));
+					int nFallos = 30 - nAciertos;
+					fallos.add(nFallos);	
+				}
+				
+				Iterator<Integer> it = fallos.iterator();
+				while(it.hasNext()) {
+					sumaFallos = sumaFallos +it.next();
+				}
+				try {
+				mediaFallos = sumaFallos/fallos.size();
+				} catch(ArithmeticException err) {
+					mediaFallos = 0;
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		return mediaFallos;
+	}
+	
+	
 
 }

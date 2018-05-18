@@ -4,17 +4,18 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import clases.Usuario;
 import interfaz.Ventana;
 
-public class TestBtnListener implements MouseListener {
-	
+public class EstadisticasBtnListener implements MouseListener {
+
 	private final Color COLOR_BACKGROUND = new Color(54, 33, 89);
 	private final Color COLOR_HOVER = new Color(110, 89, 222);
 	private Ventana ventana;
 	
 	
 
-	public TestBtnListener(Ventana ventana) {
+	public EstadisticasBtnListener(Ventana ventana) {
 		super();
 		this.ventana = ventana;
 	}
@@ -22,13 +23,11 @@ public class TestBtnListener implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if(ventana.getTestActual() == null) {
-			ventana.setTestActual(ventana.getGestorTest().empezarTest(ventana.getSesionActual().getUsuario()));
-			ventana.actualizarPregunta(ventana.getGestorTest().getPreguntaDisponible(ventana.getTestActual()));
-		} else  {
-			ventana.ReiniciarTest();
-		}
-		
+		Usuario usuario = ventana.getUsuarioInspeccionado();
+		int numeroTest = ventana.getGestorTest().getNumeroTest(usuario);
+		int numeroAprobados = ventana.getGestorTest().getNumeroAprobados(usuario);
+		float mediaFallos = ventana.getGestorTest().getMediaFallos(usuario);
+		ventana.actualizarMostrarEstadisticas(numeroTest, numeroAprobados, mediaFallos);
 		
 	}
 
@@ -55,7 +54,5 @@ public class TestBtnListener implements MouseListener {
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
 
 }

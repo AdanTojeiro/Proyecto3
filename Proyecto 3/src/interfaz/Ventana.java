@@ -33,6 +33,7 @@ import controladores.TextFocusListener;
 import interfaz.componentes.JDisplay;
 import interfaz.componentes.JFormBtn;
 import interfaz.componentes.JFormDisplay;
+import interfaz.componentes.JChanger;
 import interfaz.componentes.JControlLabel;
 import interfaz.componentes.JOption;
 import interfaz.componentes.JPopUp;
@@ -45,17 +46,19 @@ import interfaz.grupos.TextFieldGroup;
 import interfaz.grupos.TextFieldGroupRel;
 import interfaz.listas.JConsultaRowList;
 import interfaz.listas.JUserRowList;
+import controladores.ChangerBtnListener;
 import controladores.ControlLabelListener;
 import controladores.EntrarComoListener;
+import controladores.EstadisticasBtnListener;
 
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.awt.Toolkit;
-import java.awt.ComponentOrientation;
 
 public class Ventana {
 
@@ -71,7 +74,7 @@ public class Ventana {
 	private Sesion sesionActual;
 	private Test testActual;
 	private Pregunta preguntaActual;
-
+	private Usuario usuarioInspeccionado;
 	// DATA
 	private Usuario RegData = new Usuario();
 
@@ -95,6 +98,7 @@ public class Ventana {
 	private final Color COLOR_SELECTED = new Color(85, 65, 118);
 	private final Color COLOR_BACKGROUND = new Color(54, 33, 89);
 	private final Color COLOR_CHECK = new Color(50, 205, 50);
+	private final Color COLOR_DANGER = new Color(222, 69, 69);
 
 	// SESIONS_STEUP
 	private SesionSteup invitado, alumno, profesor, administrador, desarrollador;
@@ -310,13 +314,7 @@ public class Ventana {
 	private JLabel estado_text_mostrarUsuario;
 	private JLabel estado_ico_mostrarUsuario;
 	private JPanel accesoCambio_panel_mostrarUsuario;
-	private JLabel label_1;
-	private JLabel label_2;
-	private JSeparator separator_1;
 	private JPanel estadoCambio_panel_mostrarUsuario;
-	private JLabel accesoCambio_bajar_mostrarUsuario;
-	private JLabel accesoCambio_subir_mostrarUsuario;
-	private JSeparator separator;
 	// ---------------------------------------------------------------
 	private JDisplay display_cerrarSesion;
 	private JPanel cerrarSesion_btn_panel;
@@ -417,25 +415,54 @@ public class Ventana {
 	private TextFieldGroup anadirPregunta_respuestaB_tfg;
 	private TextFieldGroup anadirPregunta_respuestaC_tfg;
 	private ArrayList<TextFieldGroup> anadirPregunta_grupo_logico = new ArrayList<TextFieldGroup>();
-	//----------------------------------------------
+	// ----------------------------------------------
 	private JDisplay display_iniciarTest;
 	private JLabel iniciarTest_respuestaA_ico;
 	private JLabel iniciarTest_respuestaA_text;
 	private JRespuestaBtn iniciarTest_respuestaB_panel;
 	private JLabel iniciarTest_respuestaB_ico;
 	private JLabel iniciarTest_respuestaB_text;
-	private JRespuestaBtn  iniciarTest_respuestaC_panel;
+	private JRespuestaBtn iniciarTest_respuestaC_panel;
 	private JLabel iniciarTest_respuestaC_ico;
 	private JLabel iniciarTest_respuestaC_text;
 	private JPanel iniciarTest_pregunta_panel;
 	private JLabel iniciarTest_pregunta_enunciado;
 	private JSeparator iniciarTest_pregunta_separator;
 	private JLabel iniciarTest_pregunta_contadorPregunta;
-	private JRespuestaBtn  iniciarTest_respuestaA_panel;
+	private JRespuestaBtn iniciarTest_respuestaA_panel;
 	private JPanel iniciarTest_index_panel;
 	private JPanel iniciarTest_index_btn_panel;
 	private JLabel iniciarTest_index_btn_text;
-	
+	private JPanel iniciarTest_end_panel;
+	private JPanel iniciarTest_end_btn_panel;
+	private JLabel iniciarTest_end_btn_text;
+	private JLabel iniciarTest_fallos_numero;
+	private JLabel iniciarTest_fallos_text;
+	private JLabel iniciarTest_resultado_text;
+	private JLabel iniciarTest_aciertos_numero;
+	private JLabel iniciarTest_aciertos_text;
+	// ------------------
+	private JPanel mostrarUsuario_estadisticas_btn;
+	private JLabel mostrarUsuario_estadisticas_btn_text;
+	// ---------------------------------------------------------
+	private JDisplay display_mostrarEstadisticas;
+	private JLabel mostrarEstadisticas_aprobados_numero;
+	private JLabel mostrarEstadisticas_aprobados_text;
+	private JLabel mostrarEstadisticas_suspendos_numero;
+	private JLabel mostrarEstadisticas_suspendos_text;
+	private JLabel mostrarEstadisticas_nick_text;
+	private JSeparator mostrarEstadisticas_separator2;
+	private JSeparator mostrarEstadisticas_separator1;
+	private JLabel mostrarEstadisticas_test_text;
+	private JLabel mostrarEstadisticas_test_numero;
+	private JLabel mostrarEstadisticas_media_text;
+	private JLabel mostrarEstadisticas_media_numero;
+	private JChanger estadoCambio_online_mostrarUsuario;
+	private JChanger estadoCambio_offline_mostrarUsuario;
+	private JChanger estadoCambio_suspendido_mostrarUsuario;
+	private JChanger accesoCambio_alumno_mostrarUsuario;
+	private JChanger accesoCambio_profesor_mostrarUsuario;
+	private JChanger accesoCambio_admin_mostrarUsuario;
 
 	/*
 	 * |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -451,7 +478,7 @@ public class Ventana {
 		checker = new Checker(gestorUsuarios, gestorConsultas);
 		mysqlc.conectar();
 		initialize();
-		
+
 	}
 
 	/**
@@ -503,6 +530,14 @@ public class Ventana {
 
 	public Test getTestActual() {
 		return testActual;
+	}
+
+	public Usuario getUsuarioInspeccionado() {
+		return usuarioInspeccionado;
+	}
+
+	public void setUsuarioInspeccionado(Usuario usuarioInspeccionado) {
+		this.usuarioInspeccionado = usuarioInspeccionado;
 	}
 
 	private void cargarEstructura() {
@@ -660,7 +695,7 @@ public class Ventana {
 	// DISPLAYS
 
 	private void cargarDisplays() {
-		
+
 		cargarDisplayIndex();
 		cargarDisplayLogin();
 		cargarDisplayReg();
@@ -674,6 +709,7 @@ public class Ventana {
 		cargarDisplayMostrarConsulta();
 		cargarDisplayAñadirPregunta();
 		cargarDisplayIniciarTest();
+		cargarDisplayMostrarEstadisticas();
 
 	}
 
@@ -1663,44 +1699,86 @@ public class Ventana {
 
 		estadoCambio_panel_mostrarUsuario = new JPanel();
 		estadoCambio_panel_mostrarUsuario.setOpaque(false);
-		estadoCambio_panel_mostrarUsuario.setBounds(720, 165, 32, 68);
+		estadoCambio_panel_mostrarUsuario.setBounds(526, 233, 123, 32);
 		display_mostrarUsuario.add(estadoCambio_panel_mostrarUsuario);
 		estadoCambio_panel_mostrarUsuario.setLayout(null);
 
-		accesoCambio_bajar_mostrarUsuario = new JLabel("");
-		accesoCambio_bajar_mostrarUsuario
-				.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/arrow_down_32px.png")));
-		accesoCambio_bajar_mostrarUsuario.setBounds(0, 36, 32, 32);
-		estadoCambio_panel_mostrarUsuario.add(accesoCambio_bajar_mostrarUsuario);
+		estadoCambio_online_mostrarUsuario = new JChanger("/imagenes/online_32px.png",
+				"/imagenes/online_hover_32px.png", "estado", "online");
+		estadoCambio_online_mostrarUsuario.setBounds(0, 0, 32, 32);
+		estadoCambio_online_mostrarUsuario
+				.setIcon(new ImageIcon(Ventana.class.getResource(estadoCambio_online_mostrarUsuario.getIco_path())));
+		estadoCambio_panel_mostrarUsuario.add(estadoCambio_online_mostrarUsuario);
 
-		accesoCambio_subir_mostrarUsuario = new JLabel("");
-		accesoCambio_subir_mostrarUsuario.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/subir_32px.png")));
-		accesoCambio_subir_mostrarUsuario.setBounds(0, 0, 32, 32);
-		estadoCambio_panel_mostrarUsuario.add(accesoCambio_subir_mostrarUsuario);
+		estadoCambio_offline_mostrarUsuario = new JChanger("/imagenes/offline_32px.png",
+				"/imagenes/offline_hover_32px.png", "estado", "offline");
+		estadoCambio_offline_mostrarUsuario.setBounds(42, 0, 32, 32);
+		estadoCambio_offline_mostrarUsuario
+				.setIcon(new ImageIcon(Ventana.class.getResource(estadoCambio_offline_mostrarUsuario.getIco_path())));
+		estadoCambio_panel_mostrarUsuario.add(estadoCambio_offline_mostrarUsuario);
 
-		separator = new JSeparator();
-		separator.setBounds(0, 34, 32, 2);
-		estadoCambio_panel_mostrarUsuario.add(separator);
+		estadoCambio_suspendido_mostrarUsuario = new JChanger("/imagenes/banned_32px.png",
+				"/imagenes/banned_hover_32px.png", "estado", "suspendido");
+		estadoCambio_suspendido_mostrarUsuario.setBounds(84, 0, 32, 32);
+		estadoCambio_suspendido_mostrarUsuario.setIcon(
+				new ImageIcon(Ventana.class.getResource(estadoCambio_suspendido_mostrarUsuario.getIco_path())));
+		estadoCambio_panel_mostrarUsuario.add(estadoCambio_suspendido_mostrarUsuario);
 
 		accesoCambio_panel_mostrarUsuario = new JPanel();
 		accesoCambio_panel_mostrarUsuario.setLayout(null);
 		accesoCambio_panel_mostrarUsuario.setOpaque(false);
-		accesoCambio_panel_mostrarUsuario.setBounds(720, 294, 32, 68);
+		accesoCambio_panel_mostrarUsuario.setBounds(516, 361, 123, 32);
 		display_mostrarUsuario.add(accesoCambio_panel_mostrarUsuario);
 
-		label_1 = new JLabel("");
-		label_1.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/bajar_32px.png")));
-		label_1.setBounds(0, 36, 32, 32);
-		accesoCambio_panel_mostrarUsuario.add(label_1);
+		accesoCambio_alumno_mostrarUsuario = new JChanger("/imagenes/alumno_32px.png",
+				"/imagenes/alumno_hover_32px.png", "acceso", "alumno");
+		accesoCambio_alumno_mostrarUsuario.setBounds(0, 0, 32, 32);
+		accesoCambio_panel_mostrarUsuario.add(accesoCambio_alumno_mostrarUsuario);
+		accesoCambio_alumno_mostrarUsuario
+				.setIcon(new ImageIcon(Ventana.class.getResource(accesoCambio_alumno_mostrarUsuario.getIco_path())));
 
-		label_2 = new JLabel("");
-		label_2.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/subir_32px.png")));
-		label_2.setBounds(0, 0, 32, 32);
-		accesoCambio_panel_mostrarUsuario.add(label_2);
+		accesoCambio_profesor_mostrarUsuario = new JChanger("/imagenes/profesor_32px.png",
+				"/imagenes/profesor_hover_32px.png", "acceso", "profesor");
+		accesoCambio_profesor_mostrarUsuario.setBounds(42, 0, 32, 32);
+		accesoCambio_panel_mostrarUsuario.add(accesoCambio_profesor_mostrarUsuario);
+		accesoCambio_profesor_mostrarUsuario
+				.setIcon(new ImageIcon(Ventana.class.getResource(accesoCambio_profesor_mostrarUsuario.getIco_path())));
 
-		separator_1 = new JSeparator();
-		separator_1.setBounds(0, 34, 32, 2);
-		accesoCambio_panel_mostrarUsuario.add(separator_1);
+		accesoCambio_admin_mostrarUsuario = new JChanger("/imagenes/admin_32px.png", "/imagenes/admin_hover_32px.png",
+				"acceso", "administrador");
+		accesoCambio_admin_mostrarUsuario.setBounds(81, 0, 32, 32);
+		accesoCambio_panel_mostrarUsuario.add(accesoCambio_admin_mostrarUsuario);
+		accesoCambio_admin_mostrarUsuario
+				.setIcon(new ImageIcon(Ventana.class.getResource(accesoCambio_admin_mostrarUsuario.getIco_path())));
+
+		estadoCambio_online_mostrarUsuario
+				.addMouseListener(new ChangerBtnListener(estadoCambio_online_mostrarUsuario, this));
+		estadoCambio_offline_mostrarUsuario
+				.addMouseListener(new ChangerBtnListener(estadoCambio_offline_mostrarUsuario, this));
+		estadoCambio_suspendido_mostrarUsuario
+				.addMouseListener(new ChangerBtnListener(estadoCambio_suspendido_mostrarUsuario, this));
+
+		accesoCambio_alumno_mostrarUsuario
+				.addMouseListener(new ChangerBtnListener(accesoCambio_alumno_mostrarUsuario, this));
+		accesoCambio_profesor_mostrarUsuario
+				.addMouseListener(new ChangerBtnListener(accesoCambio_profesor_mostrarUsuario, this));
+		accesoCambio_admin_mostrarUsuario
+				.addMouseListener(new ChangerBtnListener(accesoCambio_admin_mostrarUsuario, this));
+
+		mostrarUsuario_estadisticas_btn = new JPanel();
+		mostrarUsuario_estadisticas_btn.setBackground(COLOR_BACKGROUND);
+		mostrarUsuario_estadisticas_btn.setBounds(210, 427, 356, 87);
+		display_mostrarUsuario.add(mostrarUsuario_estadisticas_btn);
+		mostrarUsuario_estadisticas_btn.setLayout(null);
+		mostrarUsuario_estadisticas_btn.addMouseListener(new EstadisticasBtnListener(this));
+
+		mostrarUsuario_estadisticas_btn_text = new JLabel("Estadisticas");
+		mostrarUsuario_estadisticas_btn_text.setBounds(0, 0, 356, 87);
+		mostrarUsuario_estadisticas_btn.add(mostrarUsuario_estadisticas_btn_text);
+		mostrarUsuario_estadisticas_btn_text.setHorizontalAlignment(SwingConstants.CENTER);
+		mostrarUsuario_estadisticas_btn_text.setFont(new Font("Tahoma", Font.BOLD, 34));
+		mostrarUsuario_estadisticas_btn_text.setForeground(Color.WHITE);
+		mostrarUsuario_estadisticas_btn.addMouseListener(new TestBtnListener(this));
 
 	}
 
@@ -2215,7 +2293,7 @@ public class Ventana {
 		fecha_text_mostrarConsulta.setBounds(52, 11, 300, 30);
 		fecha_panel_mostrarConsulta.add(fecha_text_mostrarConsulta);
 	}
-	
+
 	private void cargarDisplayIniciarTest() {
 
 		display_iniciarTest = new JDisplay("Iniciar test", "/imagenes/pregunta_96px.png", displays);
@@ -2224,17 +2302,17 @@ public class Ventana {
 		display_iniciarTest.setLayout(null);
 		display_iniciarTest.setOpaque(false);
 		display_iniciarTest.setVisible(false);
-		
+
 		iniciarTest_index_panel = new JPanel();
 		iniciarTest_index_panel.setOpaque(false);
 		iniciarTest_index_panel.setBounds(10, 11, 780, 530);
 		display_iniciarTest.add(iniciarTest_index_panel);
 		iniciarTest_index_panel.setLayout(null);
 		iniciarTest_index_panel.setVisible(true);
-		
+
 		iniciarTest_index_btn_panel = new JPanel();
 		iniciarTest_index_btn_panel.setBackground(COLOR_BACKGROUND);
-		iniciarTest_index_btn_panel.setBounds(228, 200, 356, 150);
+		iniciarTest_index_btn_panel.setBounds(205, 200, 356, 150);
 		iniciarTest_index_panel.add(iniciarTest_index_btn_panel);
 		iniciarTest_index_btn_panel.setLayout(null);
 		iniciarTest_index_btn_panel.addMouseListener(new TestBtnListener(this));
@@ -2245,93 +2323,231 @@ public class Ventana {
 		iniciarTest_index_btn_text.setForeground(Color.WHITE);
 		iniciarTest_index_btn_text.setBounds(10, 44, 336, 60);
 		iniciarTest_index_btn_panel.add(iniciarTest_index_btn_text);
-		
-		
-		//--
-		
+
+		// --
+
+		iniciarTest_end_panel = new JPanel();
+		iniciarTest_end_panel.setOpaque(false);
+		iniciarTest_end_panel.setBackground(Color.WHITE);
+		iniciarTest_end_panel.setBounds(10, 11, 780, 530);
+		display_iniciarTest.add(iniciarTest_end_panel);
+		iniciarTest_end_panel.setLayout(null);
+		iniciarTest_end_panel.setVisible(false);
+
+		iniciarTest_end_btn_panel = new JPanel();
+		iniciarTest_end_btn_panel.setBackground(COLOR_BACKGROUND);
+		iniciarTest_end_btn_panel.setBounds(205, 350, 356, 150);
+		iniciarTest_end_panel.add(iniciarTest_end_btn_panel);
+		iniciarTest_end_btn_panel.setLayout(null);
+		iniciarTest_end_btn_panel.addMouseListener(new TestBtnListener(this));
+
+		iniciarTest_end_btn_text = new JLabel("Finalizar test");
+		iniciarTest_end_btn_text.setHorizontalAlignment(SwingConstants.CENTER);
+		iniciarTest_end_btn_text.setFont(new Font("Tahoma", Font.BOLD, 34));
+		iniciarTest_end_btn_text.setForeground(Color.WHITE);
+		iniciarTest_end_btn_text.setBounds(10, 44, 336, 60);
+		iniciarTest_end_btn_panel.add(iniciarTest_end_btn_text);
+
+		iniciarTest_aciertos_numero = new JLabel("30");
+		iniciarTest_aciertos_numero.setForeground(COLOR_CHECK);
+		iniciarTest_aciertos_numero.setHorizontalAlignment(SwingConstants.CENTER);
+		iniciarTest_aciertos_numero.setFont(new Font("Arial", Font.BOLD, 96));
+		iniciarTest_aciertos_numero.setBounds(193, 140, 114, 104);
+		iniciarTest_end_panel.add(iniciarTest_aciertos_numero);
+
+		iniciarTest_aciertos_text = new JLabel("Aciertos");
+		iniciarTest_aciertos_text.setHorizontalAlignment(SwingConstants.CENTER);
+		iniciarTest_aciertos_text.setFont(new Font("Tahoma", Font.BOLD, 38));
+		iniciarTest_aciertos_text.setForeground(COLOR_CHECK);
+		iniciarTest_aciertos_text.setBounds(157, 238, 192, 52);
+		iniciarTest_end_panel.add(iniciarTest_aciertos_text);
+
+		iniciarTest_fallos_numero = new JLabel("30");
+		iniciarTest_fallos_numero.setHorizontalAlignment(SwingConstants.CENTER);
+		iniciarTest_fallos_numero.setForeground(COLOR_DANGER);
+		iniciarTest_fallos_numero.setFont(new Font("Arial", Font.BOLD, 96));
+		iniciarTest_fallos_numero.setBounds(469, 140, 114, 104);
+		iniciarTest_end_panel.add(iniciarTest_fallos_numero);
+
+		iniciarTest_fallos_text = new JLabel("Fallos");
+		iniciarTest_fallos_text.setHorizontalAlignment(SwingConstants.CENTER);
+		iniciarTest_fallos_text.setForeground(COLOR_DANGER);
+		iniciarTest_fallos_text.setFont(new Font("Tahoma", Font.BOLD, 38));
+		iniciarTest_fallos_text.setBounds(433, 238, 192, 52);
+		iniciarTest_end_panel.add(iniciarTest_fallos_text);
+
+		iniciarTest_resultado_text = new JLabel("Aprobado");
+		iniciarTest_resultado_text.setHorizontalAlignment(SwingConstants.CENTER);
+		iniciarTest_resultado_text.setForeground(Color.GREEN);
+		iniciarTest_resultado_text.setFont(new Font("Tahoma", Font.BOLD, 62));
+		iniciarTest_resultado_text.setBounds(57, 11, 659, 91);
+		iniciarTest_end_panel.add(iniciarTest_resultado_text);
+
+		// --
+
 		iniciarTest_pregunta_panel = new JPanel();
 		iniciarTest_pregunta_panel.setOpaque(false);
 		iniciarTest_pregunta_panel.setBounds(10, 11, 780, 530);
 		display_iniciarTest.add(iniciarTest_pregunta_panel);
 		iniciarTest_pregunta_panel.setLayout(null);
 		iniciarTest_pregunta_panel.setVisible(false);
-		
+
 		iniciarTest_pregunta_enunciado = new JLabel("Enunciado");
 		iniciarTest_pregunta_enunciado.setHorizontalAlignment(SwingConstants.CENTER);
 		iniciarTest_pregunta_enunciado.setFont(new Font("Tahoma", Font.BOLD, 18));
 		iniciarTest_pregunta_enunciado.setForeground(Color.WHITE);
 		iniciarTest_pregunta_enunciado.setBounds(10, 43, 760, 100);
 		iniciarTest_pregunta_panel.add(iniciarTest_pregunta_enunciado);
-		
+
 		iniciarTest_pregunta_separator = new JSeparator();
 		iniciarTest_pregunta_separator.setBounds(10, 157, 760, 2);
 		iniciarTest_pregunta_panel.add(iniciarTest_pregunta_separator);
-		
+
 		iniciarTest_pregunta_contadorPregunta = new JLabel("Pregunta n\u00BA: 0/30");
 		iniciarTest_pregunta_contadorPregunta.setFont(new Font("Tahoma", Font.BOLD, 22));
 		iniciarTest_pregunta_contadorPregunta.setForeground(Color.WHITE);
 		iniciarTest_pregunta_contadorPregunta.setBounds(10, 0, 274, 32);
 		iniciarTest_pregunta_panel.add(iniciarTest_pregunta_contadorPregunta);
-		
-		iniciarTest_respuestaA_panel = new JRespuestaBtn ('a');
+
+		iniciarTest_respuestaA_panel = new JRespuestaBtn('a');
 		iniciarTest_respuestaA_panel.setBackground(COLOR_BACKGROUND);
 		iniciarTest_respuestaA_panel.setBounds(10, 170, 760, 109);
 		iniciarTest_pregunta_panel.add(iniciarTest_respuestaA_panel);
 		iniciarTest_respuestaA_panel.setLayout(null);
-		
+
 		iniciarTest_respuestaA_ico = new JLabel("");
 		iniciarTest_respuestaA_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/a_64px.png")));
 		iniciarTest_respuestaA_ico.setBounds(0, 22, 64, 64);
 		iniciarTest_respuestaA_panel.add(iniciarTest_respuestaA_ico);
-		
+
 		iniciarTest_respuestaA_text = new JLabel("Respuesta A");
 		iniciarTest_respuestaA_text.setHorizontalAlignment(SwingConstants.CENTER);
 		iniciarTest_respuestaA_text.setForeground(Color.WHITE);
 		iniciarTest_respuestaA_text.setFont(new Font("Tahoma", Font.BOLD, 18));
 		iniciarTest_respuestaA_text.setBounds(74, 11, 676, 87);
 		iniciarTest_respuestaA_panel.add(iniciarTest_respuestaA_text);
-		
-		iniciarTest_respuestaB_panel = new JRespuestaBtn ('b');
+
+		iniciarTest_respuestaB_panel = new JRespuestaBtn('b');
 		iniciarTest_respuestaB_panel.setLayout(null);
 		iniciarTest_respuestaB_panel.setBackground(new Color(54, 33, 89));
 		iniciarTest_respuestaB_panel.setBounds(10, 290, 760, 109);
 		iniciarTest_pregunta_panel.add(iniciarTest_respuestaB_panel);
-		
+
 		iniciarTest_respuestaB_ico = new JLabel("");
 		iniciarTest_respuestaB_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/b_64px.png")));
 		iniciarTest_respuestaB_ico.setBounds(0, 22, 64, 64);
 		iniciarTest_respuestaB_panel.add(iniciarTest_respuestaB_ico);
-		
+
 		iniciarTest_respuestaB_text = new JLabel("Respuesta B");
 		iniciarTest_respuestaB_text.setHorizontalAlignment(SwingConstants.CENTER);
 		iniciarTest_respuestaB_text.setForeground(Color.WHITE);
 		iniciarTest_respuestaB_text.setFont(new Font("Tahoma", Font.BOLD, 18));
 		iniciarTest_respuestaB_text.setBounds(74, 11, 676, 87);
 		iniciarTest_respuestaB_panel.add(iniciarTest_respuestaB_text);
-		
-		iniciarTest_respuestaC_panel = new JRespuestaBtn ('c');
+
+		iniciarTest_respuestaC_panel = new JRespuestaBtn('c');
 		iniciarTest_respuestaC_panel.setLayout(null);
 		iniciarTest_respuestaC_panel.setBackground(new Color(54, 33, 89));
 		iniciarTest_respuestaC_panel.setBounds(10, 410, 760, 109);
 		iniciarTest_pregunta_panel.add(iniciarTest_respuestaC_panel);
-		
+
 		iniciarTest_respuestaC_ico = new JLabel("");
 		iniciarTest_respuestaC_ico.setIcon(new ImageIcon(Ventana.class.getResource("/imagenes/c_64px.png")));
 		iniciarTest_respuestaC_ico.setBounds(0, 22, 64, 64);
 		iniciarTest_respuestaC_panel.add(iniciarTest_respuestaC_ico);
-		
+
 		iniciarTest_respuestaC_text = new JLabel("Respuesta C");
 		iniciarTest_respuestaC_text.setHorizontalAlignment(SwingConstants.CENTER);
 		iniciarTest_respuestaC_text.setForeground(Color.WHITE);
 		iniciarTest_respuestaC_text.setFont(new Font("Tahoma", Font.BOLD, 18));
 		iniciarTest_respuestaC_text.setBounds(74, 11, 676, 87);
 		iniciarTest_respuestaC_panel.add(iniciarTest_respuestaC_text);
-		
-		
+
 		iniciarTest_respuestaA_panel.addMouseListener(new RespuestaBtnListener(this, iniciarTest_respuestaA_panel));
 		iniciarTest_respuestaB_panel.addMouseListener(new RespuestaBtnListener(this, iniciarTest_respuestaB_panel));
 		iniciarTest_respuestaC_panel.addMouseListener(new RespuestaBtnListener(this, iniciarTest_respuestaC_panel));
-		
+
+	}
+
+	private void cargarDisplayMostrarEstadisticas() {
+
+		display_mostrarEstadisticas = new JDisplay("Estadisticas", "/imagenes/info_96px.png", displays);
+		display_mostrarEstadisticas.setBounds(0, 0, 800, 552);
+		display_panel.add(display_mostrarEstadisticas);
+		display_mostrarEstadisticas.setLayout(null);
+		display_mostrarEstadisticas.setOpaque(false);
+		display_mostrarEstadisticas.setVisible(false);
+
+		mostrarEstadisticas_aprobados_numero = new JLabel("30");
+		mostrarEstadisticas_aprobados_numero.setForeground(COLOR_CHECK);
+		mostrarEstadisticas_aprobados_numero.setHorizontalAlignment(SwingConstants.CENTER);
+		mostrarEstadisticas_aprobados_numero.setFont(new Font("Arial", Font.BOLD, 96));
+		mostrarEstadisticas_aprobados_numero.setBounds(54, 312, 114, 104);
+		display_mostrarEstadisticas.add(mostrarEstadisticas_aprobados_numero);
+
+		mostrarEstadisticas_aprobados_text = new JLabel("Aprobados");
+		mostrarEstadisticas_aprobados_text.setHorizontalAlignment(SwingConstants.CENTER);
+		mostrarEstadisticas_aprobados_text.setFont(new Font("Tahoma", Font.BOLD, 38));
+		mostrarEstadisticas_aprobados_text.setForeground(COLOR_CHECK);
+		mostrarEstadisticas_aprobados_text.setBounds(10, 410, 210, 52);
+		display_mostrarEstadisticas.add(mostrarEstadisticas_aprobados_text);
+
+		mostrarEstadisticas_suspendos_numero = new JLabel("30");
+		mostrarEstadisticas_suspendos_numero.setHorizontalAlignment(SwingConstants.CENTER);
+		mostrarEstadisticas_suspendos_numero.setForeground(COLOR_DANGER);
+		mostrarEstadisticas_suspendos_numero.setFont(new Font("Arial", Font.BOLD, 96));
+		mostrarEstadisticas_suspendos_numero.setBounds(340, 312, 114, 104);
+		display_mostrarEstadisticas.add(mostrarEstadisticas_suspendos_numero);
+
+		mostrarEstadisticas_suspendos_text = new JLabel("Suspensos");
+		mostrarEstadisticas_suspendos_text.setHorizontalAlignment(SwingConstants.CENTER);
+		mostrarEstadisticas_suspendos_text.setForeground(COLOR_DANGER);
+		mostrarEstadisticas_suspendos_text.setFont(new Font("Tahoma", Font.BOLD, 38));
+		mostrarEstadisticas_suspendos_text.setBounds(290, 406, 216, 52);
+		display_mostrarEstadisticas.add(mostrarEstadisticas_suspendos_text);
+
+		mostrarEstadisticas_media_numero = new JLabel("30");
+		mostrarEstadisticas_media_numero.setHorizontalAlignment(SwingConstants.CENTER);
+		mostrarEstadisticas_media_numero.setForeground(COLOR_ERROR);
+		mostrarEstadisticas_media_numero.setFont(new Font("Arial", Font.BOLD, 96));
+		mostrarEstadisticas_media_numero.setBounds(561, 312, 229, 104);
+		display_mostrarEstadisticas.add(mostrarEstadisticas_media_numero);
+
+		mostrarEstadisticas_media_text = new JLabel("Media fallos");
+		mostrarEstadisticas_media_text.setHorizontalAlignment(SwingConstants.CENTER);
+		mostrarEstadisticas_media_text.setForeground(COLOR_ERROR);
+		mostrarEstadisticas_media_text.setFont(new Font("Tahoma", Font.BOLD, 38));
+		mostrarEstadisticas_media_text.setBounds(561, 410, 229, 52);
+		display_mostrarEstadisticas.add(mostrarEstadisticas_media_text);
+
+		mostrarEstadisticas_test_numero = new JLabel("30");
+		mostrarEstadisticas_test_numero.setHorizontalAlignment(SwingConstants.CENTER);
+		mostrarEstadisticas_test_numero.setForeground(Color.WHITE);
+		mostrarEstadisticas_test_numero.setFont(new Font("Arial", Font.BOLD, 96));
+		mostrarEstadisticas_test_numero.setBounds(41, 159, 114, 104);
+		display_mostrarEstadisticas.add(mostrarEstadisticas_test_numero);
+
+		mostrarEstadisticas_test_text = new JLabel("Test realizados");
+		mostrarEstadisticas_test_text.setHorizontalAlignment(SwingConstants.CENTER);
+		mostrarEstadisticas_test_text.setForeground(Color.WHITE);
+		mostrarEstadisticas_test_text.setFont(new Font("Tahoma", Font.BOLD, 38));
+		mostrarEstadisticas_test_text.setBounds(145, 192, 333, 52);
+		display_mostrarEstadisticas.add(mostrarEstadisticas_test_text);
+
+		mostrarEstadisticas_separator1 = new JSeparator();
+		mostrarEstadisticas_separator1.setBounds(10, 284, 780, 2);
+		display_mostrarEstadisticas.add(mostrarEstadisticas_separator1);
+
+		mostrarEstadisticas_separator2 = new JSeparator();
+		mostrarEstadisticas_separator2.setBounds(10, 141, 780, 2);
+		display_mostrarEstadisticas.add(mostrarEstadisticas_separator2);
+
+		mostrarEstadisticas_nick_text = new JLabel("Nick");
+		mostrarEstadisticas_nick_text.setForeground(Color.WHITE);
+		mostrarEstadisticas_nick_text.setFont(new Font("Tahoma", Font.BOLD, 38));
+		mostrarEstadisticas_nick_text.setBounds(10, 48, 780, 52);
+		display_mostrarEstadisticas.add(mostrarEstadisticas_nick_text);
+
 	}
 	// NavPanel inivitado
 
@@ -2458,8 +2674,8 @@ public class Ventana {
 		opt_iniciarTest.add(opt_iniciarTest_text);
 
 		// option estadisticas alumno
-		opt_estadisticas_alumno = new JOption(display_reg, "Estadisticas", "/imagenes/estadisticas_32px.png",
-				opciones_alumno);
+		opt_estadisticas_alumno = new JOption(display_mostrarEstadisticas, "Estadisticas",
+				"/imagenes/estadisticas_32px.png", opciones_alumno);
 		opt_estadisticas_alumno.setLayout(null);
 		opt_estadisticas_alumno.setBackground(new Color(54, 33, 89));
 		opt_estadisticas_alumno.setBounds(0, 59, 300, 48);
@@ -2535,7 +2751,7 @@ public class Ventana {
 		// Nav options
 
 		// option estadisticas profesor
-		opt_estadisticas_profesor = new JOption(display_login, "Estadisticas", "/imagenes/estadisticas_32px.png",
+		opt_estadisticas_profesor = new JOption(display_verUsuarios, "Estadisticas", "/imagenes/estadisticas_32px.png",
 				opciones_profesor);
 		opt_estadisticas_profesor.setBounds(0, 11, 300, 48);
 		navPanel_profesor.add(opt_estadisticas_profesor);
@@ -3049,6 +3265,8 @@ public class Ventana {
 			actualizarMostraUsuario(sesionActual.getUsuario());
 			// --
 			alumno.abrirVistaDeSesion();
+			// --
+			usuarioInspeccionado = sesionActual.getUsuario();
 			break;
 		case "profesor":
 			invitado.cerrarVistaDeSesion();
@@ -3175,7 +3393,7 @@ public class Ventana {
 	 */
 
 	public void actualizarMostraUsuario(Usuario usuario) {
-
+		usuarioInspeccionado = usuario;
 		nick_text_mostrarUsuario.setText(usuario.getNick());
 		nombre_text_mostrarUsuario.setText(usuario.getNombre());
 		apellidos_text_mostrarUsuario.setText(usuario.getApellidos());
@@ -3279,41 +3497,70 @@ public class Ventana {
 		anadirPregunta_respuestaC_radioBtn.setSelected(false);
 
 	}
-	
+
 	public void actualizarPregunta(Pregunta pregunta) {
-		
+
 		preguntaActual = pregunta;
-		Respuesta[] respuestas =  pregunta.getRespuestas();
-		for(int i = 0; i < respuestas.length; i++) {
-			switch(respuestas[i].getIndice()) {
+		Respuesta[] respuestas = pregunta.getRespuestas();
+		for (int i = 0; i < respuestas.length; i++) {
+			switch (respuestas[i].getIndice()) {
 			case 'a':
-				iniciarTest_respuestaA_text.setText("<html><p>"+respuestas[i].getTexto()+"</p></html>");
+				iniciarTest_respuestaA_text.setText("<html><p>" + respuestas[i].getTexto() + "</p></html>");
 				break;
 			case 'b':
-				iniciarTest_respuestaB_text.setText("<html><p>"+respuestas[i].getTexto()+"</p></html>");
+				iniciarTest_respuestaB_text.setText("<html><p>" + respuestas[i].getTexto() + "</p></html>");
 				break;
 			case 'c':
-				iniciarTest_respuestaC_text.setText("<html><p>"+respuestas[i].getTexto()+"</p></html>");
-				break;	
+				iniciarTest_respuestaC_text.setText("<html><p>" + respuestas[i].getTexto() + "</p></html>");
+				break;
 			}
-			
+
 		}
-		iniciarTest_pregunta_enunciado.setText("<html><p>"+pregunta.getEnunciado()+"</p></html>");
-		iniciarTest_pregunta_contadorPregunta.setText("Pregunta n\u00BA: "+(testActual.getEnunciadas().size()+1)+"/30");
+		iniciarTest_pregunta_enunciado.setText("<html><p>" + pregunta.getEnunciado() + "</p></html>");
+		iniciarTest_pregunta_contadorPregunta
+				.setText("Pregunta n\u00BA: " + (testActual.getEnunciadas().size() + 1) + "/30");
 		iniciarTest_index_panel.setVisible(false);
 		iniciarTest_pregunta_panel.setVisible(true);
-		
+
 	}
 
 	public Pregunta getPreguntaActual() {
 		return preguntaActual;
 	}
 
-	public void completarTest() {
+	public void ReiniciarTest() {
 		iniciarTest_index_panel.setVisible(true);
+		iniciarTest_end_panel.setVisible(false);
 		iniciarTest_pregunta_panel.setVisible(false);
+		testActual = null;
 	}
-	
+
+	public void completarTest(int aciertos) {
+		iniciarTest_pregunta_panel.setVisible(false);
+		iniciarTest_end_panel.setVisible(true);
+		iniciarTest_aciertos_numero.setText("" + aciertos);
+		iniciarTest_fallos_numero.setText("" + (30 - aciertos));
+		if ((30 - aciertos) > 3) {
+			iniciarTest_resultado_text.setText("Suspendido");
+			iniciarTest_resultado_text.setForeground(COLOR_DANGER);
+		} else {
+			iniciarTest_resultado_text.setText("Aprobado");
+			iniciarTest_resultado_text.setForeground(COLOR_CHECK);
+		}
+
+	}
+
+	public void actualizarMostrarEstadisticas(int numeroTest, int numeroAprobados, float mediaFallos) {
+		DecimalFormat df = new DecimalFormat();
+		df.setMaximumFractionDigits(1);
+		mostrarEstadisticas_media_numero.setText("" + df.format(mediaFallos));
+		mostrarEstadisticas_aprobados_numero.setText("" + numeroAprobados);
+		mostrarEstadisticas_suspendos_numero.setText("" + (numeroTest - numeroAprobados));
+		mostrarEstadisticas_test_numero.setText("" + numeroTest);
+		mostrarEstadisticas_nick_text.setText(usuarioInspeccionado.getNick());
+		displays.mostarDisplay(display_mostrarEstadisticas);
+	}
+
 	public void cerrarConexion() {
 		mysqlc.desconectar();
 	}

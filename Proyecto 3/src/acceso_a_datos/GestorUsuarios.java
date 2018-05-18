@@ -41,6 +41,17 @@ public class GestorUsuarios {
 		 return control;
 			
 	 }
+	
+	public boolean actualizarUsuario(String campo, String valor ,String where) {
+		 boolean control = false;
+		 if(mysqlc.isConectada()) {
+			 if(mysqlc.Update("usuario", campo+"='"+valor+"'", where)){
+				 control = true;
+			 }
+		 }
+		 return control;
+			
+	 }
 	 
 	 public boolean buscarUsuarioExacto(String campo, String value) {
 		 boolean control = false;

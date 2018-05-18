@@ -9,7 +9,7 @@ import interfaz.Ventana;
 public class Launcher {
 	/*
 	 * Autor: Adan Jarillo Merida
-	 * Version: en Desarrollo 0.7.1
+	 * Version: ALPHA 1.0.0
 	 * 
 	 * 
 	 */

@@ -36,7 +36,7 @@ public class RespuestaBtnListener implements MouseListener {
 		if(ventana.getTestActual().getEnunciadas().size() < 30) {
 			ventana.actualizarPregunta(ventana.getGestorTest().getPreguntaDisponible(ventana.getTestActual()));
 		} else {
-			ventana.completarTest();
+			ventana.completarTest(ventana.getGestorTest().getNumeroAciertos(ventana.getTestActual()));
 		}
 		
 		

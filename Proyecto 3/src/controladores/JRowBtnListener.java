@@ -33,6 +33,7 @@ public class JRowBtnListener implements MouseListener {
 			try {
 				if(rsu.next()) {
 					Usuario  usuario=  new Usuario(rsu);
+					ventana.setUsuarioInspeccionado(usuario);
 					ventana.actualizarMostraUsuario(usuario);
 				}
 			} catch (SQLException e) {
