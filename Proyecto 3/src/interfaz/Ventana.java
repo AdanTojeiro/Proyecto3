@@ -276,7 +276,7 @@ public class Ventana {
 	private TextFieldGroup reg_password_check_tfg;
 	// Formulario soporte
 
-	private TextFieldGroup soporte_asunto_tfg, soporte_textArea_tfg;
+	private TextFieldGroup soporte_asunto_tfg;
 	// Buscador verUsuarios
 	private TextFieldGroup verUsuarios_nick_tfg;
 	private JLabel acceso_text_mostrarUsuario;
@@ -3331,10 +3331,6 @@ public class Ventana {
 	 * |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 	 * GESTORES DE DATOS
 	 */
-
-	public void setFocusFixer(JButton focusFixer) {
-		this.focusFixer = focusFixer;
-	}
 
 	public GestorUsuarios getGestorUsuarios() {
 		return gestorUsuarios;
