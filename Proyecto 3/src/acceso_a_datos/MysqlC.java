@@ -63,7 +63,7 @@ public class MysqlC {
 			int n = stm.executeUpdate();
 			if(n > 0 ) {
 				control = true;
-				System.out.println("MYSQL: Execute Insert( -> "+sql+" <-). Rows afected: "+n);
+				//System.out.println("MYSQL: Execute Insert( -> "+sql+" <-). Rows afected: "+n);
 			}
 		} catch (SQLException e) {
 			System.err.println("MYSQL: "+e);
@@ -80,7 +80,7 @@ public class MysqlC {
 			int n = stm.executeUpdate();
 			if(n > 0 ) {
 				control = true;
-				System.out.println("MYSQL: Execute Update( -> "+sql+" <-). Rows afected: "+n);
+				//System.out.println("MYSQL: Execute Update( -> "+sql+" <-). Rows afected: "+n);
 			}
 		} catch (SQLException e) {
 			System.err.println("MYSQL: "+e);
@@ -95,7 +95,7 @@ public class MysqlC {
 		try {
 			PreparedStatement stm = con.prepareStatement(sql);
 			rs = stm.executeQuery(sql);
-			System.out.println("MYSQL: Execute Query( -> "+sql+" <-)");
+			//System.out.println("MYSQL: Execute Query( -> "+sql+" <-)");
 		} catch (SQLException e) {
 			System.err.println("MYSQL: "+e);
 		}
@@ -108,7 +108,7 @@ public class MysqlC {
 		try {
 			PreparedStatement stm = con.prepareStatement(sql);
 			rs = stm.executeQuery(sql);
-			System.out.println("MYSQL: Execute Query( -> "+sql+" <-)");
+			//System.out.println("MYSQL: Execute Query( -> "+sql+" <-)");
 		} catch (SQLException e) {
 			System.err.println("MYSQL: "+e);
 		}
